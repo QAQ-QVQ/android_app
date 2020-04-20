@@ -1,27 +1,33 @@
 package com.hjy.gamecommunity.activity.main;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.hjy.baseui.ui.BaseActivity;
+import com.hjy.baseutil.countdownutil.CountdownTimerTask;
 import com.hjy.gamecommunity.R;
-import com.hjy.gamecommunity.fragment.GuideFragment;
+import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
 
 /**
  * Author: zhangqingyou
- * Date: 2020/4/9
+ * Date: 2020/4/20 11:18
  * Des:
  */
 public class ActivitySplash extends BaseActivity implements View.OnClickListener {
 
 
+    private ImageView mIvImage;
+
     @Override
     public Object getLayout() {
         return R.layout.activity_splash;
+
     }
 
     @Override
     public void initView() {
-
+        mIvImage = findViewById(R.id.iv_image);
     }
 
 
@@ -52,8 +58,17 @@ public class ActivitySplash extends BaseActivity implements View.OnClickListener
         transparentStatusBar();//透明状态栏
         setStatusBarLightMode(false);//设置状态栏是否为浅色模式
 
-        showFragment(R.id.ll_LinearLayout, GuideFragment.class);
+        mIvImage.setImageResource(R.drawable.ic_launcher_background);
 
+
+        CountdownTimerTask countdownTimerTask = new CountdownTimerTask();
+        countdownTimerTask.stateCountdownExecution(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getContext(), ActivityGuide.class));
+                finish();
+            }
+        }, 3f);
     }
 
     @Override

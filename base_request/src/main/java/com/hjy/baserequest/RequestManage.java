@@ -97,6 +97,8 @@ public class RequestManage {
         buildeOkHttpClient.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);    //全局的写入超时时间
         buildeOkHttpClient.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);  //全局的连接超时时间
         buildeOkHttpClient.cookieJar(new CookieJarImpl(new SPCookieStore(getApplication())));
+        OkHttpClient build = buildeOkHttpClient.build();
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.put("charset", "utf-8");
         OkGo.getInstance().init(getApplication())
@@ -104,9 +106,10 @@ public class RequestManage {
                 .setCacheMode(CacheMode.NO_CACHE)
                 //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
-                .setOkHttpClient(buildeOkHttpClient.build())
+                .setOkHttpClient(build)
                 .addCommonHeaders(httpHeaders)
                 .setRetryCount(3);
+
     }
 
     /**

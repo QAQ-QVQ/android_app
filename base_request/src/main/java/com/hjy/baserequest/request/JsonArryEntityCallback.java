@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hjy.baserequest.RequestManage;
 import com.hjy.baserequest.util.JEventUtils;
+import com.hjy.baserequest.util.RequestResponseUtil;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.convert.StringConvert;
 import com.lzy.okgo.request.base.Request;
@@ -47,16 +48,21 @@ public abstract class JsonArryEntityCallback<T> extends AbsCallback<String> {
         return s;
     }
 
+    private String baseUrl;
+
     @Override
     public void onStart(Request<String, ? extends Request> request) {
         super.onStart(request);
         try {
-            String baseUrl = request.getBaseUrl().replace("//", "");
-            int indexOf = baseUrl.indexOf("/");
-            TAG = baseUrl.substring(indexOf, baseUrl.length());
+            baseUrl = request.getBaseUrl();
+            String url = baseUrl.replace("//", "");
+            int indexOf = url.indexOf("/");
+            TAG = url.substring(indexOf, url.length());
         } catch (Exception e) {
             TAG = "网络请求";
         }
+
+        RequestResponseUtil.setIsRequest(baseUrl, false);//设置不可请求
 
     }
 
@@ -82,6 +88,12 @@ public abstract class JsonArryEntityCallback<T> extends AbsCallback<String> {
             JEventUtils.onCountEventJsonError(response, TAG);
         }
 
+    }
+
+    @Override
+    public void onFinish() {
+        super.onFinish();
+        RequestResponseUtil.setIsRequest(baseUrl, true);//设置可请求
     }
 
 

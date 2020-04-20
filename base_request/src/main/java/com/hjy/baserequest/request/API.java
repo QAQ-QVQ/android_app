@@ -10,8 +10,8 @@ import com.hjy.baserequest.RequestManage;
  */
 public class API {
     //统一协议
-    public static final String URL_DEFAULT = "http://119.23.214.129";//app统一协议
-    public static final String URL_DEFAULT_TEST = "http://119.23.214.129";//app统一协议 测试
+    public static final String URL_DEFAULT = "http://login.5eyx.com";//app统一协议
+    public static final String URL_DEFAULT_TEST = "http://login.5eyx.com";//app统一协议 测试
     public static final String URL_DEFAULT_SDK = "http://xxx.xxx.xxx:0000";//sdk统一协议
     public static final String URL_DEFAULT_SDK_TEST = "http://xxx.xxx.xxx:0000";//sdk统一协议 测试
 

@@ -150,7 +150,6 @@ public class MainActivity extends BaseActivity {
         } else if (FragmenPersonalCenter.class.getCanonicalName().equals(tabFragmentClass)) {
             showFragment(R.id.linearLayout, FragmenPersonalCenter.class);
         }
-
     }
 
     @Override

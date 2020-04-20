@@ -98,6 +98,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void listener();
 
     /**
+     * 设置状态栏是否可见
+     */
+    public void setStatusBarVisibility(boolean isVisible) {
+        BarUtils.setStatusBarVisibility(this, isVisible);//
+    }
+
+    /**
      * 透明状态栏
      */
     public void transparentStatusBar() {

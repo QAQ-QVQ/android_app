@@ -11,6 +11,7 @@ import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.MessagePush;
 import com.hjy.baserequest.bean.User;
 import com.hjy.baserequest.util.ListToStringUtil;
+import com.hjy.baserequest.util.RequestResponseUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.callback.Callback;
@@ -37,6 +38,7 @@ public class Request {
 
     private static Request request;
 
+
     private Request() {
     }
 
@@ -50,10 +52,12 @@ public class Request {
         return request;
     }
 
+
     //--------------------------------------------------基本请求 start-------------------------------------------------
     public final int GET = 1;
     public final int POST = 2;
     public final int POST_JSON = 3;
+
 
     /**
      * 下载
@@ -75,21 +79,25 @@ public class Request {
      */
     private void okgo_postJson(String url, String json, Callback callback) {
         OkGo.<String>post(url)
-                .tag(this)
+                //.tag(requestTag(url))
                 .upJson(json)
                 .execute(callback);
     }
 
     public void okgo_get(String url, Map<String, String> params, Callback callback) {
         OkGo.<String>get(url)
+                // .tag(requestTag(url))
                 .params(params)
                 .execute(callback);
     }
 
     public void okgo_post(String url, Map<String, String> params, Callback callback) {
+        Log.d(url, "请求参数:" + MapUtils.toString(params));
         OkGo.<String>post(url)
+                //.tag(requestTag(url))
                 .params(params)
                 .execute(callback);
+
     }
     //--------------------------------------------------基本请求 end-------------------------------------------------
 
@@ -134,21 +142,13 @@ public class Request {
      * * 由于泛型方法在声明的时候会声明泛型<E>，因此即使在泛型类中并未声明泛型，编译器也能够正确识别泛型方法中识别的泛型。
      *
      * @param requestType 请求方式
-     * @param url 请求地址
-     * @param jsonObject 请求参数合集
-     * @param absCallback  请求结果回调
+     * @param url         请求地址
+     * @param jsonObject  请求参数合集
+     * @param absCallback 请求结果回调
      */
-    //防止同一个接口频繁请求，当前请求响应后才能继续下个请求
-    private Map<String, Boolean> stringBooleanMap = new LinkedHashMap<>();
 
     public void request(int requestType, String url, JsonObject jsonObject, AbsCallback absCallback) {
-        if (!stringBooleanMap.containsKey(url)) {
-            stringBooleanMap.put(url, true);
-        }
-
-        if (stringBooleanMap.get(url)) {//防止同一个接口频繁请求，当前请求响应后才能继续下个请求
-            stringBooleanMap.put(url, false);
-
+        if (RequestResponseUtil.getIsRequest(url)) {//防止同一个接口频繁请求，当前请求响应后才能继续下个请求
             Map<String, String> header = getHeader();
             for (Map.Entry<String, JsonElement> jsonElement : jsonObject.entrySet()) {
                 String key = jsonElement.getKey();
@@ -159,14 +159,13 @@ public class Request {
             if (requestType == GET) {
                 okgo_get(url, header, absCallback);
             } else if (requestType == POST) {
-                Log.d("POST请求参数", "请求参数:" + MapUtils.toString(header));
                 okgo_post(url, header, absCallback);
             } else if (requestType == POST_JSON) {
                 JsonObject jsonObjectString = new JsonObject();
                 for (Map.Entry<String, String> entry : header.entrySet()) {
                     jsonObjectString.addProperty(entry.getKey(), entry.getValue());
                 }
-                Log.d("jsonObject", "jsonObject:" + jsonObjectString.toString());
+                //Log.d("jsonObject", "jsonObject:" + jsonObjectString.toString());
                 okgo_postJson(url, jsonObjectString.toString(), absCallback);
             }
         } else

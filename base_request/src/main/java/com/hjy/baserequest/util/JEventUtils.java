@@ -330,12 +330,12 @@ public class JEventUtils {
             if (StringUtils.isTrimEmpty(requestString))
                 requestString = response.getRawResponse().request().toString();
             if (RequestManage.isDEBUG())
-                Log.d(text, text + "接口:" + requestString + "\n返回json：" + response.body());
+                Log.d(text, "接口:" + requestString + "\n返回json：" + response.body());
         } catch (Exception e) {
 
         }
         Map<String, String> extraMap = new HashMap();
-        extraMap.put("接口协议及返回json", text + "接口:" + requestString + "\n返回json：" + response.body());
+        extraMap.put("接口协议及返回json", "接口:" + requestString + "\n返回json：" + response.body());
         JEventUtils.onCountEvent("接口返回Json", extraMap);
 
     }
@@ -351,7 +351,7 @@ public class JEventUtils {
                 requestString = response.getRawResponse().request().toString();
 
             if (RequestManage.isDEBUG())
-                Log.d(text, text + "连接失败:" + requestString);
+                Log.d(text, "连接失败:" + requestString);
         } catch (Exception e) {
 
         }
@@ -372,7 +372,7 @@ public class JEventUtils {
                 requestString = response.getRawResponse().request().toString();
 
             if (RequestManage.isDEBUG())
-                Log.d(text, text + "接口:" + requestString + "\n返回json：" + response.body());
+                Log.d(text, "接口:" + requestString + "\n返回json：" + response.body());
         } catch (Exception e1) {
 
         }
@@ -393,7 +393,7 @@ public class JEventUtils {
                 requestString = response.getRawResponse().request().toString();
 
             if (RequestManage.isDEBUG())
-                Log.d(text, text + "接口:" + requestString + "\n返回json：" + response.body());
+                Log.d(text, "接口:" + requestString + "\n返回json：" + response.body());
         } catch (Exception e1) {
 
         }
