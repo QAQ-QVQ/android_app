@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
+    api 'com.android.support:support-v4:28.0.0'
+    api 'com.android.support:design:28.0.0'
+
+
+    implementation project(path: ':base_utils')
+
+    //动画库
+    api 'com.nineoldandroids:library:2.4.0'
+    //万能下拉刷新和上拉加载
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+    //万能recyclerview与Adapter
+    api 'com.zhouyou:easyrecyclerview:1.0.6'
+    //万能TabLayout 包含主流样式
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+   //动画指示器：viewpager+指示器的UI实现，或者用于TabLayout的指示器
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
+    //继承FrameLayout，在xml渲染完成后，加上加载中、无网络、无数据、出错四个页面，根据需要控制显示哪一层
+    api 'com.lai.weavey:loadinglayout:1.3.1'
+
+    //Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
+    api 'com.github.CarGuo:FrescoUtils:v1.2.1'
+    //主流样式banner
+    api 'com.youth.banner:banner:1.4.10'
+
+
+
+
+}
