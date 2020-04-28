@@ -20,58 +20,23 @@ import okhttp3.Response;
  * @param <T> json对象实体类
  */
 
-public abstract class JsonEntityCallback<T> extends AbsCallback<String> {
-    private StringConvert convert;
+public abstract class JsonEntityCallback<T> extends BaseCallback {
     private Class<T> classOfBean;//json对象实体
-    private String TAG;//网络请求TAG（用于日志过滤）
 
     public JsonEntityCallback(Class<T> classOfBean) {
-        convert = new StringConvert();
         this.classOfBean = classOfBean;
     }
 
     public JsonEntityCallback(Class<T> classOfBean, String requestName) {
-        convert = new StringConvert();
+        super(requestName);
         this.classOfBean = classOfBean;
-        this.TAG = requestName;
-    }
-
-    @Override
-    public String convertResponse(Response response) throws Throwable {
-        String s = convert.convertResponse(response);
-        response.close();
-        return s;
-    }
-
-    private String baseUrl;
-    @Override
-    public void onStart(Request<String, ? extends Request> request) {
-        super.onStart(request);
-        try {
-            baseUrl = request.getBaseUrl();
-            String url = baseUrl.replace("//", "");
-            int indexOf = url.indexOf("/");
-            TAG = url.substring(indexOf, url.length());
-        } catch (Exception e) {
-            TAG = "网络请求";
-        }
-        RequestResponseUtil.setIsRequest(baseUrl, false);//设置不可请求
-
     }
 
 
-    @Override
-    public void onError(com.lzy.okgo.model.Response<String> response) {
-        super.onError(response);
-        //极光计数事件（接口连接失败使用）
-        JEventUtils.onCountEventError(response, TAG);
-
-    }
 
     @Override
     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-        //打印完成请求链接
-        JEventUtils.logRequest(response, TAG);
+        super.onSuccess(response);
         try {
             T t = new Gson().fromJson(response.body(), classOfBean);
             onSuccess(t);
@@ -83,16 +48,9 @@ public abstract class JsonEntityCallback<T> extends AbsCallback<String> {
 
     }
 
-    @Override
-    public void onFinish() {
-        super.onFinish();
-        RequestResponseUtil.setIsRequest(baseUrl, true);//设置可请求
-    }
-
     /**
      * 对返回数据进行操作的回调， UI线程
      */
     protected abstract void onSuccess(T t);
-
 
 }

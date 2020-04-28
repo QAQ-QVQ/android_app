@@ -1,6 +1,8 @@
 package com.hjy.gamecommunity.activity.login;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -21,6 +23,7 @@ import com.hjy.baserequest.bean.User;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
+import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
@@ -57,7 +60,6 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     private TextView mTvPasswordLogin;
     private TextView mTvServiceAgreement;
     private TextView mTvPrivacyClause;
-
 
     @Override
     public Object getLayout() {
@@ -105,11 +107,48 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
     }
 
+
     @Override
     public void initData() {
         transparentStatusBar();
         setStatusBarLightMode(true);
         setPaddingTop(mClBar);
+
+
+        mBtLogn.setBackground(getStateListDrawable());
+        mBtGetVerificationCode.setBackground(getStateListDrawable());
+
+    }
+
+    /**
+     * 单背景样式
+     *
+     * @return
+     */
+    private StateListDrawable getStateListDrawable() {
+        StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.7f)//设置点击后透明度
+                .setRadius(50)//圆角
+                .setColorBg(ContextCompat.getColor(getContext(), R.color.gray))//背景颜色
+                .buid();
+        return stateListDrawable;
+    }
+
+    /**
+     * 渐变样式
+     *
+     * @return
+     */
+    private StateListDrawable getGradientDrawable() {
+        //状态2
+        int startColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        int endColor = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
+        StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.7f)//设置点击后透明度
+                .setRadius(50)//圆角
+                .setSColors(new int[]{startColor, endColor})
+                .setSGradientType(GradientDrawable.LINEAR_GRADIENT)//设置线性渐变，除此之外还有：GradientDrawable.SWEEP_GRADIENT（扫描式渐变），GradientDrawable.RADIAL_GRADIENT（圆形渐变）
+                .setSOrientation(GradientDrawable.Orientation.LEFT_RIGHT)//渐变方向从左到右
+                .buid();
+        return stateListDrawable;
     }
 
 
@@ -132,14 +171,14 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 }
                 //s:变化后的所有字符
                 if (s.toString().length() < 11) {
-                    mBtLogn.setBackgroundResource(R.drawable.bui_gray_solid_corners_style);
-                    mBtGetVerificationCode.setBackgroundResource(R.drawable.bui_gray_solid_corners_style);
+                    mBtLogn.setBackground(getStateListDrawable());
+                    mBtGetVerificationCode.setBackground(getStateListDrawable());
                     mBtLogn.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                 } else {
-                    mBtGetVerificationCode.setBackgroundResource(R.drawable.bui_colorprimary_gradual_corners_style);
+                    mBtGetVerificationCode.setBackground(getGradientDrawable());
                     String mEdVerificationCodeString = mEdVerificationCode.getText().toString();
                     if (!StringUtils.isTrimEmpty(mEdVerificationCodeString)) {
-                        mBtLogn.setBackgroundResource(R.drawable.bui_colorprimary_gradual_corners_style);
+                        mBtLogn.setBackground(getGradientDrawable());
                         mBtLogn.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                     }
                 }
@@ -163,14 +202,14 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //s:变化后的所有字符
                 if (StringUtils.isTrimEmpty(s.toString())) {
-                    mBtLogn.setBackgroundResource(R.drawable.bui_gray_solid_corners_style);
+                    mBtLogn.setBackground(getStateListDrawable());
                     mBtLogn.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                     mIbXxVerificationCode.setVisibility(View.GONE);
                 } else {
                     mIbXxVerificationCode.setVisibility(View.VISIBLE);
                     String mEdLoginPhoneString = mEdLoginPhone.getText().toString();
                     if (RegexUtils.isMobileExact(mEdLoginPhoneString)) {
-                        mBtLogn.setBackgroundResource(R.drawable.bui_colorprimary_gradual_corners_style);
+                        mBtLogn.setBackground(getGradientDrawable());
                         mBtLogn.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
                     }
                 }
@@ -293,7 +332,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                                 mEdLoginPhone.setFocusableInTouchMode(true);
                                 mIbXx.setVisibility(View.VISIBLE);
 
-                                mBtGetVerificationCode.setBackgroundResource(R.drawable.bui_colorprimary_gradual_corners_style);
+                                mBtGetVerificationCode.setBackground(getGradientDrawable());
                                 mBtGetVerificationCode.setText("重新发送");
                             }
                         });
@@ -302,7 +341,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mBtGetVerificationCode.setBackgroundResource(R.drawable.bui_gray_solid_corners_style);
+                                mBtGetVerificationCode.setBackground(getStateListDrawable());
                                 mBtGetVerificationCode.setText(time + "s后重试");
                             }
                         });

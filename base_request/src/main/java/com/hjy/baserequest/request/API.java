@@ -43,7 +43,6 @@ public class API {
 
 
     //其他
-
     public static String getUrl(String urlLast) {
         return (RequestManage.isDEBUG() ? URL_DEFAULT_TEST : URL_DEFAULT) + urlLast;
     }
