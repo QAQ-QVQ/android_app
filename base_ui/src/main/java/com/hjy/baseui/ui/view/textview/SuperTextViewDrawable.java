@@ -47,6 +47,7 @@ public class SuperTextViewDrawable extends GradientDrawable {
         int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusTopRight, 0);
         int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusBottomLeft, 0);
         int mRadiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusBottomRight, 0);
+
         typedArray.recycle();
 
         Orientation orientation1 = Orientation.TOP_BOTTOM;

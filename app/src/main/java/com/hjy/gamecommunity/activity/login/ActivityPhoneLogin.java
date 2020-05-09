@@ -117,7 +117,6 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
         mBtLogn.setBackground(getStateListDrawable());
         mBtGetVerificationCode.setBackground(getStateListDrawable());
-
     }
 
     /**
@@ -272,8 +271,6 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                         //倒计时中隐藏清除
                         mIbXx.setVisibility(View.GONE);
                     }
-
-
                 }
                 break;
             case R.id.bt_Logn://登录
