@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://jitpack.io' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            //腾讯cos上传文件
+            url "https://dl.bintray.com/tencentqcloudterminal/maven"
+        }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+
+        //集成全量更新和热更新一体的平台
+        classpath "com.tencent.bugly:tinker-support:1.1.5"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
