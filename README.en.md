@@ -1,7 +1,7 @@
-# 游戏社区_APP名称待定
+# 麒遇
 
 #### Description
-游戏社区
+麒遇
 
 #### Software Architecture
 Software architecture description
