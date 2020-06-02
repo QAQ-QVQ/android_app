@@ -10,17 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.entity.TabEntities;
 import com.hjy.gamecommunity.fragment.main.FragmenMessage;
 import com.hjy.gamecommunity.fragment.main.FragmenPersonalCenter;
 import com.hjy.gamecommunity.fragment.main.FragmenVideo;
 import com.hjy.gamecommunity.fragment.main.FragmentFamily;
 import com.hjy.gamecommunity.fragment.main.FragmentHome;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +53,8 @@ public class MainActivity extends BaseActivity {
         }
 
         viewList.add(2, mLlFamily);//家族view添加到中间位置
+
+
     }
 
     private ArrayList<TabEntities> mTabEntities;//tab实体
@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity {
             showFragment(R.id.linearLayout, FragmenPersonalCenter.class);
         }
     }
-
+    private ExitDialog exitDialog;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -167,51 +167,13 @@ public class MainActivity extends BaseActivity {
                 mAudioManager2.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FX_FOCUS_NAVIGATION_UP);
                 return true;
             case KeyEvent.KEYCODE_BACK:
-                showExitDialog();
+                if (exitDialog == null)
+                    exitDialog = new ExitDialog(getActivity());
+                exitDialog.show();
+
                 return true;
         }
         return true;
     }
 
-    private MaterialDialog titleMessgeMaterialDialog;
-    private TextView mTvTitle;
-    private TextView mTvText;
-    private TextView mTvNo;
-    private TextView mTvYes;
-
-    public void showExitDialog() {
-        if (titleMessgeMaterialDialog == null) {
-            titleMessgeMaterialDialog = new MaterialDialog.Builder(getContext())
-                    .cancelable(true)
-                    .customView(R.layout.dialog_tips_title_messge, false)
-                    .build();
-            View customView = titleMessgeMaterialDialog.getCustomView();
-
-            mTvTitle = (TextView) customView.findViewById(R.id.tv_title);
-            mTvText = (TextView) customView.findViewById(R.id.tv_text);
-            mTvNo = (TextView) customView.findViewById(R.id.tv_no);
-            mTvYes = (TextView) customView.findViewById(R.id.tv_yes);
-
-
-            mTvNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    titleMessgeMaterialDialog.dismiss();
-                }
-            });
-            mTvYes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    titleMessgeMaterialDialog.dismiss();
-                    com.hjy.baseutil.AppUtils.finishAllActivities();
-                }
-            });
-        }
-        String title = "退出《" + AppUtils.getAppName() + "》";
-        String text = "确定要退出么？";
-        mTvTitle.setText(title);
-        mTvText.setText(text);
-        if (!titleMessgeMaterialDialog.isShowing())
-            titleMessgeMaterialDialog.show();
-    }
 }

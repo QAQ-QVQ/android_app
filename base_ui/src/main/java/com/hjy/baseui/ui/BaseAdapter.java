@@ -1,204 +1,113 @@
 package com.hjy.baseui.ui;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-
-import com.zhouyou.recyclerview.adapter.BH;
-import com.zhouyou.recyclerview.adapter.BaseRecyclerViewAdapter;
-import com.zhouyou.recyclerview.adapter.BaseRecyclerViewHolder;
-import com.zhouyou.recyclerview.adapter.DataHelper;
-import com.zhouyou.recyclerview.adapter.HelperRecyclerViewHolder;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 万能Adapter
+ * 自定义基准BaseAdapter
+ * <p>
  * Author: zhangqingyou
- * Date: 2020/4/7
+ * Date: 2020/5/14 13:07
  * Des:
- *
- * @param <T> 数据源对象
  */
-public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implements DataHelper<T> {
-    private OnItemButtonClickListener onItemButtonClickListener;
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.BaseViewHolder> {
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
+    private List<T> mList;
+    private List<Integer> layoutIdsList;
 
-    private List<Integer> layoutIdsList = new ArrayList<>();
+
+    public BaseAdapter() {
+        mList = new ArrayList<>();
+        layoutIdsList = new ArrayList<>();
+    }
+
+
+    public BaseAdapter(List<T> beanList) {
+        this.mList = beanList;
+        layoutIdsList = new ArrayList<>();
+    }
+
+    @Override
+    public BaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View inflate = null;
+        if (mList != null) {
+            int checkLayout = getLayout(mList.get(i), i);
+            if (checkLayout != 0) {
+                inflate = LayoutInflater.from(viewGroup.getContext()).inflate(checkLayout, viewGroup, false);
+                if (!layoutIdsList.contains(checkLayout)) {
+                    layoutIdsList.add(checkLayout);
+                }
+            }
+        }
+        return new BaseViewHolder(inflate);
+    }
+
+    @Override
+    public void onBindViewHolder(BaseAdapter.BaseViewHolder viewHolder, int i) {
+        if (mList != null) {
+            onBindViewHolder(viewHolder, mList.get(i), i);
+            //绑定监听事件
+            onBindItemClickListener(viewHolder, i);
+            //自定义监听事件
+            listener(viewHolder, mList.get(i), i);
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        if (mList != null)
+            return mList.size();
+        return 0;
+    }
+
+    /**
+     * 获取当前加载的那个布局
+     *
+     * @param position
+     * @return
+     */
+    public int getLayoutId(int position) {
+        if (position >= 0 && position < getItemCount())
+            return getLayout(mList.get(position), position);
+        else
+            return position;
+    }
+
+    public List<T> getDataList() {
+        return mList;
+    }
 
     public List<Integer> getLayoutIdsList() {
         return layoutIdsList;
     }
 
     /**
-     * @param data     数据源
-     * @param context  上下文
-     * @param layoutId 布局Id
+     * 加载哪个布局id
+     *
+     * @return
      */
-    public BaseAdapter(List<T> data, Context context, int... layoutId) {
-        super(data, context, layoutId);
-        layoutIdsList.clear();
-        for (int i = 0; i < layoutId.length; i++) {
-            layoutIdsList.add(layoutId[i]);
-        }
+    public abstract int getLayout(T item, int position);
 
-    }
-
-    public BaseAdapter(Context context, int... layoutIds) {
-        super(context, layoutIds);
-        layoutIdsList.clear();
-        for (int i = 0; i < layoutIds.length; i++) {
-            layoutIdsList.add(layoutIds[i]);
-        }
-    }
-
-
-    @Override
-    public BaseRecyclerViewHolder createViewHolder(View view, int layoutId) {
-        return new HelperRecyclerViewHolder(view, layoutId);
-    }
-
-    @Override
-    public void onBindData(BH viewHolder, int position, T item) {
-        HelperRecyclerViewHolder helperViewHolder = (HelperRecyclerViewHolder) viewHolder;
-
-        HelperBindData(helperViewHolder, position, item);
-
-        //1.赋值相关事件,例如点击长按等
-        //2.也可用低二种方式，用BaseRecyclerViewAdapter类中的 adapter.setOnItemClickListener()
-        setListener(helperViewHolder, position, item);
-    }
-
-    public abstract void HelperBindData(HelperRecyclerViewHolder viewHolder, int position, T item);
-//    @Override
-//    protected void HelperBindData(HelperRecyclerViewHolder viewHolder, int position, MultipleItemBean item) {
-//        //方式一，对应checkLayout中的方式一
-//        if(item.getItemType() == 0){//adapter_multi_item1_layout布局对应的操作
-//            viewHolder.setText(R.id.name_tv,item.getName());
-//        } else if(item.getItemType() == 1){//adapter_multi_item2_layout布局对应的操作
-//            viewHolder.setText(R.id.name_tv,item.getName())
-//                    .setText(R.id.info_tv,item.getAge());
-//        }
-//
-//        /*//方式二，对应checkLayout中的方式二
-//        int layoutType = getItemViewType(position);
-//        if(layoutType==R.layout.adapter_multi_item1_layout){
-//            viewHolder.setText(R.id.name_tv,item.getName());
-//        }else if(layoutType==R.layout.adapter_multi_item2_layout){
-//            viewHolder.setText(R.id.name_tv,item.getName())
-//                    .setText(R.id.info_tv,item.getAge());
-//        }*/
-
-
-    /****1.数据获取方式*****/
-    //旧：传统的写法是从集合中获取再强转,如下：
-    //TestBean testBean =(TestBean)datas.get(position);
-    //新：baseadapter中提供的有获取当前postion位置对应的数据，直接调用就行了，也不用强转
-    // final TestBean testBean = getData(position);
-
-    /****2.view赋值*****/
-    //方式一：采用链式的设计的书写方式，一点到尾。（方式一）
-//        viewHolder.setText(R.id.text,testBean.getName())
-//            .setImageResource(R.id.image, MakePicUtil.makePic(position))
-//            /* .setVisible(R.id.text,true);//设置某个view是否可见*/
-//            .setOnClickListener(R.id.image, new View.OnClickListener() {//点击事件
-//        @Override
-//        public void onClick(View view) {
-//            Toast.makeText(mContext, "我是子控件" + testBean.getName() + "请看我如何处理View点击事件的", Toast.LENGTH_LONG).show();
-//        }
-//    });
-    //其它更多连写功能请查看viewHolder类中代码
-
-    //方式二：不采用链式的方式，通过getView直接获取控件对象，不需要强转了，采用的是泛型
-//    TextView textView =viewHolder.getView(R.id.text2);
-//        textView.setText(testBean.getAge());
-
-    /****3.其它更多使用方式，请自己探索*****/
-    //举例如果想知道适配器中数据是否为空用isEmpty()就可以了，无需list.size()==0  list.isEmpty()等其它方式
-//        if(isEmpty()){
-//
-//    }
-//    }
-//
-    /*********多item布局使用方式***********/
-//    //如果要用多item布局，必须重写checkLayout()方法，来指定哪一条数据对应哪个item布局文件
-//    //不重写的时候返回默认是0，也就是只会加载第一个布局
-//    @Override
-//    public int checkLayout(MultipleItemBean item, int position) {
-//        //方式一：判断的类型直接写在model中
-//        return item.getItemType();
-//        //方式二：根据类型判断
-//        /*if(item instanceof A){
-//            return R.layout.adapter_multi_item1_layout;
-//        }else if(item instanceof B){
-//            return R.layout.adapter_multi_item2_layout;
-//        }else {
-//            return R.layout.adapter_multi_item3_layout;
-//        }*/
-//    }
+    public abstract void onBindViewHolder(BaseViewHolder viewHolder, T item, int i);
 
     /**
-     * 绑定相关事件,例如点击长按等,默认空实现
-     *
-     * @param viewHolder
-     * @param position   数据的位置
-     * @param item       数据项
+     * view监听写在这里面
      */
-    public abstract void setListener(HelperRecyclerViewHolder viewHolder, int position, T item);
-
-    /*******************以下两种item点击事件都可以，自己选择合适的方式**********************************/
-    //方式一：此方式是另一种处理：绑定相关事件,例如点击长按等,默认空实现，如果你要使用需要覆写setListener()方法
-    //方式二：绑定相关事件,例如点击长按等,默认空实现等我们一般会在适配器外部使用，
-    // 例如： mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<TestBean>(){});
-
-   /* @Override
-    protected void setListener(HelperRecyclerViewHolder viewHolder, final int position, TestBean item) {
-        viewHolder.getItemView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext,"我是Item："+position,Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
-    @Override
-    public boolean isEnabled(int position) {
-        return position >= 0 && position < mList.size();
-    }
-
-    /**
-     * 添加单个数据到列表头部
-     *
-     * @param data
-     */
-    @Override
-    public void addItemToHead(T data) {
-        add(0, data);
-    }
-
-    /**
-     * 添加单个数据到列表尾部
-     *
-     * @param data 数据
-     */
-    @Override
-    public boolean addItemToLast(T data) {
-        boolean result;
-        if (data != null) {
-            if (mList == null) mList = new ArrayList<>();
-            result = mList.add(data);
-            notifyDataSetChanged();
-        } else
-            result = false;
-
-        return result;
-    }
+    public abstract void listener(BaseViewHolder viewHolder, T item, int i);
 
     /**
      * 添加数据集到列表头部
      * 注：
-     * 1.此方法 Adapter只会刷新添加的数据（效率优化，已添加数据没必要刷新）
+     *
      * @param datas
      */
-    @Override
     public boolean addItemsToHead(List<T> datas) {
         boolean b;
         if (datas != null && datas.size() > 0) {
@@ -206,7 +115,7 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
 
             b = mList.addAll(0, datas);
 
-            notifyItemRangeChanged(0, datas.size());//只刷新添加的数据
+            notifyDataSetChanged();
 
         } else
             b = false;
@@ -224,7 +133,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @return 是否添加成功
      */
 
-    @Override
     public boolean addItemsToLast(List<T> datas) {
         boolean b;
         if (datas != null && datas.size() > 0) {
@@ -235,7 +143,7 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
             int sizes = mList.size();
             int size = datas.size();
             if (sizes > size)
-                notifyItemRangeChanged(sizes - sizes, sizes);//只刷新添加的数据
+                notifyItemRangeChanged(sizes - size, sizes);//只刷新添加的数据
             else
                 notifyDataSetChanged();
         } else
@@ -260,6 +168,20 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
     }
 
     /**
+     * 替换所有数据
+     *
+     * @param data
+     */
+    public void replaceAll(List<T> data) {
+        if (data != null && data.size() > 0) {
+            if (mList == null) mList = new ArrayList<>();
+            mList.clear();
+            mList.addAll(data);
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
      * 设置了item动画必须用notifyItemRangeInserted刷新适配器，否则没有动画效果
      *
      * @param datas
@@ -281,7 +203,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @param startPosition 数据添加的位置
      * @param datas         数据集合
      */
-    @Override
     public boolean addAll(int startPosition, List<T> datas) {
         if (mList == null || datas == null)
             return false;
@@ -297,7 +218,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @param data          数据
      */
 
-    @Override
     public void add(int startPosition, T data) {
         if (mList == null || data == null) return;
         mList.add(startPosition, data);
@@ -310,7 +230,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @param index 数据座标
      * @return 数据对象
      */
-    @Override
     public T getData(int index) {
         return getItemCount() == 0 ? null : mList.get(index);
     }
@@ -321,7 +240,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @param oldData 旧的数据
      * @param newData 新的数据
      */
-    @Override
     public void alterObj(T oldData, T newData) {
         alterObj(mList.indexOf(oldData), newData);
     }
@@ -332,7 +250,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      * @param index 修改的位置
      * @param data  要代替的的数据
      */
-    @Override
     public void alterObj(int index, T data) {
         if (mList == null || data == null) return;
         mList.set(index, data);
@@ -340,15 +257,14 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
     }
 
     /**
-     * 替换所有数据
+     * 是否包含某个数据
      *
      * @param data
+     * @return
      */
-    @Override
-    public void replaceAll(List<T> data) {
-        if (mList == null) mList = new ArrayList<>();
-        mList.clear();
-        addAll(0, data);
+    public boolean contains(T data) {
+        if (mList == null || mList.isEmpty()) return false;
+        return mList.contains(data);
     }
 
     /**
@@ -356,7 +272,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      *
      * @param data
      */
-    @Override
     public boolean remove(T data) {
         boolean result = false;
         if (data == null) return result;
@@ -370,7 +285,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
      *
      * @param index
      */
-    @Override
     public void removeToIndex(int index) {
         if (mList == null) return;
         mList.remove(index);
@@ -381,7 +295,6 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
     /**
      * 清除所有
      */
-    @Override
     public void clear() {
         if (mList != null) {
             mList.clear();
@@ -390,26 +303,55 @@ public abstract class BaseAdapter<T> extends BaseRecyclerViewAdapter<T> implemen
     }
 
 
-    @Override
-    public boolean contains(T data) {
-        if (mList == null || mList.isEmpty()) return false;
-        return mList.contains(data);
+    public interface OnItemClickListener<T> {
+        void onItemClick(View view, T item, int position);
     }
 
-    public List<T> getList() {
-        return mList;
+    public interface OnItemLongClickListener<T> {
+        void onItemLongClick(View view, T item, int position);
     }
 
-    public interface OnItemButtonClickListener<T> {
-        void onItemButton(View view, T item, int position);
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
-    public OnItemButtonClickListener getOnItemButtonClickListener() {
-        return onItemButtonClickListener;
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
     }
 
-    public void setOnItemButtonClickListener(OnItemButtonClickListener onItemButtonClickListener) {
-        this.onItemButtonClickListener = onItemButtonClickListener;
+    /**
+     * 注册item点击、长按事件
+     *
+     * @param holder
+     * @param position
+     */
+    protected final void onBindItemClickListener(final BaseViewHolder holder, final int position) {
+        if (null != mOnItemClickListener)
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onItemClick(view, mList.get(position), position);
+                }
+            });
+
+        if (null != mOnItemLongClickListener)
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemLongClickListener.onItemLongClick(v, mList.get(position), position);
+                    return true;
+                }
+            });
     }
 
+    class BaseViewHolder extends RecyclerView.ViewHolder {
+
+        public BaseViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public <T extends View> T getView(int id) {
+            return itemView.findViewById(id);
+        }
+    }
 }

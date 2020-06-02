@@ -38,13 +38,13 @@ android {
     //***********************************多渠道构建***************************************
     flavorDimensions "channel"
     productFlavors {
-        幻点游社 {
+        麒遇_测试 {
             dimension "channel"
             applicationId "com.hjy.gamecommunity"
             versionCode 1
             versionName "1." + time + "." + codename
             manifestPlaceholders = [
-                    APP_NAME      : "幻点游社",
+                    APP_NAME      : "麒遇_测试",
                     APP_ICON      : "@mipmap/ic_launcher",
                     PACKAGE_NAME  : applicationId,
                     JSHARE_PKGNAME: applicationId,
@@ -94,6 +94,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/MANIFEST.MF'
     }
+
     /*Gradle3.3 以上的方法*/
     applicationVariants.all { variant ->
         // 更新至Android Studio 3.3 gradle 4.10.1
@@ -130,7 +131,9 @@ dependencies {
     implementation project(path: ':xui_lib_v1.0.9')//可以说是最强最全的ui库了（sdk尽量別使用）
 
     //完整版引入（6.0.3以上用的是androidx），支持IJKplayer、ExoPlayer、MediaPlaye切换、自定义内核
-    implementation 'com.shuyu:GSYVideoPlayer:6.0.3'
+    implementation ('com.shuyu:GSYVideoPlayer:6.0.3') {
+        exclude group: 'com.android.support'
+    }
     //富文本，用于 资讯或新闻 详情页
     implementation('com.zzhoujay.richtext:richtext:3.0.8') {
         exclude group: 'com.android.support'
@@ -142,5 +145,7 @@ dependencies {
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     //指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
-    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    implementation ('com.tencent.tinker:tinker-android-lib:1.9.9') {
+        exclude group: 'com.android.support'
+    }
 }

@@ -1,13 +1,17 @@
 package com.hjy.gamecommunity.activity.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.media.AudioManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +31,7 @@ import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
+import com.hjy.gamecommunity.dialog.ExitDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -221,6 +226,22 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
             }
         });
 
+        //服务协议
+
+        mTvServiceAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //隐私条款
+        mTvPrivacyClause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -301,6 +322,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
             case R.id.tv_VisitorLogin://游客登录
                 UtilsManage.tost("游客登录待开发");
                 startActivity(new Intent(getContext(), MainActivity.class));
+                finish();
                 break;
         }
     }
@@ -352,6 +374,31 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     public void onDestroy() {
         super.onDestroy();
         if (timerTask != null) timerTask.cancel();
+    }
+
+
+    private ExitDialog exitDialog;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Log.d("LogUtils", "音量加");
+                AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FX_FOCUS_NAVIGATION_UP);
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Log.d("LogUtils", "音量减");
+                AudioManager mAudioManager2 = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                mAudioManager2.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FX_FOCUS_NAVIGATION_UP);
+                return true;
+            case KeyEvent.KEYCODE_BACK:
+                if (exitDialog == null)
+                    exitDialog = new ExitDialog(getActivity());
+                exitDialog.show();
+
+                return true;
+        }
+        return true;
     }
 
 }

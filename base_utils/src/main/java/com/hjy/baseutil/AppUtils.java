@@ -1,78 +1,67 @@
 package com.hjy.baseutil;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.text.TextUtils;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.hjy.baseutil.countdownutil.CountdownTimerTask;
 
 public class AppUtils {
-
-
     /**
-     * ,返回true，为显示,否则不是
+     * 获取应用程序名称
      */
+    public static String getAppName() {
+        String appName = "";
+        try {
+            PackageManager pm = UtilsManage.getApplication().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(UtilsManage.getApplication().getPackageName(), 0);
+            appName = pi == null ? null : pi.applicationInfo.loadLabel(pm).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        Log.d("AppUtils", "app名字：" + appName);
+        Log.d("AppUtils", "app包名：" + UtilsManage.getApplication().getPackageName());
+        return appName;
+    }
+
+
     /**
-     * 判断某个界面是否在前台
-     * @param context
-     * @param activityClassName 当前Activity名
+     * 读取Application下的标签值
+     *
      * @return
      */
-    public static boolean isForeground(Activity context, String activityClassName) {
-        if (context == null || TextUtils.isEmpty(activityClassName))
-            return false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
-        if (list != null && list.size() > 0) {
-            ComponentName cpn = list.get(0).topActivity;
-            if (activityClassName.equals(cpn.getClassName()))
-                return true;
-        }
-        return false;
-
-    }
-
-    public static List<Activity> getAllActivitys() {
-        List<Activity> list = new ArrayList<>();
+    public static String getMetaData(String metaDataName) {
+        String value = "";
+        PackageManager pm = UtilsManage.getApplication().getPackageManager();
+        String packageName = UtilsManage.getApplication().getPackageName();
         try {
-            Class<?> activityThread = Class.forName("android.app.ActivityThread");
-            Method currentActivityThread = activityThread.getDeclaredMethod("currentActivityThread");
-            currentActivityThread.setAccessible(true);
-            //获取主线程对象
-            Object activityThreadObject = currentActivityThread.invoke(null);
-            Field mActivitiesField = activityThread.getDeclaredField("mActivities");
-            mActivitiesField.setAccessible(true);
-            Map<Object, Object> mActivities = (Map<Object, Object>) mActivitiesField.get(activityThreadObject);
-            for (Map.Entry<Object, Object> entry : mActivities.entrySet()) {
-                Object value = entry.getValue();
-                Class<?> activityClientRecordClass = value.getClass();
-                Field activityField = activityClientRecordClass.getDeclaredField("activity");
-                activityField.setAccessible(true);
-                Object o = activityField.get(value);
-                list.add((Activity) o);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            ApplicationInfo ai = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            value = String.valueOf(ai.metaData.get(metaDataName));
+        } catch (PackageManager.NameNotFoundException e) {
         }
-        return list;
+        Log.d("AppUtils", "Application下的标签值 -- name:" + metaDataName + " -- value:" + value);
+
+        return value;
+
     }
+
 
     /**
-     * 关闭所有页面退出
+     * 关闭所有Activity 再结束进程
      */
-    public static void finishAllActivities() {
-        List<Activity> activityList = getAllActivitys();
-        for (int i = activityList.size() - 1; i >= 0; --i) {// remove from top
-            Activity activity = activityList.get(i);
-            // sActivityList remove the index activity at onActivityDestroyed
-            activity.finish();
-            activity.overridePendingTransition(0, 0);
-        }
+    public static void exitApp() {
+        ActivitysUtil.finishAllActivities();
+        CountdownTimerTask countdownTimerTask = new CountdownTimerTask();
+        countdownTimerTask.stateCountdownExecution(new Runnable() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        }, 0.2f);
+
     }
+
+
 }
