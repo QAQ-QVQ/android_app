@@ -3,16 +3,10 @@ package com.hjy.baseui.ui.view.textview;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
-import android.support.annotation.FloatRange;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.hjy.baseui.R;
 import com.hjy.baseui.ui.SuperDrawable;
@@ -29,7 +23,7 @@ import com.hjy.baseui.ui.SuperDrawable;
  * Date: 2020/4/28 9:21
  * Des:
  */
-public class SuperTextViewDrawable extends GradientDrawable {
+public class SuperTextViewDrawable {
 
 
     public StateListDrawable initStateListDrawable(Context context, AttributeSet attrs) {
@@ -50,9 +44,9 @@ public class SuperTextViewDrawable extends GradientDrawable {
 
         typedArray.recycle();
 
-        Orientation orientation1 = Orientation.TOP_BOTTOM;
-        Orientation[] values = Orientation.values();
-        for (Orientation value : values) {
+        GradientDrawable.Orientation orientation1 = GradientDrawable.Orientation.TOP_BOTTOM;
+        GradientDrawable.Orientation[] values = GradientDrawable.Orientation.values();
+        for (GradientDrawable.Orientation value : values) {
             if (value.ordinal() == orientation) {
                 orientation1 = value;
             }

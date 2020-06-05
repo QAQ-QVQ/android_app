@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity {
                 selectFragment(tabEntities.getTabTag());
             } else {
                 imageView.setImageResource((Integer) tabEntities.getTabUnselectImg());
-                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.light_black));
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.bui_black_light));
             }
 
         }

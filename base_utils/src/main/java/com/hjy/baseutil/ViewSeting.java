@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ScreenUtils;
+
 /**
  * 缓存工具类
  * Author: zhangqingyou
@@ -12,14 +13,16 @@ import com.blankj.utilcode.util.ScreenUtils;
  */
 public class ViewSeting {
 
-    private static int screenWidth = ScreenUtils.getScreenWidth();
-    private static int screenHeight = ScreenUtils.getScreenHeight();
+    private static int screenWidth;
+    private static int screenHeight;
 
     public static int getScreenWidth() {
+        if (screenWidth == 0) screenWidth = ScreenUtils.getScreenWidth();
         return screenWidth;
     }
 
     public static int getScreenHeight() {
+        if (screenHeight == 0) screenHeight = ScreenUtils.getScreenHeight();
         return screenHeight;
     }
 

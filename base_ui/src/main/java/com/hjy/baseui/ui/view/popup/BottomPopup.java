@@ -10,9 +10,9 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
- * Author: zhangqingyou
- * Date: 2020/4/7
- * Des:
+ * 作者: zhangqingyou
+ * 时间: 2020/6/5 9:03
+ * 描述:
  */
 public class BottomPopup {
     public PopupWindow mPopupWindow;

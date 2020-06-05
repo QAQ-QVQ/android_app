@@ -1,75 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv1"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/bui_sign_out_top_bg"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/bui_sign_out_bottom_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv1" />
-
-    <TextView
-        android:id="@+id/tv_text"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:maxLines="5"
-        android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_image"
-        app:layout_constraintLeft_toLeftOf="@+id/iv_image"
-        app:layout_constraintRight_toRightOf="@+id/iv_image"
-        app:layout_constraintTop_toTopOf="@+id/iv_image"
-        app:layout_constraintVertical_bias="0.15" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:gravity="center"
+            android:text="xxx"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/bt_yes"
-        android:layout_width="110dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/bui_colorprimary_stroke_corners_style"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_image"
-        app:layout_constraintLeft_toLeftOf="@+id/iv_image"
-        app:layout_constraintRight_toLeftOf="@+id/bt_no"
-        tools:text="xxxx" />
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:gravity="center"
+            android:text="xxx"
+            android:textColor="@color/bui_black_light"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/bt_no"
-        android:layout_width="110dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/bui_gray_stroke_corners_style"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_image"
-        app:layout_constraintLeft_toRightOf="@+id/bt_yes"
-        app:layout_constraintRight_toRightOf="@+id/iv_image"
-        tools:text="xxxx" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/bui_gray_dividing_line_light"></View>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_Button1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="xxx"
+                android:textColor="@color/bui_black_light1"
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/v_DividingLine"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/bui_gray_dividing_line_light"></View>
+
+            <TextView
+                android:id="@+id/tv_Button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="xxx"
+                android:textColor="@color/bui_red_light"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

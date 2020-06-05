@@ -2,7 +2,9 @@ package com.hjy.baseui;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.ResourceUtils;
 import com.weavey.loading.lib.LoadingLayout;
+
 /**
  * Author: zhangqingyou
  * Date: 2020/4/7
@@ -15,7 +17,6 @@ public class BaseUIManage {
         BaseUIManage.application = application;
 
 
-
         LoadingLayout.getConfig()
                 .setErrorText("出错啦~请稍后重试！")
                 .setEmptyText("暂无数据~请稍后重试！")
@@ -23,11 +24,11 @@ public class BaseUIManage {
 //                .setErrorImage(R.mipmap.define_error)
 //                .setEmptyImage(R.mipmap.define_empty)
 //                .setNoNetworkImage(R.mipmap.define_nonetwork)
-                .setAllTipTextColor(R.color.colorPrimary)
+                .setAllTipTextColor(ResourceUtils.getColorIdByName("colorPrimary"))
                 .setAllTipTextSize(14)
                 .setReloadButtonText("点我重试哦")
                 .setReloadButtonTextSize(14)
-                .setReloadButtonTextColor(R.color.colorPrimary)
+                .setReloadButtonTextColor(ResourceUtils.getColorIdByName("colorPrimary"))
                 .setReloadButtonWidthAndHeight(150, 40);
 
 

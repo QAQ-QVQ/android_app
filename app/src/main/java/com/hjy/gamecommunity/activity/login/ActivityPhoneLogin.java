@@ -132,7 +132,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     private StateListDrawable getStateListDrawable() {
         StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.7f)//设置点击后透明度
                 .setRadius(50)//圆角
-                .setColorBg(ContextCompat.getColor(getContext(), R.color.gray))//背景颜色
+                .setColorBg(ContextCompat.getColor(getContext(), R.color.bui_gray))//背景颜色
                 .buid();
         return stateListDrawable;
     }
@@ -323,6 +323,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 UtilsManage.tost("游客登录待开发");
                 startActivity(new Intent(getContext(), MainActivity.class));
                 finish();
+
                 break;
         }
     }
@@ -378,6 +379,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
 
     private ExitDialog exitDialog;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

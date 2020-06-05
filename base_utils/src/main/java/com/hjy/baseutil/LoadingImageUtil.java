@@ -75,8 +75,8 @@ public class LoadingImageUtil {
 
         if (isplaceholder)//是否加载占位图
         {
-            requestOptions.placeholder(ResourceUtils.getColorIdByName("grayBar"));//设置加载中占位资源
-            requestOptions.error(ResourceUtils.getColorIdByName("graySegmentation"));//设置加载错误占位资源
+            requestOptions.placeholder(ResourceUtils.getColorIdByName("bui_grayBar"));//设置加载中占位资源
+            requestOptions.error(ResourceUtils.getColorIdByName("bui_graySegmentation"));//设置加载错误占位资源
         }
         objectDrawableRequestBuilder.apply(requestOptions);//加载配置信息
         objectDrawableRequestBuilder.into(imageView);
@@ -121,8 +121,8 @@ public class LoadingImageUtil {
 
         if (isplaceholder)//是否加载占位图
         {
-            requestOptions.placeholder(ResourceUtils.getColorIdByName("grayBar"));//设置加载中占位资源
-            requestOptions.error(ResourceUtils.getColorIdByName("graySegmentation"));//设置加载错误占位资源
+            requestOptions.placeholder(ResourceUtils.getColorIdByName("bui_grayBar"));//设置加载中占位资源
+            requestOptions.error(ResourceUtils.getColorIdByName("bui_graySegmentation"));//设置加载错误占位资源
         }
 
         objectDrawableRequestBuilder.apply(requestOptions);//加载配置信息
