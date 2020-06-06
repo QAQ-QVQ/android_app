@@ -26,31 +26,59 @@ public abstract class BasePopup extends PopupWindow {
     public BasePopup(Activity activity) {
         super(activity);
         this.activity = activity;
-        initView(getLayout(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        init(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
 
     public BasePopup(Activity activity, int width, int height) {
         super(activity);
         this.activity = activity;
-        initView(getLayout(), width, height);
+        init(width, height);
     }
 
     /**
      * @return
      */
-    public abstract int getLayout();
+    public abstract Object getLayout();
+
+    /**
+     * 初始化view
+     */
+    public abstract void initView(View rootView);
+
+    /**
+     * 初始化数据
+     */
+    public abstract void initData();
+
+    /**
+     * view监听写在这里面
+     */
+    public abstract void listener();
 
 
     private View mainRootView;
 
-    private void initView(int layoutId, int width, int height) {
-        mainRootView = View.inflate(activity, layoutId, null);
+    private void init(int width, int height) {
+        if (getLayout() instanceof Integer) {
+            mainRootView = View.inflate(activity, (Integer) getLayout(), null);
+        } else if (getLayout() instanceof View) {
+            mainRootView = (View) getLayout();
+        }
+
         setContentView(mainRootView);
 
 
         setWidth(ConvertUtils.dp2px(width));
         setHeight(ConvertUtils.dp2px(height));
+
+        setOutsideTouchable(true);//外部可点击
+        setAnimationStyle(android.R.style.Animation_Toast);//动画
+
+
+        initView(mainRootView);
+        initData();
+        listener();
 
     }
 

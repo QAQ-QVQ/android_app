@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.hjy.baseui.R;
@@ -25,30 +26,50 @@ public abstract class BaseDialog extends AppCompatDialog {
         super(activity, R.style.transparentDialog);
         this.activity = activity;
         int screenWidth = (int) (ViewSeting.getScreenWidth() * 0.8);
-        initView(getLayout(), screenWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+        init(screenWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
     protected BaseDialog(Activity activity, int width, int height) {
         super(activity, R.style.transparentDialog);
         this.activity = activity;
-        initView(getLayout(), width, height);
+        init(width, height);
     }
 
     /**
      * @return
      */
-    public abstract int getLayout();
+    public abstract Object getLayout();
+
+    /**
+     * 初始化view
+     */
+    public abstract void initView(View rootView);
+
+    /**
+     * 初始化数据
+     */
+    public abstract void initData();
+
+    /**
+     * view监听写在这里面
+     */
+    public abstract void listener();
 
 
     private LinearLayout rootView;
     private View mainView;
 
-    private void initView(int layoutId, int width, int height) {
+    private void init(int width, int height) {
         rootView = new LinearLayout(getContext());
         rootView.setOrientation(android.widget.LinearLayout.VERTICAL);
 
-        mainView = View.inflate(getContext(), layoutId, null);
+        if (getLayout() instanceof Integer) {
+            mainView = View.inflate(getContext(), (Integer) getLayout(), null);
+        } else if (getLayout() instanceof View) {
+            mainView = (View) getLayout();
+        }
+
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
         mainView.setLayoutParams(lp);
 
@@ -56,6 +77,20 @@ public abstract class BaseDialog extends AppCompatDialog {
 
         setContentView(rootView);
 
+        setCancelable(true);//外部可点击
+
+        //设置弹窗背景透明度
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.dimAmount = 0.5f;
+        getWindow().setAttributes(layoutParams);
+
+        //设置窗口弹出动画
+        getWindow().setWindowAnimations(android.R.style.Animation_Toast);
+
+
+        initView(rootView);
+        initData();
+        listener();
 
     }
 
@@ -89,7 +124,6 @@ public abstract class BaseDialog extends AppCompatDialog {
         if (!activity.isFinishing() && !isShowing()) {
             super.show();
         }
-
     }
 
     @Override
@@ -97,7 +131,6 @@ public abstract class BaseDialog extends AppCompatDialog {
         if (!activity.isFinishing() && isShowing()) {
             super.dismiss();
         }
-
     }
 
 

@@ -1,6 +1,7 @@
 package com.hjy.baseui.ui.view.popup.tips;
 
 import android.app.Activity;
+import android.view.View;
 
 import com.hjy.baseui.R;
 
@@ -20,8 +21,23 @@ public class VoicePopup extends BaseTipsPopup {
     }
 
     @Override
-    public int getLayout() {
+    public Object getLayout() {
         return R.layout.bui_voice_popup;
+    }
+
+    @Override
+    public void initView(View rootView) {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void listener() {
+
     }
 
 }

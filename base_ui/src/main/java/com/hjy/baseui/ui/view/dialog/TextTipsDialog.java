@@ -11,11 +11,11 @@ import com.hjy.baseui.R;
 /**
  * 作者: zhangqingyou
  * 时间: 2020/6/5 14:03
- * 描述: 提示Dialog
+ * 描述: 文本提示Dialog
  */
 /*
   调用示例：
-        TipsTextDialog loadPopup = new TipsTextDialog(getActivity())
+        TextTipsDialog textTipsDialog = new TextTipsDialog(getActivity())
                 .setTitle("标题")
                 .setText("内容")
                 .setOnLeftButtonClickListener("取消", new View.OnClickListener() {
@@ -28,10 +28,10 @@ import com.hjy.baseui.R;
                     public void onClick(View v) {
                     }
                 });
-        loadPopup.show();
+        textTipsDialog.show();
  */
 
-public class TipsTextDialog extends BaseDialog {
+public class TextTipsDialog extends BaseDialog {
 
     private TextView mTvTitle;
     private TextView mTvText;
@@ -39,75 +39,79 @@ public class TipsTextDialog extends BaseDialog {
     private View mVDividingLine;
     private TextView mTvButton2;
 
-    public TipsTextDialog(Activity activity) {
+    public TextTipsDialog(Activity activity) {
         super(activity);
-        initView(getRootView());
 
     }
 
-    public TipsTextDialog(Activity activity, int width, int height) {
+    public TextTipsDialog(Activity activity, int width, int height) {
         super(activity, width, height);
-        initView(getRootView());
     }
 
 
     @Override
-    public int getLayout() {
+    public Object getLayout() {
         return R.layout.bui_tips_dialog;
     }
 
-    private void initView(View view) {
-        setDialogRadiusColos(5, R.color.bui_white);
-
+    @Override
+    public void initView(View view) {
         mTvTitle = view.findViewById(R.id.tv_title);
         mTvText = view.findViewById(R.id.tv_text);
         mTvButton1 = view.findViewById(R.id.tv_Button1);
         mVDividingLine = view.findViewById(R.id.v_DividingLine);
         mTvButton2 = view.findViewById(R.id.tv_Button2);
+    }
 
+    @Override
+    public void initData() {
+        setDialogRadiusColos(5, R.color.bui_white);
         mTvButton1.setTextSize(18);
         mTvButton2.setTextSize(18);
         mTvButton1.setTextColor(ContextCompat.getColor(getContext(), R.color.bui_black_light1));
         mTvButton2.setTextColor(ContextCompat.getColor(getContext(), R.color.bui_red_light));
         mTvButton1.setText("");
         mTvButton2.setText("");
+    }
 
+    @Override
+    public void listener() {
 
     }
 
-    public TextView getTitle() {
+    public TextView getTitleView() {
         return mTvTitle;
     }
 
-    public TextView getText() {
+    public TextView getTextView() {
         return mTvText;
     }
 
-    public TextView getLeftButton() {
+    public TextView getLeftButtonView() {
         return mTvButton1;
     }
 
-    public TextView getRightButton() {
+    public TextView getRightButtonView() {
         return mTvButton2;
     }
 
-    public TipsTextDialog setTitle(String mTvTitle) {
+    public TextTipsDialog setTitle(String mTvTitle) {
         this.mTvTitle.setText(mTvTitle);
         return this;
     }
 
-    public TipsTextDialog setText(String mTvText) {
+    public TextTipsDialog setText(String mTvText) {
         this.mTvText.setText(mTvText);
         return this;
     }
 
-    public TipsTextDialog setOnLeftButtonClickListener(String text, View.OnClickListener onNoClickListener) {
+    public TextTipsDialog setOnLeftButtonClickListener(String text, View.OnClickListener onNoClickListener) {
         mTvButton1.setText(text);
         mTvButton1.setOnClickListener(onNoClickListener);
         return this;
     }
 
-    public TipsTextDialog setOnRightButtonClickListener(String text, View.OnClickListener onYesClickListener) {
+    public TextTipsDialog setOnRightButtonClickListener(String text, View.OnClickListener onYesClickListener) {
         mTvButton2.setText(text);
         mTvButton2.setOnClickListener(onYesClickListener);
         return this;
