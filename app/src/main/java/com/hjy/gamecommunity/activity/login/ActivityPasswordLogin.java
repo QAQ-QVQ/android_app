@@ -20,6 +20,7 @@ import com.hjy.baserequest.bean.User;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
+import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
@@ -32,7 +33,6 @@ import com.hjy.gamecommunity.activity.main.MainActivity;
  * Des:
  */
 public class ActivityPasswordLogin extends BaseActivity implements View.OnClickListener {
-
 
     /**
      * 请输入手机号/帐号
@@ -55,7 +55,7 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
     private Button mBtLogn;
 
     private ImageButton mIbXxPassword;
-    private ImageButton mIbBackImageBar;
+    private ColorStateImageView mIbBackImageBar;
     private android.widget.LinearLayout mLlBar;
 
 
@@ -67,7 +67,7 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
     @Override
     public void initView() {
         mLlBar = (LinearLayout) findViewById(R.id.ll_bar);
-        mIbBackImageBar = (ImageButton) findViewById(R.id.ib_back_image_bar);
+        mIbBackImageBar = (ColorStateImageView) findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
 
         mEdLoginPhone = (EditText) findViewById(R.id.ed_login_phone);
@@ -188,7 +188,7 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             default:
                 break;
-            case R.id.ib_back_image_bar:
+            case R.id.iv_back_image_bar:
                 finish();
                 break;
             case R.id.ib_xx://清除手机号

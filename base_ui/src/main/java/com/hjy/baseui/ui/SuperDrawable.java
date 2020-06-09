@@ -1,21 +1,16 @@
 package com.hjy.baseui.ui;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.AttrRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.hjy.baseui.R;
 
 
 /**
@@ -122,7 +117,6 @@ public class SuperDrawable extends GradientDrawable {
      * @return
      */
     private int getAlphaColor(int color, @FloatRange(from = 0, to = 1) float clickAlpha) {
-
         int alphaComponent = ColorUtils.setAlphaComponent(color, clickAlpha);
         //设置按下背景色为 未选中状态背景色 的指定透明值
         return alphaComponent;
@@ -146,10 +140,8 @@ public class SuperDrawable extends GradientDrawable {
      * @param colorBg
      */
     public SuperDrawable setColorBg(int colorBg) {
-        if (colorBg != 0) {
-            ColorStateList colorStateList = ColorStateList.valueOf(colorBg);
-            this.colorBg = colorStateList;
-        }
+        ColorStateList colorStateList = ColorStateList.valueOf(colorBg);
+        this.colorBg = colorStateList;
         return this;
     }
 
@@ -161,10 +153,8 @@ public class SuperDrawable extends GradientDrawable {
      */
 
     public SuperDrawable setColorBorder(int colorBorder) {
-        if (colorBorder != 0) {
-            ColorStateList colorStateList = ColorStateList.valueOf(colorBorder);
-            this.colorBorder = colorStateList;
-        }
+        ColorStateList colorStateList = ColorStateList.valueOf(colorBorder);
+        this.colorBorder = colorStateList;
         return this;
     }
 
@@ -175,10 +165,8 @@ public class SuperDrawable extends GradientDrawable {
      * @param clickColorBg
      */
     public SuperDrawable setClickColorBg(int clickColorBg) {
-        if (clickColorBg != 0) {
-            ColorStateList colorStateList = ColorStateList.valueOf(clickColorBg);
-            this.clickColorBg = colorStateList;
-        }
+        ColorStateList colorStateList = ColorStateList.valueOf(clickColorBg);
+        this.clickColorBg = colorStateList;
 
         return this;
     }
@@ -190,10 +178,9 @@ public class SuperDrawable extends GradientDrawable {
      * @param clickColorBorder
      */
     public SuperDrawable setClickColorBorder(int clickColorBorder) {
-        if (clickColorBorder != 0) {
-            ColorStateList colorStateList = ColorStateList.valueOf(clickColorBorder);
-            this.clickColorBorder = colorStateList;
-        }
+        ColorStateList colorStateList = ColorStateList.valueOf(clickColorBorder);
+        this.clickColorBorder = colorStateList;
+
         return this;
     }
 
@@ -332,69 +319,6 @@ public class SuperDrawable extends GradientDrawable {
     }
 
 
-    public StateListDrawable initStateListDrawable(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SuperButton);
-        ColorStateList colorBg = typedArray.getColorStateList(R.styleable.SuperButton_zqy_backgroundColor);
-        ColorStateList colorBorder = typedArray.getColorStateList(R.styleable.SuperButton_zqy_borderColor);
-        ColorStateList startColor = typedArray.getColorStateList(R.styleable.SuperButton_zqy_startColor);
-        ColorStateList endColor = typedArray.getColorStateList(R.styleable.SuperButton_zqy_endColor);
-        int gradient = typedArray.getInt(R.styleable.SuperButton_zqy_gradient, -1);
-        int orientation = typedArray.getInt(R.styleable.SuperButton_zqy_orientation, -1);
-        int borderWidth = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_borderWidth, 0);
-        boolean isRadiusAdjustBounds = typedArray.getBoolean(R.styleable.SuperButton_zqy_isRadiusAdjustBounds, false);
-        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_radius, ConvertUtils.dp2px(5));
-        int mRadiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_radiusTopLeft, 0);
-        int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_radiusTopRight, 0);
-        int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_radiusBottomLeft, 0);
-        int mRadiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_radiusBottomRight, 0);
-        typedArray.recycle();
-
-        Orientation orientation1 = Orientation.TOP_BOTTOM;
-        Orientation[] values = Orientation.values();
-        for (Orientation value : values) {
-            if (value.ordinal() == orientation) {
-                orientation1 = value;
-            }
-        }
-
-
-        /**
-         * @param colorBg              未点击状态背景色
-         * @param colorBorder          未点击状态的描边色
-         * @param clickColorBg         点击状态背景色
-         * @param clickColorBorder     点击状态的描边色
-         * @param gradient             设置线性渐变，除此之外还有：GradientDrawable.SWEEP_GRADIENT（扫描式渐变），GradientDrawable.RADIAL_GRADIENT（圆形渐变）        
-         * @param colors               设置渐变颜色
-         * @param orientation          设置渐变方向                       
-         * @param borderWidth          边框宽度
-         * @param isRadiusAdjustBounds 设置圆角大小是否自动适应为 View 的高度的一半
-         * @param radius               四角圆形度数
-         * @param radiusTopLeft        左上圆形度数
-         * @param radiusTopRight       右上圆形度数
-         * @param radiusBottomLeft     左下圆形度数
-         * @param radiusBottomRight    右下圆形度数
-         * @return
-         */
-        StateListDrawable buid = setClickAlpha(0.7f)
-                .setRadius(mRadius)
-                .setBorderWidth(borderWidth)
-                .setRadiusAdjustBounds(isRadiusAdjustBounds)
-                .setRadiusBottomLeft(mRadiusBottomLeft)
-                .setRadiusBottomRight(mRadiusBottomRight)
-                .setRadiusTopLeft(mRadiusTopLeft)
-                .setRadiusTopRight(mRadiusTopRight)
-                .setColorBg(colorBg != null ? colorBg.getDefaultColor() : 0)
-                .setColorBorder(colorBorder != null ? colorBorder.getDefaultColor() : 0)
-                .setClickColorBg(0)
-                .setClickColorBorder(0)
-                .setSGradientType(gradient)
-                .setSColors(new int[]{startColor.getDefaultColor(), endColor.getDefaultColor()})
-                .setSOrientation(orientation1)
-                .buid();
-        return buid;
-    }
-
-
     /**
      * @param :colorBg              未点击状态背景色
      * @param :colorBorder          未点击状态的描边色
@@ -422,7 +346,8 @@ public class SuperDrawable extends GradientDrawable {
             normalGb.setGradientType(gradient);//设置线性渐变，除此之外还有：GradientDrawable.SWEEP_GRADIENT（扫描式渐变），GradientDrawable.RADIAL_GRADIENT（圆形渐变）
             normalGb.setOrientation(orientation);//设置渐变方向
         } else {
-            normalGb.setBgData(colorBg);//设置背景色(只支持纯色,不支持 Bitmap 或 Drawable)
+            if (colorBg != null)
+                normalGb.setBgData(colorBg);//设置背景色(只支持纯色,不支持 Bitmap 或 Drawable)
         }
 
 
@@ -452,7 +377,8 @@ public class SuperDrawable extends GradientDrawable {
             pressedGb.setGradientType(gradient);//设置线性渐变，除此之外还有：GradientDrawable.SWEEP_GRADIENT（扫描式渐变），GradientDrawable.RADIAL_GRADIENT（圆形渐变）
             pressedGb.setOrientation(orientation);//设置渐变方向
         } else {
-            pressedGb.setBgData(clickColorBg);//设置背景色(只支持纯色,不支持 Bitmap 或 Drawable)
+            if (clickColorBg != null)
+                pressedGb.setBgData(clickColorBg);//设置背景色(只支持纯色,不支持 Bitmap 或 Drawable)
         }
         pressedGb.setStrokeData(borderWidth, clickColorBorder);//设置按钮的描边粗细和颜色
         pressedGb.setRadiusAdjustBounds(isRadiusAdjustBounds);

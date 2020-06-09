@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
+import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 
@@ -31,7 +31,7 @@ import com.hjy.gamecommunity.R;
  */
 public class ActivityPasswordSetNewPassword extends BaseActivity implements View.OnClickListener {
     private ImageButton mIbXxPassword;
-    private ImageButton mIbBackImageBar;
+    private ColorStateImageView mIbBackImageBar;
     private LinearLayout mLlBar;
     private EditText mEdNewPassword;
     private ImageButton mIbIsVisibilityPassword;
@@ -49,7 +49,7 @@ public class ActivityPasswordSetNewPassword extends BaseActivity implements View
 
     @Override
     public void initView() {
-        mIbBackImageBar = findViewById(R.id.ib_back_image_bar);
+        mIbBackImageBar = findViewById(R.id.iv_back_image_bar);
         mLlBar = findViewById(R.id.ll_bar);
         mEdNewPassword = findViewById(R.id.ed_NewPassword);
         mIbXxPassword = findViewById(R.id.ib_xxPassword);
@@ -165,7 +165,7 @@ public class ActivityPasswordSetNewPassword extends BaseActivity implements View
         switch (v.getId()) {
             default:
                 break;
-            case R.id.ib_back_image_bar:
+            case R.id.iv_back_image_bar:
                 finish();
                 break;
             case R.id.ib_xxPassword://清除密码

@@ -7,14 +7,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.MetaDataUtils;
-import com.hjy.baseui.ui.view.popup.BottomPopup;
 import com.hjy.baseutil.UtilsManage;
-import com.hjy.gamecommunity.R;
+import com.hjy.baseutil.ViewSeting;
+import com.hjy.gamecommunity.dialog.BottomPopup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,10 +146,8 @@ public class ShareUtil {
      * @param activity
      * @param
      */
-    private View dialogView;
     private BottomPopup shareBottomPopupDialog;
     private ShareParams shareParams;
-    private List<View> views = new ArrayList<>();
     private List<String> platformName;
 
     public void share_Dialog(final Activity activity, View rootView, ShareParams shareParams, SharingResultsListener sharingResultsListener) {
@@ -168,25 +166,11 @@ public class ShareUtil {
         this.shareParams = shareParams;
         this.sharingResultsListener = sharingResultsListener;
         //分享弹窗
-        if (dialogView == null) {
-            dialogView = LayoutInflater.from(activity).inflate(R.layout.share_bottom_dialog, null);
-            shareBottomPopupDialog = new BottomPopup(activity, dialogView);
-            View share_qq_btnViewById = dialogView.findViewById(R.id.share_qq_btn);
-            View share_to_qq_zone_btnViewById = dialogView.findViewById(R.id.share_to_qq_zone_btn);
-            View share_weixin_btnViewById = dialogView.findViewById(R.id.share_weixin_btn);
-            View share_wxcircle_btnViewById = dialogView.findViewById(R.id.share_wxcircle_btn);
-            View share_to_weiboViewById = dialogView.findViewById(R.id.share_to_weibo);
-            View share_pop_cancle_btnViewById = dialogView.findViewById(R.id.share_pop_cancle_btn);
-            views.clear();
-            views.add(share_qq_btnViewById);
-            views.add(share_to_qq_zone_btnViewById);
-            views.add(share_weixin_btnViewById);
-            views.add(share_wxcircle_btnViewById);
-            views.add(share_to_weiboViewById);
-            views.add(share_pop_cancle_btnViewById);
+        if (shareBottomPopupDialog == null) {
+            shareBottomPopupDialog = new BottomPopup(activity, ViewSeting.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-        listener(views, platformName);
-        shareBottomPopupDialog.showPopup(rootView);
+        listener(shareBottomPopupDialog.getViewsList(), platformName);
+        shareBottomPopupDialog.show(rootView);
     }
 
     /**

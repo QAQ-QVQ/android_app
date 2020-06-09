@@ -141,10 +141,12 @@
     </declare-styleable>
 
     <declare-styleable name="SuperTextView">
+        <!-- 按下时 背景颜色和字体颜色 透明度 默认0.7f-->
+        <attr name="zqy_stv_clickAlpha" format="float" />
         <!-- 背景颜色-->
-        <attr name="zqy_stv_backgroundColor" format="reference" />
+        <attr name="zqy_stv_backgroundColor" format="color" />
         <!-- 边框颜色 -->
-        <attr name="zqy_stv_borderColor" format="reference" />
+        <attr name="zqy_stv_borderColor" format="color" />
         <!-- 边框宽度-->
         <attr name="zqy_stv_borderWidth" format="dimension" />
 
@@ -157,9 +159,9 @@
         <attr name="zqy_stv_radiusBottomRight" format="dimension" />
 
         <!--渐变开始颜色-->
-        <attr name="zqy_stv_startColor" format="color|reference" />
+        <attr name="zqy_stv_startColor" format="color" />
         <!--渐变结束颜色-->
-        <attr name="zqy_stv_endColor" format="color|reference" />
+        <attr name="zqy_stv_endColor" format="color" />
 
         <!--linear_gradient 设置线性渐变，sweep_gradient（扫描式渐变），radial_gradient（圆形渐变）-->
         <attr name="zqy_stv_gradient" format="enum">
@@ -200,28 +202,30 @@
 
     <!-- declare-styleable name和view名字一样才能自动提示 -->
     <declare-styleable name="SuperButton">
+        <!-- 按下时 背景颜色和字体颜色 透明度 默认0.7f-->
+        <attr name="zqy_sb_clickAlpha" format="float" />
         <!-- 背景颜色-->
-        <attr name="zqy_backgroundColor" format="reference" />
+        <attr name="zqy_sb_backgroundColor" format="color" />
         <!-- 边框颜色 -->
-        <attr name="zqy_borderColor" format="reference" />
+        <attr name="zqy_sb_borderColor" format="color" />
         <!-- 边框宽度-->
-        <attr name="zqy_borderWidth" format="dimension" />
+        <attr name="zqy_sb_borderWidth" format="dimension" />
 
-        <attr name="zqy_isRadiusAdjustBounds" format="boolean" />
+        <attr name="zqy_sb_isRadiusAdjustBounds" format="boolean" />
         <!-- 圆角弧度，默认5dp -->
-        <attr name="zqy_radius" format="dimension" />
-        <attr name="zqy_radiusTopLeft" format="dimension" />
-        <attr name="zqy_radiusTopRight" format="dimension" />
-        <attr name="zqy_radiusBottomLeft" format="dimension" />
-        <attr name="zqy_radiusBottomRight" format="dimension" />
+        <attr name="zqy_sb_radius" format="dimension" />
+        <attr name="zqy_sb_radiusTopLeft" format="dimension" />
+        <attr name="zqy_sb_radiusTopRight" format="dimension" />
+        <attr name="zqy_sb_radiusBottomLeft" format="dimension" />
+        <attr name="zqy_sb_radiusBottomRight" format="dimension" />
 
         <!--渐变开始颜色-->
-        <attr name="zqy_startColor" format="color|reference" />
+        <attr name="zqy_sb_startColor" format="color" />
         <!--渐变结束颜色-->
-        <attr name="zqy_endColor" format="color|reference" />
+        <attr name="zqy_sb_endColor" format="color" />
 
         <!--linear_gradient 设置线性渐变，sweep_gradient（扫描式渐变），radial_gradient（圆形渐变）-->
-        <attr name="zqy_gradient" format="enum">
+        <attr name="zqy_sb_gradient" format="enum">
             <enum name="linear_gradient" value="0" />
             <enum name="sweep_gradient" value="2" />
             <enum name="radial_gradient" value="1" />
@@ -244,7 +248,7 @@
 
         tl_br,从左上到右下
         -->
-        <attr name="zqy_orientation" format="enum">
+        <attr name="zqy_sb_orientation" format="enum">
             <enum name="top_bottom" value="0" />
             <enum name="tr_bl" value="1" />
             <enum name="right_left" value="2" />
@@ -254,6 +258,18 @@
             <enum name="left_right" value="6" />
             <enum name="tl_br" value="7" />
         </attr>
+    </declare-styleable>
+
+
+    <!-- declare-styleable name和view名字一样才能自动提示 -->
+    <declare-styleable name="ColorStateImageView">
+        <!-- 设置图标颜色-->
+        <attr name="zqy_csiv_imgColor" format="color" />
+        <!-- 设置图标按下颜色-->
+        <attr name="zqy_csiv_clickImgColor" format="color" />
+        <!-- 按下时 图标颜色 透明度 默认0.7f -->
+        <attr name="zqy_csiv_clickImgAlpha" format="float" />
+
     </declare-styleable>
 </resources>
 

@@ -1,7 +1,6 @@
 package com.hjy.gamecommunity.activity.login;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,6 +16,7 @@ import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
+import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 
@@ -42,7 +42,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
 
     private Button mBtNextStep;
     private ImageButton mIbXx;
-    private ImageButton mIbBackImageBar;
+    private ColorStateImageView mIbBackImageBar;
     private LinearLayout mLlBar;
 
 
@@ -56,7 +56,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
     @Override
     public void initView() {
         mLlBar = (LinearLayout) findViewById(R.id.ll_bar);
-        mIbBackImageBar = (ImageButton) findViewById(R.id.ib_back_image_bar);
+        mIbBackImageBar = (ColorStateImageView) findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
 
 
@@ -230,7 +230,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
             case R.id.ib_xx:
                 mEdLoginPhone.setText("");
                 break;
-            case R.id.ib_back_image_bar:
+            case R.id.iv_back_image_bar:
                 finish();
                 break;
 

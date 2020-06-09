@@ -28,6 +28,8 @@ import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.SuperDrawable;
+import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
+import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
@@ -44,8 +46,8 @@ import java.util.TimerTask;
  * Des:
  */
 public class ActivityPhoneLogin extends BaseActivity implements View.OnClickListener {
-    private ImageButton mIbBackImageBar;
-    private TextView mTvVisitorLogin;
+    private ColorStateImageView mIbBackImageBar;
+    private SuperTextView mTvVisitorLogin;
     private android.support.constraint.ConstraintLayout mClBar;
 
     /**
@@ -74,10 +76,10 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     @Override
     public void initView() {
         mClBar = (ConstraintLayout) findViewById(R.id.cl_bar);
-        mIbBackImageBar = (ImageButton) findViewById(R.id.ib_back_image_bar);
+        mIbBackImageBar =  findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
 
-        mTvVisitorLogin = (TextView) findViewById(R.id.tv_VisitorLogin);
+        mTvVisitorLogin = (SuperTextView) findViewById(R.id.tv_VisitorLogin);
         mTvVisitorLogin.setOnClickListener(this);
 
         mEdLoginPhone = (EditText) findViewById(R.id.ed_login_phone);
@@ -122,6 +124,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
         mBtLogn.setBackground(getStateListDrawable());
         mBtGetVerificationCode.setBackground(getStateListDrawable());
+
     }
 
     /**
@@ -251,7 +254,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             default:
                 break;
-            case R.id.ib_back_image_bar:
+            case R.id.iv_back_image_bar:
                 finish();
                 break;
             case R.id.ib_xx://清除手机号
@@ -323,7 +326,6 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 UtilsManage.tost("游客登录待开发");
                 startActivity(new Intent(getContext(), MainActivity.class));
                 finish();
-
                 break;
         }
     }

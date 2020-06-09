@@ -76,6 +76,8 @@ public abstract class BasePopup extends PopupWindow {
         setAnimationStyle(android.R.style.Animation_Toast);//动画
 
 
+
+
         initView(mainRootView);
         initData();
         listener();
