@@ -2,6 +2,7 @@ package com.hjy.gamecommunity.fragment.main;
 
 import android.graphics.Color;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.adapter.RealTimeInfoAdapter;
+import com.hjy.gamecommunity.adapter.VideoAdapter;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.zhpan.bannerview.BannerViewPager;
 import com.zhpan.bannerview.constants.IndicatorGravity;
@@ -24,6 +27,7 @@ import com.zhpan.bannerview.holder.ViewHolder;
 import com.zhpan.bannerview.indicator.IndicatorView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -136,6 +140,20 @@ public class FragmentHome extends BaseFragment {
 
         mScivSearch.setImgColor(Color.WHITE);
         mScivSearch.setOnClickImgAlpha(0.5f);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerViewVideo.setLayoutManager(linearLayoutManager);
+        mRecyclerViewVideo.setNestedScrollingEnabled(false);
+        VideoAdapter videoAdapter = new VideoAdapter();
+        mRecyclerViewVideo.setAdapter(videoAdapter);
+        videoAdapter.replaceAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+
+        mRecyclerViewRealTimeInfo.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerViewRealTimeInfo.setNestedScrollingEnabled(false);
+        RealTimeInfoAdapter realTimeInfoAdapter = new RealTimeInfoAdapter();
+        mRecyclerViewRealTimeInfo.setAdapter(realTimeInfoAdapter);
+        realTimeInfoAdapter.replaceAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
     @Override

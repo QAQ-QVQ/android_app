@@ -1,5 +1,6 @@
 package com.hjy.baseui.adapter;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -22,7 +23,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     private OnItemLongClickListener mOnItemLongClickListener;
     private List<T> mList;
     private List<Integer> layoutIdsList;
-
+    private Context context;
 
     public BaseAdapter() {
         mList = new ArrayList<>();
@@ -36,18 +37,24 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        context = viewGroup.getContext();
         View inflate = null;
         if (mList != null) {
-            int checkLayout = getLayout(mList.get(i), i);
+            int checkLayout = getLayout(mList.get(viewType), viewType);
             if (checkLayout != 0) {
-                inflate = LayoutInflater.from(viewGroup.getContext()).inflate(checkLayout, viewGroup, false);
+                inflate = LayoutInflater.from(context).inflate(checkLayout, viewGroup, false);
                 if (!layoutIdsList.contains(checkLayout)) {
                     layoutIdsList.add(checkLayout);
                 }
             }
         }
         return new BaseViewHolder(inflate);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -80,6 +87,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
             return getLayout(mList.get(position), position);
         else
             return -1;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public List<T> getDataList() {
@@ -373,7 +384,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
             }
         }
 
-        public <T extends View> T getView(int id) {
+        public <T extends View> T findViewById(int id) {
             return itemView.findViewById(id);
         }
     }
