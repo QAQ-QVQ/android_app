@@ -1,6 +1,5 @@
 package com.hjy.baseui.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -210,24 +209,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-    //开启  状态栏字体颜色随背景颜色变化
-    public void openFontVariety() {
-        try {
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } catch (Exception e) {
 
-        }
-    }
-
-    //关闭  状态栏字体颜色随背景颜色变化
-    public void closeFontVariety() {
-        try {
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-        } catch (Exception e) {
-
-        }
-    }
 
     public void setPaddingTop(View view) {
         try {
@@ -248,23 +230,36 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Add the top margin size equals status bar's height for view.
-     *
-     * @param view The view.
+     * 设置状态栏是否可见
      */
-    private static final String TAG_OFFSET = "TAG_OFFSET";
-    private static final int KEY_OFFSET = -123;
-
-    public static void setMarginTop(@NonNull View view, int num) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        view.setTag(TAG_OFFSET);
-        Object haveSetOffset = view.getTag(KEY_OFFSET);
-        if (haveSetOffset != null && (Boolean) haveSetOffset) return;
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        layoutParams.setMargins(layoutParams.leftMargin,
-                layoutParams.topMargin + num,
-                layoutParams.rightMargin,
-                layoutParams.bottomMargin);
-        view.setTag(KEY_OFFSET, true);
+    public void setStatusBarVisibility(boolean isVisible) {
+        BarUtils.setStatusBarVisibility(getActivity(), isVisible);//
     }
+
+    /**
+     * 透明状态栏
+     */
+    public void transparentStatusBar() {
+        BarUtils.transparentStatusBar(getActivity());//
+    }
+
+    /**
+     * 设置状态栏是否为浅色模式
+     *
+     * @param isLightMode
+     */
+    public void setStatusBarLightMode(boolean isLightMode) {
+        BarUtils.setStatusBarLightMode(getActivity(), isLightMode);
+    }
+
+    /**
+     * 设置导航栏是否为浅色模式
+     *
+     * @param isLightMode
+     */
+    public void setNavBarLightMode(boolean isLightMode) {
+        BarUtils.setNavBarLightMode(getActivity(), isLightMode);
+    }
+
+
 }

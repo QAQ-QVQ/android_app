@@ -37,6 +37,9 @@ dependencies {
     //工具类
     api 'com.github.xuexiangjys.XUtil:xutil-core:1.1.6'
     api 'com.github.xuexiangjys.XUtil:xutil-sub:1.1.6'
+    //Adapter及刷新库
+//    api 'com.github.xuexiangjys.SmartRefreshLayout:refresh-header:1.1.5'
+//    api 'com.github.xuexiangjys.SmartRefreshLayout:refresh-layout:1.1.5'
 
 }
 

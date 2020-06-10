@@ -4,15 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     tools:ignore="MissingConstraints">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--banner区-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_light"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <include layout="@layout/banner_video_layout"></include>
+
+
+            </LinearLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--视频区-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="视频"
+                        android:textColor="@color/bui_black_light1"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="（客服直播、游戏直播、游戏视频）"
+                        android:textColor="@color/bui_black_light"
+                        android:textSize="12sp" />
+
+                    <com.hjy.baseui.ui.view.textview.SuperTextView
+                        android:id="@+id/tv_MoreVideo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多>"
+                        android:textColor="@color/bui_black_light"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/RecyclerViewVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+                <!--资讯区-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="资讯"
+                        android:textColor="@color/bui_black_light1"
+                        android:textSize="18sp" />
+
+
+                    <com.hjy.baseui.ui.view.textview.SuperTextView
+                        android:id="@+id/tv_MoreRealTimeInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多>"
+                        android:textColor="@color/bui_black_light"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/RecyclerViewRealTimeInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <!--搜索区-->
+    <LinearLayout
+        android:id="@+id/ll_Search"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="发现"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:fitsSystemWindows="true"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
+        <com.hjy.baseui.ui.view.imageview.ColorStateImageView
+            android:id="@+id/sciv_Search"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/search_t" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
+

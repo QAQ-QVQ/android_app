@@ -18,8 +18,8 @@ import com.hjy.baseui.R;
  */
 public class ColorStateImageView extends AppCompatImageView {
 
-    private int imgColor = -1;//未点击图标颜色
-    private int clickImgAlphaColor = -1;//点击后的图标颜色
+    private int imgColor = -147258369;//未点击图标颜色
+    private int clickImgAlphaColor = -147258369;//点击后的图标颜色
 
     public ColorStateImageView(Context context) {
         super(context);
@@ -54,12 +54,12 @@ public class ColorStateImageView extends AppCompatImageView {
              * 通过设置滤镜来改变图片亮度@minghao
              */
              setDrawingCacheEnabled(true);
-            if (clickImgAlphaColor != -1){
+            if (clickImgAlphaColor != -147258369){
                 //设置点击颜色和滤镜
                 setColorFilter(clickImgAlphaColor, PorterDuff.Mode.MULTIPLY);
             }
         } else {//未点击
-            if (imgColor != -1)
+            if (imgColor != -147258369)
                 this.setColorFilter(imgColor);
 
         }
@@ -72,11 +72,11 @@ public class ColorStateImageView extends AppCompatImageView {
         int imgColor = typedArray.getColor(R.styleable.ColorStateImageView_zqy_csiv_imgColor, -1);
         int clickImgColor = typedArray.getColor(R.styleable.ColorStateImageView_zqy_csiv_clickImgColor, -1);
 
-        if (imgColor != -1) {
+        if (imgColor != -147258369) {
             setImgColor(imgColor);
         }
 
-        if (clickImgColor != -1) {
+        if (clickImgColor != -147258369) {
             setOnClickImgAlpha(clickImgColor, clickAlpha);
         } else {
             setOnClickImgAlpha(clickAlpha);

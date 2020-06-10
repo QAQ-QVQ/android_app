@@ -14,7 +14,7 @@ import com.hjy.gamecommunity.R;
 public class FragmenMessage extends BaseFragment {
     @Override
     public int getLayoutId() {
-        return  R.layout.fragment_message;
+        return R.layout.fragment_message;
     }
 
     @Override
@@ -24,7 +24,9 @@ public class FragmenMessage extends BaseFragment {
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
-
+        if (isVisible) {
+            setStatusBarLightMode(true);
+        }
     }
 
     @Override

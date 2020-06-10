@@ -24,7 +24,9 @@ public class FragmentFamily extends BaseFragment {
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
-
+        if (isVisible) {
+            setStatusBarLightMode(true);
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
-package com.hjy.baseui.ui;
+package com.hjy.baseui.adapter;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +79,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
         if (position >= 0 && position < getItemCount())
             return getLayout(mList.get(position), position);
         else
-            return position;
+            return -1;
     }
 
     public List<T> getDataList() {
@@ -344,10 +346,31 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
             });
     }
 
-    class BaseViewHolder extends RecyclerView.ViewHolder {
+    public class BaseViewHolder extends RecyclerView.ViewHolder {
 
         public BaseViewHolder(View itemView) {
             super(itemView);
+            initBackground(itemView);
+        }
+
+        /**
+         * 设置水波纹背景
+         *
+         * @param itemView
+         */
+        protected void initBackground(View itemView) {
+            if (itemView.getBackground() == null) {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = itemView.getContext().getTheme();
+                int top = itemView.getPaddingTop();
+                int bottom = itemView.getPaddingBottom();
+                int left = itemView.getPaddingLeft();
+                int right = itemView.getPaddingRight();
+                if (theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)) {
+                    itemView.setBackgroundResource(typedValue.resourceId);
+                }
+                itemView.setPadding(left, top, right, bottom);
+            }
         }
 
         public <T extends View> T getView(int id) {

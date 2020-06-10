@@ -32,7 +32,9 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
-
+        if (isVisible) {
+            setStatusBarLightMode(true);
+        }
     }
 
     @Override
