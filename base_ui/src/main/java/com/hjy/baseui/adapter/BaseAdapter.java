@@ -358,7 +358,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {
-
         public BaseViewHolder(View itemView) {
             super(itemView);
             //  setWaterRipple(itemView);

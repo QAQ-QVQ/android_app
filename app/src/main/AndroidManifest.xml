@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.hjy.gamecommunity">
 
     <!--    <uses-sdk tools:overrideLibrary="scut.carson_ho.searchview,com.hgdendi.expandablerecycleradapter,com.hjy.fixedfloatwindow,com.toomee.mengplus" />-->
@@ -20,6 +19,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
 
     <application
         android:name=".App"

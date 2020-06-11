@@ -1,12 +1,11 @@
 package com.hjy.gamecommunity.fragment;
 
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.hjy.baseui.ui.BaseFragment;
+import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.gamecommunity.R;
-import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 /**
  * 作者: zhangqingyou
@@ -14,15 +13,14 @@ import com.xuexiang.xui.widget.imageview.RadiusImageView;
  * 描述: 发现-banner-描述
  */
 public class FragmentCustomerServiceMsg extends BaseFragment {
-    private RadiusImageView mRivCustomerServiceHead;
-    private TextView mTvCustomerServiceTitle;
-    private TextView mTvCustomerServiceText;
-    private TextView mTvCustomerServiceDescribe;
-    private LinearLayout mLlCustomerServiceMsg;
+
+
+    private ImageView mIvImage;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_banner_customer_service_msg_layout;
+        // return R.layout.fragment_banner_customer_service_msg_layout;
+        return R.layout.image_layout;
 
     }
 
@@ -34,11 +32,7 @@ public class FragmentCustomerServiceMsg extends BaseFragment {
 
     @Override
     public void initView(View mRootView) {
-        mRivCustomerServiceHead = findViewById(R.id.riv_CustomerServiceHead);
-        mTvCustomerServiceTitle = findViewById(R.id.tv_CustomerServiceTitle);
-        mTvCustomerServiceText = findViewById(R.id.tv_CustomerServiceText);
-        mTvCustomerServiceDescribe = findViewById(R.id.tv_CustomerServiceDescribe);
-        mLlCustomerServiceMsg = findViewById(R.id.ll_CustomerServiceMsg);
+        mIvImage = findViewById(R.id.iv_image);
     }
 
     @Override
@@ -48,8 +42,7 @@ public class FragmentCustomerServiceMsg extends BaseFragment {
 
     @Override
     public void initData() {
-        mTvCustomerServiceDescribe.setText(data.toString());
-
+        LoadingImageUtil.loadingImag(data, mIvImage, true);
     }
 
     @Override

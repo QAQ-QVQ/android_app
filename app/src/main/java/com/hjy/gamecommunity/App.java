@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.hjy.baserequest.RequestManage;
+import com.hjy.baserequest.data.UserData;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.BaseUIManage;
 import com.hjy.baseutil.GlideCacheUtil;
 import com.hjy.baseutil.UtilsManage;
@@ -83,8 +85,10 @@ public class App extends Application {
      * 极光绑定用户
      */
     public static void setAlias() {
-        if (RequestManage.getUserData() != null && RequestManage.getUserData().getData() != null && RequestManage.getUserData().getData().getUser_id() != 0)
-            JPushInterface.setAlias(getApplication(), RequestManage.getUserData().getData().getUser_id(), String.valueOf(RequestManage.getUserData().getData().getUser_id()));
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            JPushInterface.setAlias(getApplication(), Integer.parseInt(userData.getUser_id()), userData.getUser_id());
+        }
     }
 
 

@@ -3,8 +3,6 @@ package com.hjy.baseutil;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -22,15 +20,16 @@ import java.util.Map;
 
 
 /**
- * 获取手机系统内部信息工具类
- * Author: zhangqingyou
- * Date: 2020/4/7
- * Des:
+ * 作者: zhangqingyou
+ * 时间: 2020/6/11 16:01
+ * 描述: 获取手机系统内部信息工具类
  */
 public class GetSystemInfoUtil {
 
     /**
      * 安卓10 获取设备标识
+     *
+     * @param //appIdsUpdater
      */
 //    @SuppressLint("MissingPermission")
 //    public static void getDeviceId(MiitHelper.AppIdsUpdater appIdsUpdater) {
@@ -119,7 +118,6 @@ public class GetSystemInfoUtil {
             设备码 = 缓存设备码;
         } else {
             设备码 = DeviceUtils.getUniqueDeviceId();
-
         }
 
         if (TextUtils.isEmpty(缓存设备码))
@@ -138,30 +136,6 @@ public class GetSystemInfoUtil {
         CacheUtil.writeString(CacheUtil.getDeviceMD5Path(), "设备码", getUniqueDeviceId(false));
     }
 
-    /**
-     * 获取设备唯一标识 前15位  不够  补A
-     *
-     * @return
-     */
-//    public static String getUniqueDeviceIdSubstring15(boolean isReadCache) {
-//        String uniqueDeviceId = getUniqueDeviceId(isReadCache);
-//        int length = uniqueDeviceId.length();
-//        if (length > 15) {
-//            uniqueDeviceId = uniqueDeviceId.substring(0, 15);
-//
-//        } else if (length < 15) {
-//            int num = 15 - length;
-//            StringBuffer stringBuffer1 = new StringBuffer();
-//            stringBuffer1.append(uniqueDeviceId);
-//            for (int i = 0; i < num; i++) {
-//                stringBuffer1.append("A");
-//            }
-//            uniqueDeviceId = stringBuffer1.toString();
-//
-//        }
-//        return uniqueDeviceId;
-//
-//    }
 
     //获取第一个IMEI
     @SuppressLint("MissingPermission")
@@ -369,81 +343,5 @@ public class GetSystemInfoUtil {
     }
 
 
-    /**
-     * 获取所有app包名及其他信息转MD5
-     *
-     * @param isRecalculation 是否重新计算MD5
-     * @return
-     */
-//    private static String packageNameMD5ToString;
-//
-//    public static String getDeviceInformationMD5(boolean isRecalculation) {
-//        if (isRecalculation) {
-//            String deviceToString = getDeviceToString();
-//            packageNameMD5ToString = EncryptUtils.encryptMD5ToString(deviceToString);
-//        } else {
-//            if (packageNameMD5ToString == null) {
-//                String deviceToString = getDeviceToString();
-//                packageNameMD5ToString = EncryptUtils.encryptMD5ToString(deviceToString);
-//            }
-//
-//        }
-//        return packageNameMD5ToString;
-//    }
-
-    /**
-     * 获取所有app包名及其他信息
-     *
-     * @return
-     */
-//    private static String getDeviceToString() {
-//        String deviceToString = "";
-//        try {
-//            StringBuilder stringBuilder = new StringBuilder();
-//            PackageManager pm = UtilsManage.getApplication().getPackageManager();
-//            List<PackageInfo> list = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
-//            for (PackageInfo packageInfo : list) {
-//                //获取到设备上已经安装的应用的名字,即在AndriodMainfest中的app_name。
-//                String appName = packageInfo.applicationInfo.loadLabel(UtilsManage.getApplication().getPackageManager()).toString();
-//                //获取到应用所在包的名字,即在AndriodMainfest中的package的值。
-//                String packageName = packageInfo.packageName;
-//                Log.d("zyn", "应用的名字:" + appName);
-//                Log.d("zyn", "应用的包名字:" + packageName);
-//                stringBuilder.append(packageName);
-//            }
-//            stringBuilder.append(DeviceUtils.getAndroidID());
-//            stringBuilder.append(DeviceUtils.getSDKVersionCode());
-//
-//            deviceToString = stringBuilder.toString();
-//        } catch (Exception e) {
-//
-//        }
-//        return deviceToString;
-//    }
-
-    /**
-     * 读取application 节点  meta-data 信息
-     */
-    public static String readApplicationMetaData(String key) {
-        ApplicationInfo appInfo = null;
-        try {
-            appInfo = UtilsManage.getApplication().getPackageManager()
-                    .getApplicationInfo(UtilsManage.getApplication().getPackageName(),
-                            PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
-        Object o = null;
-        if (appInfo != null) {
-            o = appInfo.metaData.get(key);
-            if (o instanceof String) {
-                return (String) o;
-            } else if (o instanceof Integer) {
-                int vale = (Integer) o;
-                return String.valueOf(vale);
-            }
-        }
-        return null;
-    }
 }
 

@@ -8,13 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
@@ -111,7 +113,7 @@ public class FragmentHome extends BaseFragment {
         // banner客服信息
         for (int i = 0; i < mList.size(); i++) {
             FragmentCustomerServiceMsg fragmentCustomerServiceMsg = new FragmentCustomerServiceMsg();
-            fragmentCustomerServiceMsg.setData(i+1);
+            fragmentCustomerServiceMsg.setData(i + 1);
             mFragments.add(fragmentCustomerServiceMsg);
         }
 
@@ -164,8 +166,6 @@ public class FragmentHome extends BaseFragment {
 
                     @Override
                     public void onPageSelected(int position) {
-                        // mViewPagerBannerFragment.(position);
-                        Log.d("FragmentHome", "position:" + position);
                         mViewPagerBannerFragment.setCurrentItem(position);
                     }
 
@@ -200,6 +200,15 @@ public class FragmentHome extends BaseFragment {
         realTimeInfoAdapter = new RealTimeInfoAdapter();
         mRecyclerViewRealTimeInfo.setAdapter(realTimeInfoAdapter);
         realTimeInfoAdapter.replaceAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+
+
+        //获取banner
+        Request.getInstance().findBanner(new JsonEntityCallback<FindBanner>(FindBanner.class) {
+            @Override
+            protected void onSuccess(FindBanner findBanner) {
+
+            }
+        });
     }
 
     @Override

@@ -14,14 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.google.gson.Gson;
-import com.hjy.baserequest.RequestManage;
-import com.hjy.baserequest.bean.User;
+import com.hjy.baserequest.bean.AccountsLoginUserBean;
+import com.hjy.baserequest.data.UserData;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.UtilsManage;
+import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
 
@@ -225,11 +226,14 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
                     UtilsManage.tost("请输入6-18位密码");
                 } else {
                     //账号密码登录
-                    Request.getInstance().accountPasswordLogin(mEdLoginPhoneString, mEdPasswordString, new JsonEntityCallback<User>(User.class) {
+                    Request.getInstance().accountPasswordLogin(mEdLoginPhoneString, mEdPasswordString, new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
                         @Override
-                        protected void onSuccess(User user) {
-                            if (user.getCode() == 200) {
-                                RequestManage.writeUserData(new Gson().toJson(user));
+                        protected void onSuccess(AccountsLoginUserBean user) {
+                            AccountsLoginUserBean.DataBean dataBean = user.getData();
+                            if (dataBean != null) {
+                                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
+                                UserDataContainer.getInstance().setUser(userData);
+                                App.setAlias();
                                 startActivity(new Intent(getContext(), MainActivity.class));
                                 finish();
                             } else {

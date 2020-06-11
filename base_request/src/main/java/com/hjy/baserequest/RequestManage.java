@@ -4,21 +4,16 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.hjy.baserequest.bean.User;
-
-import com.hjy.baserequest.request.API;
-import com.google.gson.Gson;
+import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.model.HttpHeaders;
-import com.hjy.baseutil.CacheUtil;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +22,7 @@ import okhttp3.OkHttpClient;
 
 public class RequestManage {
     private static Application application;
-    private static User userObject;
+    private static PhoneLoginUserBean userObject;
     private static boolean DEBUG;
 
     public static void init(Application application) {
@@ -112,34 +107,5 @@ public class RequestManage {
 
     }
 
-    /**
-     * //从本地获取用户信息
-     *
-     * @return 返回用户对象，用户未登录返回null
-     */
-    public static User getUserData() {
-        //如果用户已登陆，从本地读取
-        if (userObject == null) {
-            String userJson = CacheUtil.readString(CacheUtil.getUserPath(), "user");
-            if (userJson != null) {
-                userObject = new Gson().fromJson(userJson, User.class);
-                return userObject;
-            } else {
-                return null;
-            }
-        } else
-            return userObject;
-    }
 
-
-    /**
-     * 写入用户信息（json字符）
-     *
-     * @param jsonString
-     */
-    public static synchronized void writeUserData(String jsonString) {
-        userObject = null;
-        CacheUtil.writeString(CacheUtil.getUserPath(), "user", jsonString);
-
-    }
 }

@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.google.gson.Gson;
-import com.hjy.baserequest.RequestManage;
 import com.hjy.baserequest.bean.DescAndCode;
-import com.hjy.baserequest.bean.User;
+import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.data.UserData;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
@@ -31,10 +31,12 @@ import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.UtilsManage;
+import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,7 +78,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     @Override
     public void initView() {
         mClBar = (ConstraintLayout) findViewById(R.id.cl_bar);
-        mIbBackImageBar =  findViewById(R.id.iv_back_image_bar);
+        mIbBackImageBar = findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
 
         mTvVisitorLogin = (SuperTextView) findViewById(R.id.tv_VisitorLogin);
@@ -276,7 +278,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                         UtilsManage.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
-                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "reg", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "app_quickLogin", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {
@@ -307,13 +309,30 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                     UtilsManage.tost(mEdVerificationCode.getHint().toString());
                 } else {
                     //手机号登录
-                    Request.getInstance().phoneLogin(mEdLoginPhoneString, mEdVerificationCodeString, new JsonEntityCallback<User>(User.class) {
+                    Request.getInstance().phoneLogin(mEdLoginPhoneString, mEdVerificationCodeString, new JsonEntityCallback<PhoneLoginUserBean>(PhoneLoginUserBean.class) {
                         @Override
-                        protected void onSuccess(User user) {
+                        protected void onSuccess(PhoneLoginUserBean user) {
                             if (user.getCode() == 200) {
-                                RequestManage.writeUserData(new Gson().toJson(user));
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                finish();
+                                PhoneLoginUserBean.DataBean data = user.getData();
+                                if (data != null) {
+                                    List<PhoneLoginUserBean.DataBean.UserListBean> user_list = data.getUser_list();
+                                    if (user_list != null || user_list.size() == 0) {
+                                        if (user_list.size() == 1) {
+                                            PhoneLoginUserBean.DataBean.UserinfoBean userinfo = data.getUserinfo();
+                                            UserData userData = new UserData(String.valueOf(userinfo.getUser_id()), userinfo.getToken());
+                                            UserDataContainer.getInstance().setUser(userData);
+                                            App.setAlias();
+                                            startActivity(new Intent(getContext(), MainActivity.class));
+                                            finish();
+                                        } else {
+                                            //TODO 跳转到选择帐号登录  暂时不做
+                                        }
+
+                                    } else {
+                                        UtilsManage.tost("未查询到历史帐号");
+                                    }
+                                }
+
                             } else {
                                 UtilsManage.tost(user.getMsg());
                             }
