@@ -55,67 +55,14 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
 
-        <LinearLayout
-            android:id="@+id/ll_CustomerServiceMsg"
+        <com.hjy.baseui.ui.view.NoScrollViewPager
+            android:id="@+id/viewPagerBannerFragment"
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:background="@color/bui_white"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.xuexiang.xui.widget.imageview.RadiusImageView
-                    android:id="@+id/riv_CustomerServiceHead"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:riv_corner_radius="50dp"
-                    app:riv_is_circle="true" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_CustomerServiceTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/bui_black_light1"
-                        android:textSize="16sp"
-                        tools:text="xxxxxxx" />
-
-                    <TextView
-                        android:id="@+id/tv_CustomerServiceText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:textColor="@color/bui_black_light"
-                        android:textSize="12sp"
-                        tools:text="xxxxxxx" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_CustomerServiceDescribe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:textColor="@color/bui_black_light"
-                android:textSize="12sp"
-                tools:text="xxxxxxxxxxxx\nxxxxxxxx" />
+            android:padding="8dp" />
 
 
-        </LinearLayout>
     </android.support.v7.widget.CardView>
     <!--</com.hjy.baseui.ui.view.ShadowLayout>-->
 

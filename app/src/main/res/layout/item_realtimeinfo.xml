@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,10 @@
     android:paddingLeft="6dp"
     android:paddingTop="15dp"
     android:paddingRight="6dp"
-    android:paddingBottom="15dp">
+    android:paddingBottom="15dp"
+    app:zqy_sll_backgroundColor="@android:color/white"
+    app:zqy_sll_clickAlpha="1.0"
+    app:zqy_sll_radius="5px">
 
     <TextView
         android:id="@+id/tv_Title"
@@ -52,4 +55,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>

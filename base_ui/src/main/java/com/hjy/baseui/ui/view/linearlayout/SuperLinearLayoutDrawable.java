@@ -1,4 +1,4 @@
-package com.hjy.baseui.ui.view.textview;
+package com.hjy.baseui.ui.view.linearlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -22,30 +22,31 @@ import com.hjy.baseui.ui.SuperDrawable;
  * Date: 2020/4/28 9:21
  * Des:
  */
-public class SuperTextViewDrawable {
+public class SuperLinearLayoutDrawable {
 
 
     private float clickAlpha;//按下时 背景颜色和字体颜色 透明度
 
-    public StateListDrawable initStateListDrawable(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SuperTextView);
-        clickAlpha = typedArray.getFloat(R.styleable.SuperTextView_zqy_stv_clickAlpha, 0.7f);
+    public StateListDrawable initStateListDrawable(Context context, AttributeSet attrs) {//SuperLinearLayout_zqy_sll
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SuperLinearLayout);
+        clickAlpha = typedArray.getFloat(R.styleable.SuperLinearLayout_zqy_sll_clickAlpha, 0.7f);
 
-        int colorBg = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_backgroundColor, Color.TRANSPARENT);
-        int colorBorder = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_borderColor, Color.TRANSPARENT);
-        int startColor = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_startColor, Color.TRANSPARENT);
-        int endColor = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_endColor, Color.TRANSPARENT);
-        int clickColorBg = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_clickColorBg, Color.TRANSPARENT);
-        int clickColorBorder = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_clickColorBorder, Color.TRANSPARENT);
-        int gradient = typedArray.getInt(R.styleable.SuperTextView_zqy_stv_gradient, -1);
-        int orientation = typedArray.getInt(R.styleable.SuperTextView_zqy_stv_orientation, -1);
-        int borderWidth = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_borderWidth, 0);
-        boolean isRadiusAdjustBounds = typedArray.getBoolean(R.styleable.SuperTextView_zqy_stv_isRadiusAdjustBounds, false);
-        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radius, 5);
-        int mRadiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusTopLeft, 0);
-        int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusTopRight, 0);
-        int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusBottomLeft, 0);
-        int mRadiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.SuperTextView_zqy_stv_radiusBottomRight, 0);
+        int colorBg = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_backgroundColor, Color.TRANSPARENT);
+        int colorBorder = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_borderColor, Color.TRANSPARENT);
+        int startColor = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_startColor, Color.TRANSPARENT);
+        int endColor = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_endColor, Color.TRANSPARENT);
+        int clickColorBg = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_clickColorBg, Color.TRANSPARENT);
+        int clickColorBorder = typedArray.getColor(R.styleable.SuperLinearLayout_zqy_sll_clickColorBorder, Color.TRANSPARENT);
+
+        int gradient = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_gradient, -1);
+        int orientation = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_orientation, -1);
+        int borderWidth = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_borderWidth, 0);
+        boolean isRadiusAdjustBounds = typedArray.getBoolean(R.styleable.SuperLinearLayout_zqy_sll_isRadiusAdjustBounds, false);
+        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radius, 5);
+        int mRadiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusTopLeft, 0);
+        int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusTopRight, 0);
+        int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomLeft, 0);
+        int mRadiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomRight, 0);
 
         typedArray.recycle();
 

@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.hjy.baseui.R;
 import com.hjy.baseui.ui.SuperDrawable;
 
@@ -34,11 +33,13 @@ public class SuperButtonDrawable {
         int colorBorder = typedArray.getColor(R.styleable.SuperButton_zqy_sb_borderColor, Color.TRANSPARENT);
         int startColor = typedArray.getColor(R.styleable.SuperButton_zqy_sb_startColor, Color.TRANSPARENT);
         int endColor = typedArray.getColor(R.styleable.SuperButton_zqy_sb_endColor, Color.TRANSPARENT);
+        int clickColorBg = typedArray.getColor(R.styleable.SuperButton_zqy_sb_clickColorBg, Color.TRANSPARENT);
+        int clickColorBorder = typedArray.getColor(R.styleable.SuperButton_zqy_sb_clickColorBorder, Color.TRANSPARENT);
         int gradient = typedArray.getInt(R.styleable.SuperButton_zqy_sb_gradient, -1);
         int orientation = typedArray.getInt(R.styleable.SuperButton_zqy_sb_orientation, -1);
         int borderWidth = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_borderWidth, 0);
         boolean isRadiusAdjustBounds = typedArray.getBoolean(R.styleable.SuperButton_zqy_sb_isRadiusAdjustBounds, false);
-        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_radius, ConvertUtils.dp2px(5));
+        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_radius, 5);
         int mRadiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_radiusTopLeft, 0);
         int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_radiusTopRight, 0);
         int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperButton_zqy_sb_radiusBottomLeft, 0);
@@ -81,10 +82,10 @@ public class SuperButtonDrawable {
                 .setRadiusTopRight(mRadiusTopRight)
                 .setColorBg(colorBg)
                 .setColorBorder(colorBorder)
-                .setClickColorBg(0)
-                .setClickColorBorder(0);
+                .setClickColorBg(clickColorBg)
+                .setClickColorBorder(clickColorBorder);
 
-        if (startColor > 0 && endColor > 0) {
+        if (startColor != 0 && endColor != 0) {
             superDrawable
                     .setSGradientType(gradient)
                     .setSColors(new int[]{startColor, endColor})

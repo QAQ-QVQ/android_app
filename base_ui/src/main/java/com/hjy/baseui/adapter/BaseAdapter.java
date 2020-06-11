@@ -361,15 +361,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
 
         public BaseViewHolder(View itemView) {
             super(itemView);
-            initBackground(itemView);
+            //  setWaterRipple(itemView);
         }
 
         /**
          * 设置水波纹背景
-         *
-         * @param itemView
          */
-        protected void initBackground(View itemView) {
+        public void setWaterRipple() {
             if (itemView.getBackground() == null) {
                 TypedValue typedValue = new TypedValue();
                 Resources.Theme theme = itemView.getContext().getTheme();
