@@ -35,7 +35,7 @@ public class SuperTextViewDrawable {
         int colorBorder = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_borderColor, Color.TRANSPARENT);
         int startColor = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_startColor, Color.TRANSPARENT);
         int endColor = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_endColor, Color.TRANSPARENT);
-        int clickColorBg = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_clickColorBg, Color.TRANSPARENT);
+        int clickColorBg = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_clickColorBg,Color.TRANSPARENT);
         int clickColorBorder = typedArray.getColor(R.styleable.SuperTextView_zqy_stv_clickColorBorder, Color.TRANSPARENT);
         int gradient = typedArray.getInt(R.styleable.SuperTextView_zqy_stv_gradient, -1);
         int orientation = typedArray.getInt(R.styleable.SuperTextView_zqy_stv_orientation, -1);

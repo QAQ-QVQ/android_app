@@ -181,7 +181,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                         ToastUtil.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
-                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "lost", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "app_forgetPassword", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {
@@ -212,7 +212,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                     ToastUtil.tost(mEdVerificationCode.getHint().toString());
                 } else {
                     //手机验证
-                    Request.getInstance().phoneVerification(mEdLoginPhoneString, "lost", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+                    Request.getInstance().phoneVerification(mEdLoginPhoneString, mEdVerificationCodeString, new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                         @Override
                         protected void onSuccess(DescAndCode descAndCode) {
                             if (descAndCode.getCode() == 200) {

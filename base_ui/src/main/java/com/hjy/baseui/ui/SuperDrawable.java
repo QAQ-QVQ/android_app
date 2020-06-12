@@ -165,6 +165,7 @@ public class SuperDrawable extends GradientDrawable {
      * @param clickColorBg
      */
     public SuperDrawable setClickColorBg(int clickColorBg) {
+
         ColorStateList colorStateList = ColorStateList.valueOf(clickColorBg);
         this.clickColorBg = colorStateList;
 
@@ -301,6 +302,13 @@ public class SuperDrawable extends GradientDrawable {
                 clickColorBg = ColorStateList.valueOf(alphaColor);//选中状态下的背景色
             }
 
+        } else {
+            int defaultColor = clickColorBg.getDefaultColor();
+            if (defaultColor != Color.TRANSPARENT) {
+                int alphaColor = getAlphaColor(defaultColor, clickAlpha);
+                clickColorBg = ColorStateList.valueOf(alphaColor);//选中状态下的背景色
+            }
+
         }
         if (clickColorBorder == null) {
             if (colorBorder != null) {
@@ -308,6 +316,13 @@ public class SuperDrawable extends GradientDrawable {
                  * 如果未设置按下状态下的边框颜色 默认给边框色加上透明值
                  */
                 int alphaColor = getAlphaColor(colorBorder.getDefaultColor(), clickAlpha);
+                clickColorBorder = ColorStateList.valueOf(alphaColor);//选中状态下的边框色
+            }
+
+        } else {
+            int defaultColor = clickColorBorder.getDefaultColor();
+            if (defaultColor != Color.TRANSPARENT) {
+                int alphaColor = getAlphaColor(defaultColor, clickAlpha);
                 clickColorBorder = ColorStateList.valueOf(alphaColor);//选中状态下的边框色
             }
 

@@ -35,7 +35,7 @@ public class API {
     public static final String visitorLogin = USER_URL_DEFAULT + "/user/user/visitorLogin";//游客登录
     public static final String accountPasswordLogin = USER_URL_DEFAULT + "/user/user/accountLogin";//账号密码登录
     public static final String phoneLogin = USER_URL_DEFAULT + "/user/user/appQuickLogin";//手机号登录
-    public static final String phoneVerification = USER_URL_DEFAULT + "/forgetPwdFirst";//手机验证
+    public static final String phoneVerification = USER_URL_DEFAULT + "/user/user/forgetPasswordFirst";//手机验证
     public static final String resetPassword = USER_URL_DEFAULT + "/forgetPwdSecond";//重置密码
 
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号

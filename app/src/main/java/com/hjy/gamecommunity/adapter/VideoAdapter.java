@@ -1,7 +1,6 @@
 package com.hjy.gamecommunity.adapter;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,18 +38,18 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
             switch (dataBean.getType()) {
                 case 1://客服主播
                     layoutId = R.layout.item_live_customer_service;
-                    Log.d("VideoAdapter", "客服主播layoutId:" +position+"--"+  layoutId);
+                    // Log.d("VideoAdapter", "客服主播layoutId:" +position+"--"+  layoutId);
                     break;
                 case 2://游戏主播
                     layoutId = R.layout.item_find_live_game;
-                    Log.d("VideoAdapter", "游戏主播layoutId:" +position+"--"+ layoutId);
+                    // Log.d("VideoAdapter", "游戏主播layoutId:" +position+"--"+ layoutId);
                     break;
                 default:
             }
         } else if (item instanceof VideoList.DataBean.ListBean) {
             //视频
             layoutId = R.layout.item_find_video;
-            Log.d("VideoAdapter", "视频layoutId:" +position+"--"+ layoutId);
+            // Log.d("VideoAdapter", "视频layoutId:" +position+"--"+ layoutId);
         }
 
         return layoutId;
@@ -61,7 +60,7 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
     @Override
     public void onBindViewHolder(BaseViewHolder viewHolder, T item, int position) {
         int layoutId = getLayoutId(viewHolder);
-        Log.d("VideoAdapter", "onBindViewHolder:" +position+"--"+ layoutId);
+        // Log.d("VideoAdapter", "onBindViewHolder:" +position+"--"+ layoutId);
         if (layoutId == R.layout.item_live_customer_service) {
             //客服直播
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
