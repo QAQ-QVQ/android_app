@@ -19,7 +19,7 @@ import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
-import com.hjy.baseutil.UtilsManage;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 
 /**
@@ -204,22 +204,22 @@ public class ActivityPasswordSetNewPassword extends BaseActivity implements View
                 String mEdAgainPasswordString = mEdAgainPassword.getText().toString();
 
                 if (TextUtils.isEmpty(mEdNewPasswordString)) {
-                    UtilsManage.tost(mEdNewPassword.getHint().toString());
+                    ToastUtil.tost(mEdNewPassword.getHint().toString());
                 } else if (TextUtils.isEmpty(mEdAgainPasswordString)) {
-                    UtilsManage.tost(mEdAgainPassword.getHint().toString());
+                    ToastUtil.tost(mEdAgainPassword.getHint().toString());
                 } else if (!mEdNewPasswordString.equals(mEdAgainPasswordString)) {
-                    UtilsManage.tost("两次密码不一致！");
+                    ToastUtil.tost("两次密码不一致！");
                 } else {
                     //重置密码
                     Request.getInstance().resetPassword(mEdAgainPasswordString, new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                         @Override
                         protected void onSuccess(DescAndCode descAndCode) {
                             if (descAndCode.getCode() == 200) {
-                                UtilsManage.tost("密码设置成功！");
+                                ToastUtil.tost("密码设置成功！");
                                 startActivity(new Intent(getContext(), ActivityPasswordLogin.class));
                                 finish();
                             } else {
-                                UtilsManage.tost(descAndCode.getMsg());
+                                ToastUtil.tost(descAndCode.getMsg());
                             }
                         }
                     });

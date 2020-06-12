@@ -1,13 +1,7 @@
 package com.hjy.baserequest;
 
 import android.app.Application;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.TextUtils;
-import android.view.Gravity;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -22,7 +16,6 @@ import okhttp3.OkHttpClient;
 
 public class RequestManage {
     private static Application application;
-    private static PhoneLoginUserBean userObject;
     private static boolean DEBUG;
 
     public static void init(Application application) {
@@ -42,39 +35,7 @@ public class RequestManage {
         DEBUG = dEBUG;
     }
 
-    /**
-     * 消息提示
-     *
-     * @param s
-     */
-    public static void tost(final String s) {
-        if (!TextUtils.isEmpty(s)) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtils.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                    ToastUtils.showShort(s);
-                }
-            });
-        }
-    }
 
-    /**
-     * 消息提示
-     *
-     * @param s
-     */
-    public static void tostLong(final String s) {
-        if (!TextUtils.isEmpty(s)) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtils.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                    ToastUtils.showLong(s);
-                }
-            });
-        }
-    }
 
     private static void OkGoInit() {
         try {

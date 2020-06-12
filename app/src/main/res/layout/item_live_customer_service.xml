@@ -10,7 +10,7 @@
     android:paddingBottom="12dp"
     app:zqy_sll_backgroundColor="@android:color/white"
     app:zqy_sll_clickAlpha="1.0"
-    app:zqy_sll_radius="5px">
+    app:zqy_sll_radius="5">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="171dp"
@@ -40,7 +40,7 @@
             app:zqy_sll_endColor="#E43947"
             app:zqy_sll_gradient="linear_gradient"
             app:zqy_sll_orientation="left_right"
-            app:zqy_sll_radius="5px"
+            app:zqy_sll_radius="5"
             app:zqy_sll_startColor="#EE6A55">
 
             <ImageView
@@ -70,8 +70,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:zqy_sll_backgroundColor="#33000000"
             app:zqy_sll_clickAlpha="1.0"
-            app:zqy_sll_radiusBottomLeft="3px"
-            app:zqy_sll_radiusBottomRight="3px">
+            app:zqy_sll_radiusBottomLeft="3"
+            app:zqy_sll_radiusBottomRight="3">
 
 
             <TextView

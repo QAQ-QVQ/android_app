@@ -60,7 +60,7 @@ public class PermissionUtils {
                                   @Override
                                   public void onDenied() {
                                       Log.d("PermissionUtils", "onDenied");
-                                      UtilsManage.tost(PermissionUtils.text);
+                                      ToastUtil.tost(PermissionUtils.text);
                                       com.blankj.utilcode.util.PermissionUtils.launchAppDetailsSettings();
 
                                   }

@@ -278,6 +278,16 @@ public class Request {
         request(POST, API.smsVerificationCode, jsonObject, jsonEntityCallback);
     }
 
+    /**
+     * 游客登录
+     *
+     * @param jsonEntityCallback
+     */
+    public void visitorLogin(JsonEntityCallback<AccountsLoginUserBean> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.visitorLogin, jsonObject, jsonEntityCallback);
+    }
+
 
     /**
      * 手机号登录

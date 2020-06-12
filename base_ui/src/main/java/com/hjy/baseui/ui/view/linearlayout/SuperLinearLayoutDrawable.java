@@ -40,13 +40,13 @@ public class SuperLinearLayoutDrawable {
 
         int gradient = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_gradient, -1);
         int orientation = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_orientation, -1);
-        int borderWidth = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_borderWidth, 0);
+        int borderWidth = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_borderWidth, 0);
         boolean isRadiusAdjustBounds = typedArray.getBoolean(R.styleable.SuperLinearLayout_zqy_sll_isRadiusAdjustBounds, false);
-        int mRadius = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radius, 5);
-        int mRadiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusTopLeft, 0);
-        int mRadiusTopRight = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusTopRight, 0);
-        int mRadiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomLeft, 0);
-        int mRadiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomRight, 0);
+        int mRadius = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_radius, 5);
+        int mRadiusTopLeft = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_radiusTopLeft, 0);
+        int mRadiusTopRight = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_radiusTopRight, 0);
+        int mRadiusBottomLeft = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomLeft, 0);
+        int mRadiusBottomRight = typedArray.getInt(R.styleable.SuperLinearLayout_zqy_sll_radiusBottomRight, 0);
 
         typedArray.recycle();
 

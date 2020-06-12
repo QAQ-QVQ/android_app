@@ -32,6 +32,7 @@ public class API {
 
     //用户
     public static final String smsVerificationCode = SMS_URL_DEFAULT + "/sms/phone_send_info/sendSms";//获取短信验证码
+    public static final String visitorLogin = USER_URL_DEFAULT + "/user/user/visitorLogin";//游客登录
     public static final String accountPasswordLogin = USER_URL_DEFAULT + "/user/user/accountLogin";//账号密码登录
     public static final String phoneLogin = USER_URL_DEFAULT + "/user/user/appQuickLogin";//手机号登录
     public static final String phoneVerification = USER_URL_DEFAULT + "/forgetPwdFirst";//手机验证
@@ -40,6 +41,6 @@ public class API {
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号
 
     //
-    public static final String findBanner = SYSTEM_URL_DEFAULT + "/live/adpic/adpicList";//发现-banner
+    public static final String findBanner = SYSTEM_URL_DEFAULT + "/home/adpic/adpicList";//发现-banner
 
 }

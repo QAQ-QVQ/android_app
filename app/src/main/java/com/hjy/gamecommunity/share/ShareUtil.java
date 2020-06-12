@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.MetaDataUtils;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.UtilsManage;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.dialog.BottomPopup;
@@ -196,7 +197,7 @@ public class ShareUtil {
                     if (JShareInterface.isClientValid(QQ.Name)) {
                         JShareInterface.share(QQ.Name, shareParams, mPlatActionListener);
                     } else {
-                        UtilsManage.tost("分享无效，请检查QQ是否安装！");
+                        ToastUtil.tost("分享无效，请检查QQ是否安装！");
                     }
                 }
             });
@@ -213,7 +214,7 @@ public class ShareUtil {
                     if (JShareInterface.isClientValid(QZone.Name)) {
                         JShareInterface.share(QZone.Name, shareParams, mPlatActionListener);
                     } else {
-                        UtilsManage.tost("分享无效，请检查QQ是否安装！");
+                        ToastUtil.tost("分享无效，请检查QQ是否安装！");
                     }
                 }
             });
@@ -229,7 +230,7 @@ public class ShareUtil {
                     if (JShareInterface.isClientValid(Wechat.Name)) {
                         JShareInterface.share(Wechat.Name, shareParams, mPlatActionListener);
                     } else {
-                        UtilsManage.tost("分享无效，请检查微信是否安装！");
+                        ToastUtil.tost("分享无效，请检查微信是否安装！");
                     }
 
                 }
@@ -246,7 +247,7 @@ public class ShareUtil {
                     if (JShareInterface.isClientValid(WechatMoments.Name)) {
                         JShareInterface.share(WechatMoments.Name, shareParams, mPlatActionListener);
                     } else {
-                        UtilsManage.tost("分享无效，请检查微信是否安装！");
+                        ToastUtil.tost("分享无效，请检查微信是否安装！");
                     }
 
                 }
@@ -262,7 +263,7 @@ public class ShareUtil {
                     if (JShareInterface.isClientValid(SinaWeibo.Name)) {
                         JShareInterface.share(SinaWeibo.Name, shareParams, mPlatActionListener);
                     } else {
-                        UtilsManage.tost("分享无效，请检查微博是否安装！");
+                        ToastUtil.tost("分享无效，请检查微博是否安装！");
                     }
 
                 }

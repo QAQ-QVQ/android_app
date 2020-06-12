@@ -148,7 +148,7 @@
         <!-- 边框颜色 -->
         <attr name="zqy_stv_borderColor" format="color" />
         <!-- 边框宽度-->
-        <attr name="zqy_stv_borderWidth" format="dimension" />
+        <attr name="zqy_stv_borderWidth" format="integer" />
 
         <!-- 按下背景颜色-->
         <attr name="zqy_stv_clickColorBg" format="color" />
@@ -157,11 +157,11 @@
 
         <attr name="zqy_stv_isRadiusAdjustBounds" format="boolean" />
         <!-- 圆角弧度，默认5dp -->
-        <attr name="zqy_stv_radius" format="dimension" />
-        <attr name="zqy_stv_radiusTopLeft" format="dimension" />
-        <attr name="zqy_stv_radiusTopRight" format="dimension" />
-        <attr name="zqy_stv_radiusBottomLeft" format="dimension" />
-        <attr name="zqy_stv_radiusBottomRight" format="dimension" />
+        <attr name="zqy_stv_radius" format="integer" />
+        <attr name="zqy_stv_radiusTopLeft" format="integer" />
+        <attr name="zqy_stv_radiusTopRight" format="integer" />
+        <attr name="zqy_stv_radiusBottomLeft" format="integer" />
+        <attr name="zqy_stv_radiusBottomRight" format="integer" />
 
         <!--渐变开始颜色-->
         <attr name="zqy_stv_startColor" format="color" />
@@ -214,7 +214,7 @@
         <!-- 边框颜色 -->
         <attr name="zqy_sb_borderColor" format="color" />
         <!-- 边框宽度-->
-        <attr name="zqy_sb_borderWidth" format="dimension" />
+        <attr name="zqy_sb_borderWidth" format="integer" />
 
         <!-- 按下背景颜色-->
         <attr name="zqy_sb_clickColorBg" format="color" />
@@ -223,11 +223,11 @@
 
         <attr name="zqy_sb_isRadiusAdjustBounds" format="boolean" />
         <!-- 圆角弧度，默认5dp -->
-        <attr name="zqy_sb_radius" format="dimension" />
-        <attr name="zqy_sb_radiusTopLeft" format="dimension" />
-        <attr name="zqy_sb_radiusTopRight" format="dimension" />
-        <attr name="zqy_sb_radiusBottomLeft" format="dimension" />
-        <attr name="zqy_sb_radiusBottomRight" format="dimension" />
+        <attr name="zqy_sb_radius" format="integer" />
+        <attr name="zqy_sb_radiusTopLeft" format="integer" />
+        <attr name="zqy_sb_radiusTopRight" format="integer" />
+        <attr name="zqy_sb_radiusBottomLeft" format="integer" />
+        <attr name="zqy_sb_radiusBottomRight" format="integer" />
 
         <!--渐变开始颜色-->
         <attr name="zqy_sb_startColor" format="color" />
@@ -291,7 +291,7 @@
         <!-- 边框颜色 -->
         <attr name="zqy_sll_borderColor" format="color" />
         <!-- 边框宽度-->
-        <attr name="zqy_sll_borderWidth" format="dimension" />
+        <attr name="zqy_sll_borderWidth" format="integer" />
         <!-- 按下背景颜色-->
         <attr name="zqy_sll_clickColorBg" format="color" />
         <!-- 按下边框颜色-->
@@ -299,11 +299,11 @@
 
         <attr name="zqy_sll_isRadiusAdjustBounds" format="boolean" />
         <!-- 圆角弧度，默认5dp -->
-        <attr name="zqy_sll_radius" format="dimension" />
-        <attr name="zqy_sll_radiusTopLeft" format="dimension" />
-        <attr name="zqy_sll_radiusTopRight" format="dimension" />
-        <attr name="zqy_sll_radiusBottomLeft" format="dimension" />
-        <attr name="zqy_sll_radiusBottomRight" format="dimension" />
+        <attr name="zqy_sll_radius" format="integer" />
+        <attr name="zqy_sll_radiusTopLeft" format="integer" />
+        <attr name="zqy_sll_radiusTopRight" format="integer" />
+        <attr name="zqy_sll_radiusBottomLeft" format="integer" />
+        <attr name="zqy_sll_radiusBottomRight" format="integer" />
 
         <!--渐变开始颜色-->
         <attr name="zqy_sll_startColor" format="color" />

@@ -17,7 +17,7 @@ import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
-import com.hjy.baseutil.UtilsManage;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 
 import java.util.Timer;
@@ -176,18 +176,18 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                 if (btString.equals("获取验证码") || btString.equals("重新发送")) {
                     String mEdLoginPhoneString = mEdLoginPhone.getText().toString();
                     if (TextUtils.isEmpty(mEdLoginPhoneString)) {
-                        UtilsManage.tost(mEdLoginPhone.getHint().toString());
+                        ToastUtil.tost(mEdLoginPhone.getHint().toString());
                     } else if (!RegexUtils.isMobileExact(mEdLoginPhoneString)) {
-                        UtilsManage.tost("请输入正确的手机号");
+                        ToastUtil.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
                         Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "lost", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {
-                                    UtilsManage.tost("验证码获取成功");
+                                    ToastUtil.tost("验证码获取成功");
                                 } else {
-                                    UtilsManage.tost(descAndCode.getMsg());
+                                    ToastUtil.tost(descAndCode.getMsg());
                                 }
                             }
                         });
@@ -207,9 +207,9 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                 String mEdVerificationCodeString = mEdVerificationCode.getText().toString();
 
                 if (TextUtils.isEmpty(mEdLoginPhoneString)) {
-                    UtilsManage.tost(mEdLoginPhone.getHint().toString());
+                    ToastUtil.tost(mEdLoginPhone.getHint().toString());
                 } else if (TextUtils.isEmpty(mEdVerificationCodeString)) {
-                    UtilsManage.tost(mEdVerificationCode.getHint().toString());
+                    ToastUtil.tost(mEdVerificationCode.getHint().toString());
                 } else {
                     //手机验证
                     Request.getInstance().phoneVerification(mEdLoginPhoneString, "lost", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
@@ -220,7 +220,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                                 startActivity(new Intent(getContext(), ActivityPasswordSetNewPassword.class));
                                 finish();
                             } else {
-                                UtilsManage.tost(descAndCode.getMsg());
+                                ToastUtil.tost(descAndCode.getMsg());
                             }
                         }
                     });

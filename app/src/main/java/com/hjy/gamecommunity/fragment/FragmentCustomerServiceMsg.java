@@ -1,8 +1,11 @@
 package com.hjy.gamecommunity.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.gamecommunity.R;
@@ -24,10 +27,10 @@ public class FragmentCustomerServiceMsg extends BaseFragment {
 
     }
 
-    private Object data;
+    private FindBanner.DataBean.ListBean listBean;
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setData(FindBanner.DataBean.ListBean listBean) {
+        this.listBean = listBean;
     }
 
     @Override
@@ -42,11 +45,29 @@ public class FragmentCustomerServiceMsg extends BaseFragment {
 
     @Override
     public void initData() {
-        LoadingImageUtil.loadingImag(data, mIvImage, true);
+        LoadingImageUtil.loadingImag(listBean.getSecond_resource(), mIvImage, true);
     }
 
     @Override
     public void listener() {
+        mIvImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listBean.getIs_jump() == 1) {
+                    openUrl(listBean.getLink_url());
+                }
+            }
+        });
+    }
 
+    /**
+     * 跳转链接
+     *
+     * @param url
+     */
+    private void openUrl(String url) {
+        Uri uri = Uri.parse(url);
+        Intent it = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(it);
     }
 }

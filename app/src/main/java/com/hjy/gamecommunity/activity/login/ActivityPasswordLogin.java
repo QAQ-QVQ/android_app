@@ -21,7 +21,7 @@ import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
-import com.hjy.baseutil.UtilsManage;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
@@ -219,28 +219,14 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
                 String mEdPasswordString = mEdPassword.getText().toString();
 
                 if (StringUtils.isTrimEmpty(mEdLoginPhoneString)) {
-                    UtilsManage.tost(mEdLoginPhone.getHint().toString());
+                    ToastUtil.tost(mEdLoginPhone.getHint().toString());
                 } else if (StringUtils.isTrimEmpty(mEdPasswordString)) {
-                    UtilsManage.tost("请输入密码");
+                    ToastUtil.tost("请输入密码");
                 } else if (mEdPasswordString.length() < 6) {
-                    UtilsManage.tost("请输入6-18位密码");
+                    ToastUtil.tost("请输入6-18位密码");
                 } else {
                     //账号密码登录
-                    Request.getInstance().accountPasswordLogin(mEdLoginPhoneString, mEdPasswordString, new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
-                        @Override
-                        protected void onSuccess(AccountsLoginUserBean user) {
-                            AccountsLoginUserBean.DataBean dataBean = user.getData();
-                            if (dataBean != null) {
-                                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
-                                UserDataContainer.getInstance().setUser(userData);
-                                App.setAlias();
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                finish();
-                            } else {
-                                UtilsManage.tost(user.getMsg());
-                            }
-                        }
-                    });
+                    Request.getInstance().accountPasswordLogin(mEdLoginPhoneString, mEdPasswordString, accountPasswordLoginJsonEntityCallback);
                 }
                 break;
 
@@ -248,5 +234,29 @@ public class ActivityPasswordLogin extends BaseActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 登录成功后操作
+     */
+    private void loginSuccessful(UserData userData) {
+        UserDataContainer.getInstance().setUser(userData);
+        App.setAlias();
+        startActivity(new Intent(getContext(), MainActivity.class));
+        finish();
+    }
 
+    /**
+     * 帐号登录
+     */
+    JsonEntityCallback accountPasswordLoginJsonEntityCallback = new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
+        @Override
+        protected void onSuccess(AccountsLoginUserBean user) {
+            AccountsLoginUserBean.DataBean dataBean = user.getData();
+            if (dataBean != null) {
+                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
+                loginSuccessful(userData);
+            } else {
+                ToastUtil.tost(user.getMsg());
+            }
+        }
+    };
 }

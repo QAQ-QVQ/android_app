@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.hjy.baserequest.bean.AccountsLoginUserBean;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.data.UserData;
@@ -30,7 +31,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
-import com.hjy.baseutil.UtilsManage;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
@@ -126,6 +127,8 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
         mBtLogn.setBackground(getStateListDrawable());
         mBtGetVerificationCode.setBackground(getStateListDrawable());
+
+        exitDialog = new ExitDialog(getActivity());
 
     }
 
@@ -257,7 +260,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
             default:
                 break;
             case R.id.iv_back_image_bar:
-                finish();
+                exitDialog.show();
                 break;
             case R.id.ib_xx://清除手机号
                 mEdLoginPhone.setText("");
@@ -273,18 +276,18 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 if (btString.equals("获取验证码") || btString.equals("重新发送")) {
                     String mEdLoginPhoneString = mEdLoginPhone.getText().toString();
                     if (TextUtils.isEmpty(mEdLoginPhoneString)) {
-                        UtilsManage.tost(mEdLoginPhone.getHint().toString());
+                        ToastUtil.tost(mEdLoginPhone.getHint().toString());
                     } else if (!RegexUtils.isMobileExact(mEdLoginPhoneString)) {
-                        UtilsManage.tost("请输入正确的手机号");
+                        ToastUtil.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
                         Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "app_quickLogin", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {
-                                    UtilsManage.tost("验证码获取成功");
+                                    ToastUtil.tost("验证码获取成功");
                                 } else {
-                                    UtilsManage.tost(descAndCode.getMsg());
+                                    ToastUtil.tost(descAndCode.getMsg());
                                 }
                             }
                         });
@@ -304,47 +307,17 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 String mEdVerificationCodeString = mEdVerificationCode.getText().toString();
 
                 if (TextUtils.isEmpty(mEdLoginPhoneString)) {
-                    UtilsManage.tost(mEdLoginPhone.getHint().toString());
+                    ToastUtil.tost(mEdLoginPhone.getHint().toString());
                 } else if (TextUtils.isEmpty(mEdVerificationCodeString)) {
-                    UtilsManage.tost(mEdVerificationCode.getHint().toString());
+                    ToastUtil.tost(mEdVerificationCode.getHint().toString());
                 } else {
                     //手机号登录
-                    Request.getInstance().phoneLogin(mEdLoginPhoneString, mEdVerificationCodeString, new JsonEntityCallback<PhoneLoginUserBean>(PhoneLoginUserBean.class) {
-                        @Override
-                        protected void onSuccess(PhoneLoginUserBean user) {
-                            if (user.getCode() == 200) {
-                                PhoneLoginUserBean.DataBean data = user.getData();
-                                if (data != null) {
-                                    List<PhoneLoginUserBean.DataBean.UserListBean> user_list = data.getUser_list();
-                                    if (user_list != null || user_list.size() == 0) {
-                                        if (user_list.size() == 1) {
-                                            PhoneLoginUserBean.DataBean.UserinfoBean userinfo = data.getUserinfo();
-                                            UserData userData = new UserData(String.valueOf(userinfo.getUser_id()), userinfo.getToken());
-                                            UserDataContainer.getInstance().setUser(userData);
-                                            App.setAlias();
-                                            startActivity(new Intent(getContext(), MainActivity.class));
-                                            finish();
-                                        } else {
-                                            //TODO 跳转到选择帐号登录  暂时不做
-                                        }
-
-                                    } else {
-                                        UtilsManage.tost("未查询到历史帐号");
-                                    }
-                                }
-
-                            } else {
-                                UtilsManage.tost(user.getMsg());
-                            }
-                        }
-                    });
+                    Request.getInstance().phoneLogin(mEdLoginPhoneString, mEdVerificationCodeString, phoneLoginJsonEntityCallback);
                 }
                 break;
 
             case R.id.tv_VisitorLogin://游客登录
-                UtilsManage.tost("游客登录待开发");
-                startActivity(new Intent(getContext(), MainActivity.class));
-                finish();
+                Request.getInstance().visitorLogin(visitorLoginJsonEntityCallback);
                 break;
         }
     }
@@ -392,6 +365,16 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
         new Timer().schedule(timerTask, 100, 1000);
     }
 
+    /**
+     * 登录成功后操作
+     */
+    private void loginSuccessful(UserData userData) {
+        UserDataContainer.getInstance().setUser(userData);
+        App.setAlias();
+        startActivity(new Intent(getContext(), MainActivity.class));
+        finish();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -415,13 +398,56 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 mAudioManager2.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FX_FOCUS_NAVIGATION_UP);
                 return true;
             case KeyEvent.KEYCODE_BACK:
-                if (exitDialog == null)
-                    exitDialog = new ExitDialog(getActivity());
                 exitDialog.show();
-
                 return true;
         }
         return true;
     }
+
+    /**
+     * 游客登录
+     */
+    JsonEntityCallback visitorLoginJsonEntityCallback = new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
+        @Override
+        protected void onSuccess(AccountsLoginUserBean accountsLoginUserBean) {
+            AccountsLoginUserBean.DataBean dataBean = accountsLoginUserBean.getData();
+            if (dataBean != null) {
+                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
+                loginSuccessful(userData);
+            } else {
+                ToastUtil.tost(accountsLoginUserBean.getMsg());
+            }
+        }
+    };
+
+    /**
+     * 手机号登录
+     */
+    JsonEntityCallback phoneLoginJsonEntityCallback = new JsonEntityCallback<PhoneLoginUserBean>(PhoneLoginUserBean.class) {
+        @Override
+        protected void onSuccess(PhoneLoginUserBean user) {
+            if (user.getCode() == 200) {
+                PhoneLoginUserBean.DataBean data = user.getData();
+                if (data != null) {
+                    List<PhoneLoginUserBean.DataBean.UserListBean> user_list = data.getUser_list();
+                    if (user_list != null || user_list.size() == 0) {
+                        if (user_list.size() == 1) {
+                            PhoneLoginUserBean.DataBean.UserinfoBean userinfo = data.getUserinfo();
+                            UserData userData = new UserData(String.valueOf(userinfo.getUser_id()), userinfo.getToken());
+                            loginSuccessful(userData);
+                        } else {
+                            //TODO 跳转到选择帐号登录  暂时不做
+                        }
+
+                    } else {
+                        ToastUtil.tost("未查询到历史帐号");
+                    }
+                }
+
+            } else {
+                ToastUtil.tost(user.getMsg());
+            }
+        }
+    };
 
 }

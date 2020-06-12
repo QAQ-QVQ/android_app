@@ -2,15 +2,8 @@ package com.hjy.baserequest.request;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.hjy.baserequest.RequestManage;
 import com.hjy.baserequest.util.JEventUtils;
-import com.hjy.baserequest.util.RequestResponseUtil;
-import com.lzy.okgo.callback.AbsCallback;
-import com.lzy.okgo.convert.StringConvert;
-import com.lzy.okgo.request.base.Request;
-
-
-import okhttp3.Response;
+import com.hjy.baseutil.ToastUtil;
 
 /**
  * Author: zhangqingyou
@@ -41,7 +34,7 @@ public abstract class JsonEntityCallback<T> extends BaseCallback {
             T t = new Gson().fromJson(response.body(), classOfBean);
             onSuccess(t);
         } catch (JsonSyntaxException e) {
-            RequestManage.tost(TAG + "_json数据格式错误");
+            ToastUtil.tost(TAG + "_json数据格式错误");
             //极光计数事件（接口返回json数据解析错误使用）
             JEventUtils.onCountEventJsonError(response, TAG);
         }

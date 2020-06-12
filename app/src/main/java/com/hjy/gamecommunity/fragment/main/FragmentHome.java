@@ -1,6 +1,8 @@
 package com.hjy.gamecommunity.fragment.main;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +24,8 @@ import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseui.ui.view.scrollview.ScrollInterceptScrollView;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
+import com.hjy.baseutil.LoadingImageUtil;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
@@ -99,32 +103,16 @@ public class FragmentHome extends BaseFragment {
 
     }
 
+    // banner客服信息
+    private List<FindBanner.DataBean.ListBean> bannerDataList = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private List<String> mList = new ArrayList<>();
 
     @Override
     public void initData() {
         ViewSeting.setMeasuredHeight(mBannerView, 0.7f);
+
         //banner
-        List<Object> mList = new ArrayList<>();
-        mList.add(R.mipmap.home_banner_bg);
-        mList.add(R.mipmap.home_banner_bg);
-        mList.add(R.mipmap.home_banner_bg);
-
-        // banner客服信息
-        for (int i = 0; i < mList.size(); i++) {
-            FragmentCustomerServiceMsg fragmentCustomerServiceMsg = new FragmentCustomerServiceMsg();
-            fragmentCustomerServiceMsg.setData(i + 1);
-            mFragments.add(fragmentCustomerServiceMsg);
-        }
-
-        FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getChildFragmentManager(), mFragments);
-        fragmentStatePageAdapter.setDestroyItem(false);
-        mViewPagerBannerFragment.setAdapter(fragmentStatePageAdapter);
-        //预加载页面数量的方法
-        // mViewPager.setOffscreenPageLimit(mTitles.size());//tab数
-
-
-        //banner图片
         mBannerView
                 .setInterval(3000)//设置间隔 毫秒
                 .setCanLoop(true)//设置可以循环
@@ -142,7 +130,7 @@ public class FragmentHome extends BaseFragment {
                 .setHolderCreator(new HolderCreator() {
                     @Override
                     public ViewHolder createViewHolder() {
-                        ViewHolder viewHolder = new ViewHolder<Integer>() {
+                        ViewHolder viewHolder = new ViewHolder<Object>() {
                             @Override
                             public int getLayoutId() {
                                 return R.layout.item_banner_layout;
@@ -150,9 +138,9 @@ public class FragmentHome extends BaseFragment {
 
 
                             @Override
-                            public void onBind(View itemView, Integer img, int position, int size) {
+                            public void onBind(View itemView, Object img, int position, int size) {
                                 ImageView mIvImage = itemView.findViewById(R.id.iv_image);
-                                mIvImage.setImageResource(img);
+                                LoadingImageUtil.loadingImag(img, mIvImage, true);
                             }
                         };
                         return viewHolder;
@@ -177,9 +165,12 @@ public class FragmentHome extends BaseFragment {
                 .setOnPageClickListener(new BannerViewPager.OnPageClickListener() {
                     @Override
                     public void onPageClick(int position) {
-
+                        FindBanner.DataBean.ListBean listBean = bannerDataList.get(position);
+                        if (listBean.getIs_jump() == 1) {
+                            openUrl(listBean.getLink_url());
+                        }
                     }
-                }).create(mList);
+                });
 
 
         //设置搜索图标颜色及点击颜色
@@ -203,12 +194,7 @@ public class FragmentHome extends BaseFragment {
 
 
         //获取banner
-        Request.getInstance().findBanner(new JsonEntityCallback<FindBanner>(FindBanner.class) {
-            @Override
-            protected void onSuccess(FindBanner findBanner) {
-
-            }
-        });
+        Request.getInstance().findBanner(bannerJsonEntityCallback);
     }
 
     @Override
@@ -288,6 +274,55 @@ public class FragmentHome extends BaseFragment {
             }
         });
     }
+
+    /**
+     * 跳转链接
+     *
+     * @param url
+     */
+    private void openUrl(String url) {
+        Uri uri = Uri.parse(url);
+        Intent it = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(it);
+    }
+
+    /**
+     * banner
+     */
+    JsonEntityCallback bannerJsonEntityCallback = new JsonEntityCallback<FindBanner>(FindBanner.class) {
+
+        @Override
+        protected void onSuccess(FindBanner findBanner) {
+            FindBanner.DataBean bannerData = findBanner.getData();
+            if (bannerData != null) {
+                bannerDataList.clear();
+                bannerDataList.addAll(bannerData.getList());
+                if (bannerDataList != null && bannerDataList.size() > 0) {
+                    mList.clear();
+                    mFragments.clear();
+                    for (FindBanner.DataBean.ListBean listBean : bannerDataList) {
+                        mList.add(listBean.getResource());
+                        FragmentCustomerServiceMsg fragmentCustomerServiceMsg = new FragmentCustomerServiceMsg();
+                        fragmentCustomerServiceMsg.setData(listBean);
+                        mFragments.add(fragmentCustomerServiceMsg);
+                    }
+
+
+                    FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getChildFragmentManager(), mFragments);
+                    fragmentStatePageAdapter.setDestroyItem(false);
+                    mViewPagerBannerFragment.setAdapter(fragmentStatePageAdapter);
+                    //预加载页面数量的方法
+                    // mViewPager.setOffscreenPageLimit(mTitles.size());//tab数
+
+                    mBannerView.create(mList);
+
+
+                } else {
+                    ToastUtil.tost(findBanner.getMsg());
+                }
+            }
+        }
+    };
 
 
 }

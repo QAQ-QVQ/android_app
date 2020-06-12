@@ -39,7 +39,7 @@ public class ExitDialog {
                 .buid());
         mTvYes.setBackground(new SuperDrawable()
                 .setClickAlpha(0.7f)
-                .setColorBg(ContextCompat.getColor(activity, R.color.colorPrimaryDark))
+                .setColorBg(ContextCompat.getColor(activity, R.color.colorPrimary))
                 .setRadius(5)
                 .buid());
 

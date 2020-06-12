@@ -59,8 +59,7 @@
             android:id="@+id/viewPagerBannerFragment"
             android:layout_width="match_parent"
             android:layout_height="117dp"
-            android:background="@color/bui_white"
-            android:padding="8dp" />
+            android:background="@color/bui_white" />
 
 
     </android.support.v7.widget.CardView>

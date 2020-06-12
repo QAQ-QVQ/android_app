@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.hjy.baserequest.RequestManage;
 import com.hjy.baserequest.bean.UploadImageOne;
+import com.hjy.baseutil.ToastUtil;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
@@ -66,7 +65,7 @@ public class UploadImage {
         index = 0;
         final int size = compressPathList.size();
         if (compressPathList == null || size <= 0) {
-            RequestManage.tost("加载图片失败，请重新选择");
+            ToastUtil.tost("加载图片失败，请重新选择");
             return;
         }
         final List<String> stringListMd5 = new ArrayList<>();
@@ -136,7 +135,7 @@ public class UploadImage {
                     public void onError(Response<String> response) {
                         super.onError(response);
                         uploadImageInterface.onError();
-                        RequestManage.tost("多图上传连接失败");
+                        ToastUtil.tost("多图上传连接失败");
                     }
 
                     @Override
@@ -156,10 +155,10 @@ public class UploadImage {
                                 }
                                 uploadImageInterface.onSuccess(list_String(uploadImage.getData()), list_String(stringListMd5));
                             } else {
-                                RequestManage.tost("多图上传失败" + uploadImage.getMsg());
+                                ToastUtil.tost("多图上传失败" + uploadImage.getMsg());
                             }
                         } catch (JsonSyntaxException e) {
-                            RequestManage.tost("多图上传-数据格式错误！" + e.getMessage());
+                            ToastUtil.tost("多图上传-数据格式错误！" + e.getMessage());
                         }
                     }
                 }
@@ -183,7 +182,7 @@ public class UploadImage {
             public void onError(Response<String> response) {
                 super.onError(response);
                 uploadImageInterface.onError();
-                RequestManage.tost("单图上传连接失败！");
+                ToastUtil.tost("单图上传连接失败！");
             }
 
             @Override
@@ -203,7 +202,7 @@ public class UploadImage {
                     uploadImageInterface.onSuccess(uploadImageOne);
 
                 } catch (Exception e) {
-                    RequestManage.tost("单图上传-数据格式错误！" + e.getMessage());
+                    ToastUtil.tost("单图上传-数据格式错误！" + e.getMessage());
                 }
             }
         });
