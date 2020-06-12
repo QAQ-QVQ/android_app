@@ -12,7 +12,7 @@ public class API {
     public static final String USER_URL_DEFAULT = "http://user.5eyx.com";//快速登录&账号登录&忘记密码&实名认证&登录验证 -- 统一域名
     public static final String SMS_URL_DEFAULT = "http://sms.5eyx.com";//发送短信 -- 统一域名
     public static final String PAY_URL_DEFAULT = "http://sdk.pay.android.5eyx.com";//支付 -- 统一域名
-
+    public static final String LIVE_URL_DEFAULT = "http://live.5eyx.com";//直播 -- 统一域名
 
     public static final String CDN = "http://cdn.xxxx.co";//CDN统一地址
     public static final String IMAGEURL_DEFAULT = CDN + "/img";//CDN图片地址
@@ -40,7 +40,9 @@ public class API {
 
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号
 
-    //
-    public static final String findBanner = SYSTEM_URL_DEFAULT + "/home/adpic/adpicList";//发现-banner
-
+    //直播相关
+    public static final String findBanner = LIVE_URL_DEFAULT + "/home/adpic/adpicList";//发现-banner
+    public static final String anchorList = LIVE_URL_DEFAULT + "/live/anchor/anchorList";//发现-（客服直播、游戏直播）
+    public static final String videoList = LIVE_URL_DEFAULT + "/home/video/videoList";//发现-视频列表
+    public static final String newsList = LIVE_URL_DEFAULT + "/home/news/newsList";//发现-资讯列表
 }

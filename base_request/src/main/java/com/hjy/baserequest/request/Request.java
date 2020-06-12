@@ -11,10 +11,13 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hjy.baserequest.bean.AccountsLoginUserBean;
+import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baserequest.bean.MessagePush;
+import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baserequest.util.ListToStringUtil;
@@ -370,6 +373,45 @@ public class Request {
     public void findBanner(JsonEntityCallback<FindBanner> jsonEntityCallback) {
         JsonObject jsonObject = new JsonObject();
         request(POST, API.findBanner, jsonObject, jsonEntityCallback);
+    }
+
+
+    /**
+     * （客服直播、游戏直播）
+     *
+     * @param jsonEntityCallback
+     */
+    public void anchorList(JsonEntityCallback<AnchorList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.anchorList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 发现-视频列表
+     *
+     * @param page               页数
+     * @param limit              页大小
+     * @param jsonEntityCallback
+     */
+    public void videoList(int page, int limit, JsonEntityCallback<VideoList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("limit", limit);
+        request(POST, API.videoList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 发现-资讯列表
+     *
+     * @param page               页数
+     * @param limit              页大小
+     * @param jsonEntityCallback
+     */
+    public void newsList(int page, int limit, JsonEntityCallback<NewsList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("limit", limit);
+        request(POST, API.newsList, jsonObject, jsonEntityCallback);
     }
 
 

@@ -1,8 +1,14 @@
 package com.hjy.gamecommunity.adapter;
 
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ViewSeting;
@@ -21,8 +27,10 @@ public class RealTimeInfoAdapter<T> extends BaseAdapter<T> {
     private RadiusImageView mRivImage1;
     private RadiusImageView mRivImage2;
     private RadiusImageView mRivImage3;
+    private LinearLayout mLlImage;
 
     public RealTimeInfoAdapter() {
+
     }
 
     public RealTimeInfoAdapter(List<T> beanList) {
@@ -44,9 +52,10 @@ public class RealTimeInfoAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder viewHolder, T item, int i) {
+    public void onBindViewHolder(BaseViewHolder viewHolder, T item, int position) {
 
         mTvTitle = viewHolder.findViewById(R.id.tv_Title);
+        mLlImage = viewHolder.findViewById(R.id.ll_Image);
         mRivImage1 = viewHolder.findViewById(R.id.riv_image1);
         mRivImage2 = viewHolder.findViewById(R.id.riv_image2);
         mRivImage3 = viewHolder.findViewById(R.id.riv_image3);
@@ -55,10 +64,23 @@ public class RealTimeInfoAdapter<T> extends BaseAdapter<T> {
         setImgWH(mRivImage2);
         setImgWH(mRivImage3);
 
-        mTvTitle.setText("xxxxxxxxxxx");
-        LoadingImageUtil.loadingImag("", mRivImage1, true);
-        LoadingImageUtil.loadingImag("", mRivImage2, true);
-        LoadingImageUtil.loadingImag("", mRivImage3, true);
+        if (item instanceof NewsList.DataBean.ListBean) {
+            NewsList.DataBean.ListBean listBean = (NewsList.DataBean.ListBean) item;
+            mTvTitle.setText(listBean.getTitle());
+            String cover_picture = listBean.getCover_picture();
+            if (!TextUtils.isEmpty(cover_picture)) {
+                List<String> stringList = new Gson().fromJson(cover_picture, new TypeToken<List<String>>() {
+                }.getType());
+
+                for (int i = 0; i < stringList.size(); i++) {
+                    View childAt = mLlImage.getChildAt(i);
+                    if (childAt instanceof ImageView) {
+                        LoadingImageUtil.loadingImag(stringList.get(i), (ImageView) childAt, true);
+                    }
+                }
+            }
+        }
+
 
         viewHolder.setWaterRipple();//设置水波纹点击效果
     }

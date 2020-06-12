@@ -56,9 +56,9 @@ public abstract class HeadFootAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder viewHolder, T item, int i) {
-        if (getLayoutId(i) == headLayoutId) {
+        if (getLayoutId(viewHolder) == headLayoutId) {
             onHeadView(viewHolder.itemView);
-        } else if (getLayoutId(i) == footLayoutId) {
+        } else if (getLayoutId(viewHolder) == footLayoutId) {
             onFootView(viewHolder.itemView);
         } else {
             if (headLayoutId != 0) {

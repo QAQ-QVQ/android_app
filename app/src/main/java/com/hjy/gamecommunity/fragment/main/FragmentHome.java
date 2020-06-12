@@ -3,6 +3,7 @@ package com.hjy.gamecommunity.fragment.main;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,13 +17,15 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.bean.NewsList;
+import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
-import com.hjy.baseui.ui.view.scrollview.ScrollInterceptScrollView;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ToastUtil;
@@ -32,6 +35,11 @@ import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
 import com.hjy.gamecommunity.adapter.RealTimeInfoAdapter;
 import com.hjy.gamecommunity.adapter.VideoAdapter;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.MaterialHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhpan.bannerview.BannerViewPager;
 import com.zhpan.bannerview.constants.IndicatorGravity;
 import com.zhpan.bannerview.constants.IndicatorSlideMode;
@@ -41,7 +49,6 @@ import com.zhpan.bannerview.holder.ViewHolder;
 import com.zhpan.bannerview.indicator.IndicatorView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,10 +67,11 @@ public class FragmentHome extends BaseFragment {
     private ColorStateImageView mScivSearch;
     private VideoAdapter videoAdapter;
     private RealTimeInfoAdapter realTimeInfoAdapter;
-    private ScrollInterceptScrollView mScrollInterceptScrollView;
+    private NestedScrollView mScrollInterceptScrollView;
     private ConstraintLayout mClSearch;
     private TextView mTvTitle;
     private ViewPager mViewPagerBannerFragment;
+    private SmartRefreshLayout mSrlRealTimeInfo;
 
     @Override
     public int getLayoutId() {
@@ -86,6 +94,8 @@ public class FragmentHome extends BaseFragment {
         mRecyclerViewVideo = findViewById(R.id.RecyclerViewVideo);
         mTvMoreRealTimeInfo = findViewById(R.id.tv_MoreRealTimeInfo);
         mRecyclerViewRealTimeInfo = findViewById(R.id.RecyclerViewRealTimeInfo);
+
+        mSrlRealTimeInfo = findViewById(R.id.srl_RealTimeInfo);
 
         setPaddingNumTop(mClSearch, 12);
     }
@@ -183,22 +193,54 @@ public class FragmentHome extends BaseFragment {
         mRecyclerViewVideo.setNestedScrollingEnabled(false);
         videoAdapter = new VideoAdapter();
         mRecyclerViewVideo.setAdapter(videoAdapter);
-        videoAdapter.replaceAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
         //资讯Adapter
         mRecyclerViewRealTimeInfo.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewRealTimeInfo.setNestedScrollingEnabled(false);
         realTimeInfoAdapter = new RealTimeInfoAdapter();
         mRecyclerViewRealTimeInfo.setAdapter(realTimeInfoAdapter);
-        realTimeInfoAdapter.replaceAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
 
-        //获取banner
-        Request.getInstance().findBanner(bannerJsonEntityCallback);
+        //设置 Header 样式
+        MaterialHeader materialHeader = new MaterialHeader(getContext());
+        materialHeader.setProgressBackgroundColorSchemeResource(android.R.color.transparent);
+        materialHeader.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
+        mSrlRealTimeInfo.setRefreshHeader(materialHeader);
+        //设置 Footer  样式
+        mSrlRealTimeInfo.setRefreshFooter(new ClassicsFooter(getContext()));
+        mSrlRealTimeInfo.setEnableHeaderTranslationContent(false);//是否下拉Header的时候向下平移列表或者内容
+
+        mSrlRealTimeInfo.autoRefresh();//自动刷新
     }
+
+    private int pageVideo = 1, limitVideo = 10;//视频列表 >  页数 - 页大小
+    private int pageNews = 1, limitNews = 10;//资讯列表 >  页数 - 页大小
 
     @Override
     public void listener() {
+        mSrlRealTimeInfo.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //获取banner
+                Request.getInstance().findBanner(bannerJsonEntityCallback);
+
+                //获取（客服直播、游戏直播）
+                Request.getInstance().anchorList(anchorListJsonEntityCallback);
+
+                //发现-资讯列表
+                Request.getInstance().newsList(pageNews = 1, limitNews = 10, newsListJsonEntityCallback);
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                //发现-资讯列表
+                Request.getInstance().newsList(++pageNews, limitNews = 10, newsListJsonEntityCallback);
+            }
+
+
+        });
+
+
         mScrollInterceptScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int scroll = 500;//在该距离内滑动改变搜索区域背景颜色
 
@@ -258,14 +300,55 @@ public class FragmentHome extends BaseFragment {
 
             }
         });
+        //客服直播、游戏直播、游戏视频  \滑动监听
+        mRecyclerViewVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        //加载更多功能的代码
+                        //获取（游戏视频）
+                        Request.getInstance().videoList(++pageVideo, limitVideo = 10, videoListJsonEntityCallback);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                if (dx > 0) {
+                    //大于0表示正在向右滚动
+                    isSlidingToLast = true;
+                } else {
+                    //小于等于0表示停止或向左滚动
+                    isSlidingToLast = false;
+                }
+            }
+        });
 
         //（客服直播、游戏直播、游戏视频）Adapter
         videoAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Object item, int position) {
-
+                if (item instanceof AnchorList.DataBean) {
+                    //客服直播、游戏直播
+                } else if (item instanceof VideoList.DataBean.ListBean) {
+                    //游戏视频
+                }
             }
         });
+
         //资讯Adapter
         realTimeInfoAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
@@ -273,6 +356,8 @@ public class FragmentHome extends BaseFragment {
 
             }
         });
+
+
     }
 
     /**
@@ -316,11 +401,89 @@ public class FragmentHome extends BaseFragment {
 
                     mBannerView.create(mList);
 
-
                 } else {
                     ToastUtil.tost(findBanner.getMsg());
                 }
             }
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+            mSrlRealTimeInfo.finishRefresh(200);
+        }
+    };
+
+    /**
+     * （客服直播、游戏直播）
+     */
+    JsonEntityCallback anchorListJsonEntityCallback = new JsonEntityCallback<AnchorList>(AnchorList.class) {
+        @Override
+        protected void onSuccess(AnchorList anchorList) {
+            List<AnchorList.DataBean> anchorListData = anchorList.getData();
+            if (anchorListData != null && anchorListData.size() > 0) {
+                videoAdapter.replaceAll(anchorListData);
+            } else {
+                ToastUtil.tost(anchorList.getMsg());
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+            //获取（游戏视频）  -- 游戏视频 将拼接在  客服直播、游戏直播  后面
+            Request.getInstance().videoList(pageVideo = 1, limitVideo = 10, videoListJsonEntityCallback);
+        }
+    };
+    /**
+     * 游戏视频列表
+     */
+    JsonEntityCallback videoListJsonEntityCallback = new JsonEntityCallback<VideoList>(VideoList.class) {
+        @Override
+        protected void onSuccess(VideoList videoList) {
+            VideoList.DataBean data = videoList.getData();
+            if (data != null) {
+                List<VideoList.DataBean.ListBean> list = data.getList();
+                if (list != null && list.size() > 0) {
+                    videoAdapter.addItemsToLast(list);
+                } else {
+                    if (pageVideo == 1) {
+                        ToastUtil.tost(videoList.getMsg());
+                    } else {
+                        ToastUtil.tost("没有更多啦!");
+                    }
+                }
+            }
+        }
+    };
+    /**
+     * 发现-资讯列表
+     */
+    JsonEntityCallback newsListJsonEntityCallback = new JsonEntityCallback<NewsList>(NewsList.class) {
+        @Override
+        protected void onSuccess(NewsList newsList) {
+            NewsList.DataBean newsListData = newsList.getData();
+            if (newsListData != null) {
+                List<NewsList.DataBean.ListBean> newsListDataList = newsListData.getList();
+                if (newsListDataList != null && newsListDataList.size() > 0) {
+                    if (pageNews == 1)
+                        realTimeInfoAdapter.replaceAll(newsListDataList);
+                    else
+                        realTimeInfoAdapter.addItemsToLast(newsListDataList);
+                } else {
+                    if (pageNews == 1) {
+                        ToastUtil.tost(newsList.getMsg());
+                    } else {
+                        ToastUtil.tost("没有更多啦!");
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+            mSrlRealTimeInfo.finishLoadMore(200);
         }
     };
 

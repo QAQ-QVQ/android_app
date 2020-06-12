@@ -2,6 +2,7 @@ package com.hjy.baseui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -39,17 +40,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         context = viewGroup.getContext();
-        View inflate = null;
+        BaseViewHolder baseViewHolder = null;
         if (mList != null) {
             int checkLayout = getLayout(mList.get(viewType), viewType);
             if (checkLayout != 0) {
-                inflate = LayoutInflater.from(context).inflate(checkLayout, viewGroup, false);
+                View inflate = LayoutInflater.from(context).inflate(checkLayout, viewGroup, false);
+                baseViewHolder = new BaseViewHolder(inflate, checkLayout);
                 if (!layoutIdsList.contains(checkLayout)) {
                     layoutIdsList.add(checkLayout);
                 }
             }
         }
-        return new BaseViewHolder(inflate);
+        return baseViewHolder;
     }
 
     @Override
@@ -79,14 +81,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     /**
      * 获取当前加载的那个布局
      *
-     * @param position
+     * @param
      * @return
      */
-    public int getLayoutId(int position) {
-        if (position >= 0 && position < getItemCount())
-            return getLayout(mList.get(position), position);
-        else
-            return -1;
+    public int getLayoutId(BaseAdapter.BaseViewHolder viewHolder) {
+        return viewHolder.getLayoutId();
     }
 
     public Context getContext() {
@@ -106,7 +105,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
      *
      * @return
      */
-    public abstract int getLayout(T item, int position);
+    public abstract @LayoutRes
+    int getLayout(T item, int position);
 
     public abstract void onBindViewHolder(BaseViewHolder viewHolder, T item, int i);
 
@@ -358,9 +358,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {
+        private int layoutId;
+
         public BaseViewHolder(View itemView) {
             super(itemView);
             //  setWaterRipple(itemView);
+        }
+
+        public BaseViewHolder(View itemView, @LayoutRes int layoutId) {
+            this(itemView);
+            this.layoutId = layoutId;
         }
 
         /**
@@ -383,6 +390,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
 
         public <T extends View> T findViewById(int id) {
             return itemView.findViewById(id);
+        }
+
+        public int getLayoutId() {
+            return layoutId;
         }
     }
 }
