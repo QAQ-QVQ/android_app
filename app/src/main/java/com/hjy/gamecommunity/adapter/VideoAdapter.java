@@ -141,7 +141,7 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
 
         }
 
-        viewHolder.setWaterRipple();//设置水波纹点击效果
+       // viewHolder.setWaterRipple();//设置水波纹点击效果
 
 
     }

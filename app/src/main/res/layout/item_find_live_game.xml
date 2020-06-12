@@ -9,6 +9,7 @@
     android:paddingTop="12dp"
     android:paddingBottom="12dp"
     app:zqy_sll_backgroundColor="@android:color/white"
+    app:zqy_sll_clickColorBg="@color/bui_gray2"
     app:zqy_sll_clickAlpha="1.0"
     app:zqy_sll_radius="5">
 

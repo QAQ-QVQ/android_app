@@ -375,7 +375,6 @@ public class FragmentHome extends BaseFragment {
      * banner
      */
     JsonEntityCallback bannerJsonEntityCallback = new JsonEntityCallback<FindBanner>(FindBanner.class) {
-
         @Override
         protected void onSuccess(FindBanner findBanner) {
             FindBanner.DataBean bannerData = findBanner.getData();
