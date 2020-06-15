@@ -31,9 +31,10 @@ import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.search.ActivitySearch;
+import com.hjy.gamecommunity.adapter.FindVideoAdapter;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
 import com.hjy.gamecommunity.adapter.RealTimeInfoAdapter;
-import com.hjy.gamecommunity.adapter.VideoAdapter;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -65,7 +66,7 @@ public class FragmentHome extends BaseFragment {
     private SuperTextView mTvMoreRealTimeInfo;
     private RecyclerView mRecyclerViewRealTimeInfo;
     private ColorStateImageView mScivSearch;
-    private VideoAdapter videoAdapter;
+    private FindVideoAdapter videoAdapter;
     private RealTimeInfoAdapter realTimeInfoAdapter;
     private NestedScrollView mScrollInterceptScrollView;
     private ConstraintLayout mClSearch;
@@ -191,7 +192,7 @@ public class FragmentHome extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerViewVideo.setLayoutManager(linearLayoutManager);
         mRecyclerViewVideo.setNestedScrollingEnabled(false);
-        videoAdapter = new VideoAdapter();
+        videoAdapter = new FindVideoAdapter();
         mRecyclerViewVideo.setAdapter(videoAdapter);
 
         //资讯Adapter
@@ -281,7 +282,7 @@ public class FragmentHome extends BaseFragment {
         mScivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(), ActivitySearch.class));
             }
         });
 

@@ -60,13 +60,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     }
 
     @Override
-    public void onBindViewHolder(BaseAdapter.BaseViewHolder viewHolder, int i) {
+    public void onBindViewHolder(BaseAdapter.BaseViewHolder viewHolder, int position) {
         if (mList != null) {
-            onBindViewHolder(viewHolder, mList.get(i), i);
+            onBindViewHolder(viewHolder, mList.get(position), position);
             //绑定监听事件
-            onBindItemClickListener(viewHolder, i);
+            onBindItemClickListener(viewHolder, position);
             //自定义监听事件
-            listener(viewHolder, mList.get(i), i);
+            listener(viewHolder, mList.get(position), position);
         }
 
     }
@@ -108,12 +108,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
     public abstract @LayoutRes
     int getLayout(T item, int position);
 
-    public abstract void onBindViewHolder(BaseViewHolder viewHolder, T item, int i);
+    public abstract void onBindViewHolder(BaseViewHolder viewHolder, T item, int position);
 
     /**
      * view监听写在这里面
      */
-    public abstract void listener(BaseViewHolder viewHolder, T item, int i);
+    public abstract void listener(BaseViewHolder viewHolder, T item, int position);
 
     /**
      * 添加数据集到列表头部

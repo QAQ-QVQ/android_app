@@ -45,4 +45,5 @@ public class API {
     public static final String anchorList = LIVE_URL_DEFAULT + "/live/anchor/anchorList";//发现-（客服直播、游戏直播）
     public static final String videoList = LIVE_URL_DEFAULT + "/home/video/videoList";//发现-视频列表
     public static final String newsList = LIVE_URL_DEFAULT + "/home/news/newsList";//发现-资讯列表
+    public static final String search = LIVE_URL_DEFAULT + "/live/index/search";//搜索
 }

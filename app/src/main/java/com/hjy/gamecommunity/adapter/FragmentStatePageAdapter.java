@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,16 +16,16 @@ import java.util.List;
 public class FragmentStatePageAdapter extends FragmentStatePagerAdapter {
     private FragmentManager fm;
     private List<String> mTitles;
-    private ArrayList<Fragment> mFragments;
+    private List<Fragment> mFragments;
     private boolean isDestroyItem;
 
-    public FragmentStatePageAdapter(FragmentManager fm, ArrayList<Fragment> mFragments) {
+    public FragmentStatePageAdapter(FragmentManager fm, List<Fragment> mFragments) {
         super(fm);
         this.fm = fm;
         this.mFragments = mFragments;
     }
 
-    public FragmentStatePageAdapter(FragmentManager fm, List<String> mTitles, ArrayList<Fragment> mFragments) {
+    public FragmentStatePageAdapter(FragmentManager fm, List<String> mTitles, List<Fragment> mFragments) {
         super(fm);
         this.fm = fm;
         this.mTitles = mTitles;

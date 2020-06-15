@@ -17,6 +17,7 @@ import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baserequest.bean.MessagePush;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.bean.SearchBean;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
@@ -412,6 +413,19 @@ public class Request {
         jsonObject.addProperty("page", page);
         jsonObject.addProperty("limit", limit);
         request(POST, API.newsList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 搜索
+     * @param type
+     * @param keywords
+     * @param jsonEntityCallback
+     */
+    public void search(String type, String keywords, JsonEntityCallback<SearchBean> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", type);
+        jsonObject.addProperty("keywords", keywords);
+        request(POST, API.search, jsonObject, jsonEntityCallback);
     }
 
 
