@@ -99,8 +99,7 @@ public class FragmentSearchAll extends FragmentSearch {
         LinearLayout mLlMsg = inflate.findViewById(R.id.ll_Msg);
         mLlMsg.setPadding(6, 12, 6, 12);
         RecyclerView mRecyclerView = inflate.findViewById(R.id.recyclerView);
-        mRecyclerView.setPadding(12, 0, 12, 0);
-        mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
+
         TitleRecyclerViewEntities titleRecyclerViewEntities = new TitleRecyclerViewEntities(inflate, mTvTitle, mTvMore, mLlMsg, mRecyclerView);
         return titleRecyclerViewEntities;
     }
@@ -132,6 +131,7 @@ public class FragmentSearchAll extends FragmentSearch {
             titleRecyclerViewEntities.getmRecyclerView().setLayoutManager(linearLayoutManager);
             LiveAdapter liveAdapter = new LiveAdapter(live_list);
             titleRecyclerViewEntities.getmRecyclerView().setAdapter(liveAdapter);
+            titleRecyclerViewEntities.getmRecyclerView().setPadding(12, 0, 12, 0);
             initlistener(titleRecyclerViewEntities, liveAdapter);
         }
         if (video_list != null && video_list.size() > 0) {
@@ -144,6 +144,7 @@ public class FragmentSearchAll extends FragmentSearch {
             titleRecyclerViewEntities.getmRecyclerView().setLayoutManager(linearLayoutManager);
             VideoAdapter videoAdapter = new VideoAdapter(video_list);
             titleRecyclerViewEntities.getmRecyclerView().setAdapter(videoAdapter);
+            titleRecyclerViewEntities.getmRecyclerView().setPadding(12, 0, 12, 0);
             initlistener(titleRecyclerViewEntities, videoAdapter);
 
         }
@@ -153,6 +154,8 @@ public class FragmentSearchAll extends FragmentSearch {
             mLlContent.addView(titleRecyclerViewEntities.getRootView());
             titleRecyclerViewEntities.getmTvTitle().setText("家族");
             titleRecyclerViewEntities.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
+            titleRecyclerViewEntities.getmRecyclerView().setPadding(12, 0, 12, 0);
+            titleRecyclerViewEntities.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
         }
         if (game_list != null && game_list.size() > 0) {
             TitleRecyclerViewEntities titleRecyclerViewEntities = getTitleRecyclerViewEntities();
@@ -199,10 +202,8 @@ public class FragmentSearchAll extends FragmentSearch {
                     SearchBean.DataBean.LiveListBean dataBean = (SearchBean.DataBean.LiveListBean) item;
                     switch (dataBean.getType()) {
                         case 1://客服主播
-
                             break;
                         case 2://游戏主播
-
                             break;
                         default:
                     }
