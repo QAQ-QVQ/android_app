@@ -21,9 +21,7 @@ import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
 import com.hjy.gamecommunity.enumclass.TaskSearchType;
 import com.hjy.gamecommunity.fragment.search.FragmentSearch;
-import com.hjy.gamecommunity.fragment.search.FragmentSearchAll;
 import com.xuexiang.xui.widget.tabbar.TabSegment;
-import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,7 +30,7 @@ import java.util.Map;
 
 /**
  * 作者: zhangqingyou
- * 时间: 2020/6/15 10:01  灰色
+ * 时间: 2020/6/15 10:01
  * 描述: 搜索
  */
 public class ActivitySearchShow extends BaseActivity {
@@ -68,11 +66,15 @@ public class ActivitySearchShow extends BaseActivity {
         transparentStatusBar();//透明状态栏
         setStatusBarLightMode(true);//设置状态栏是否为浅色模式
 
+        String keywords = getIntent().getStringExtra(KEYWORDS);
+        String searchType = getIntent().getStringExtra(SEARCHTYPE);
+
 
         for (TaskSearchType value : TaskSearchType.values()) {
             mTabSegment.addTab(new TabSegment.Tab(value.getDesc()));
 
-            FragmentSearchAll fragmentSearchAll = new FragmentSearchAll();
+            FragmentSearch fragmentSearchAll = new FragmentSearch();
+            fragmentSearchAll.refreshData(value.getKey(), keywords);
             mFragments.put(value.getDesc(), fragmentSearchAll);
         }
 
@@ -81,7 +83,7 @@ public class ActivitySearchShow extends BaseActivity {
         FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getSupportFragmentManager(), fragmentList);
         fragmentStatePageAdapter.setDestroyItem(false);
         mViewPagerContent.setAdapter(fragmentStatePageAdapter);
-
+        mViewPagerContent.setOffscreenPageLimit(fragmentList.size());
         mTabSegment.setMode(TabSegment.MODE_FIXED);
         mTabSegment.setupWithViewPager(mViewPagerContent, false);
 
@@ -89,21 +91,9 @@ public class ActivitySearchShow extends BaseActivity {
 //        mTabSegment.notifyDataChanged();
 //        mTabSegment.selectTab(0);
 
-
-        String keywords = getIntent().getStringExtra(KEYWORDS);
-        String searchType = getIntent().getStringExtra(SEARCHTYPE);
         if (!TextUtils.isEmpty(keywords)) {
             mAppCompatEditText.setText(keywords);
-
-            FragmentSearch fragment = mFragments.get(TaskSearchType.searchDesc(searchType));
-            mViewPagerContent.post(new Runnable() {
-                @Override
-                public void run() {
-                    fragment.refreshData(searchType, keywords);
-                }
-            });
-
-
+            selectTab(TaskSearchType.searchDesc(searchType));
         }
     }
 
@@ -152,7 +142,11 @@ public class ActivitySearchShow extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String textViewString = v.getText().toString();
                     if (!TextUtils.isEmpty(textViewString)) {
-
+                        for (Map.Entry<String, FragmentSearch> entry : mFragments.entrySet()) {
+                            String key = entry.getKey();
+                            FragmentSearch value = entry.getValue();
+                            value.refreshData(TaskSearchType.searchKey(key), textViewString);
+                        }
                     } else {
                         ToastUtil.tost("请输入搜索内容");
                     }
@@ -172,7 +166,7 @@ public class ActivitySearchShow extends BaseActivity {
         mTabSegment.setOnTabClickListener(new TabSegment.OnTabClickListener() {
             @Override
             public void onTabClick(int index) {
-                ToastUtils.toast("点击了" + index);
+                //  ToastUtils.toast("点击了" + index);
             }
         });
 
@@ -201,6 +195,13 @@ public class ActivitySearchShow extends BaseActivity {
 
             }
         });
+    }
+
+
+    public void selectTab(String title) {
+        int indexOf = TaskSearchType.indexOf(title);
+        mViewPagerContent.setCurrentItem(indexOf);
+       // mTabSegment.selectTab(indexOf);
     }
 
 

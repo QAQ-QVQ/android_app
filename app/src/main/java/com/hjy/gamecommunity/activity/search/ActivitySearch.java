@@ -109,10 +109,7 @@ public class ActivitySearch extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         String editTextString = mAppCompatEditText.getText().toString();
-                        if (!TextUtils.isEmpty(editTextString)) {
-                            Jump(editTextString, TaskSearchType.searchKey(item.replace("搜", "")));
-                        } else
-                            ToastUtil.tost("请输入搜索内容");
+                        jumpOther(editTextString, TaskSearchType.searchKey(item.replace("搜", "")));
                     }
                 });
             }
@@ -164,12 +161,10 @@ public class ActivitySearch extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String textViewString = v.getText().toString();
                     if (!TextUtils.isEmpty(textViewString)) {
-                        Jump(textViewString, TaskSearchType.searchKey("全部"));
+                        jump(textViewString, TaskSearchType.searchKey("全部"));
                     } else {
                         ToastUtil.tost("请输入搜索内容");
                     }
-
-
                     return true;
                 }
                 return false;
@@ -184,11 +179,30 @@ public class ActivitySearch extends BaseActivity {
         });
     }
 
-    //跳转
-    private void Jump(String keywords, String searchType) {
+
+    /**
+     * 跳转搜索全部
+     *
+     * @param keywords
+     * @param searchType
+     */
+    private void jump(String keywords, String searchType) {
         Intent intent = new Intent(getContext(), ActivitySearchShow.class);
         intent.putExtra(ActivitySearchShow.KEYWORDS, keywords);//搜索内容
         intent.putExtra(ActivitySearchShow.SEARCHTYPE, searchType);//搜索类型
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转搜索单独分类
+     *
+     * @param keywords
+     * @param searchType
+     */
+    private void jumpOther(String keywords, String searchType) {
+        Intent intent = new Intent(getContext(), ActivitySearchOther.class);
+        intent.putExtra(ActivitySearchOther.KEYWORDS, keywords);//搜索内容
+        intent.putExtra(ActivitySearchOther.SEARCHTYPE, searchType);//搜索类型
         startActivity(intent);
     }
 

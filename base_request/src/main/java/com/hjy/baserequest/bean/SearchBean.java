@@ -213,19 +213,20 @@ public class SearchBean implements Serializable {
         }
 
         public static class GameListBean implements Serializable {
+
             /**
-             * id : 3
-             * name : test
-             * icon :
-             * family_count : 0
-             * familys : []
+             * id : 1
+             * name : 剑侠情缘IIItest
+             * icon : https://jx3.xoyo.com/zt/2020/05/08/fenliuye-pc/assets/img/xfe-layer-9-c0e7a587.png.webp
+             * family_count : 3
+             * familys : [{"id":1,"avatar":"avatar.png"},{"id":2,"avatar":"avatar"},{"id":3,"avatar":"avatar.png"}]
              */
 
             private int id;
             private String name;
             private String icon;
             private int family_count;
-            private List<?> familys;
+            private List<FamilysBean> familys;
 
             public int getId() {
                 return id;
@@ -259,12 +260,38 @@ public class SearchBean implements Serializable {
                 this.family_count = family_count;
             }
 
-            public List<?> getFamilys() {
+            public List<FamilysBean> getFamilys() {
                 return familys;
             }
 
-            public void setFamilys(List<?> familys) {
+            public void setFamilys(List<FamilysBean> familys) {
                 this.familys = familys;
+            }
+
+            public static class FamilysBean implements Serializable {
+                /**
+                 * id : 1
+                 * avatar : avatar.png
+                 */
+
+                private int id;
+                private String avatar;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public String getAvatar() {
+                    return avatar;
+                }
+
+                public void setAvatar(String avatar) {
+                    this.avatar = avatar;
+                }
             }
         }
 
@@ -284,6 +311,15 @@ public class SearchBean implements Serializable {
             private String family_number;
             private int headcount;
             private String game_name;
+            private String cp_server_name;
+
+            public String getCp_server_name() {
+                return cp_server_name;
+            }
+
+            public void setCp_server_name(String cp_server_name) {
+                this.cp_server_name = cp_server_name;
+            }
 
             public int getId() {
                 return id;

@@ -23,6 +23,7 @@ public class FragmentStatePageAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.fm = fm;
         this.mFragments = mFragments;
+
     }
 
     public FragmentStatePageAdapter(FragmentManager fm, List<String> mTitles, List<Fragment> mFragments) {

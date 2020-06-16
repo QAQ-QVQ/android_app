@@ -186,7 +186,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
      * @param data
      */
     public void replaceAll(List<T> data) {
-        if (data != null && data.size() > 0) {
+        if (data != null) {
             if (mList == null) mList = new ArrayList<>();
             mList.clear();
             mList.addAll(data);

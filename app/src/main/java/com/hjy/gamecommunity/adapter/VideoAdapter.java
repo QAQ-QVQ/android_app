@@ -1,11 +1,19 @@
 package com.hjy.gamecommunity.adapter;
 
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NumberUtils;
 import com.hjy.baserequest.bean.SearchBean;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseutil.LoadingImageUtil;
+import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
@@ -19,12 +27,36 @@ import java.util.List;
 public class VideoAdapter<T> extends BaseAdapter<T> {
 
 
-    public VideoAdapter() {
-
+    public VideoAdapter(RecyclerView.LayoutManager layout) {
+        initItemWH(layout);
     }
 
-    public VideoAdapter(List<T> beanList) {
+    public VideoAdapter(List<T> beanList, RecyclerView.LayoutManager layout) {
         super(beanList);
+        initItemWH(layout);
+    }
+
+    /**
+     * @param layout
+     */
+    private int imgW, imgH;
+
+    private void initItemWH(RecyclerView.LayoutManager layout) {
+        if (layout instanceof GridLayoutManager) {
+            imgW = ViewGroup.LayoutParams.MATCH_PARENT;
+            imgH = ConvertUtils.dp2px(96);
+        } else if (layout instanceof LinearLayoutManager) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layout;
+            int orientation = linearLayoutManager.getOrientation();
+            if (orientation == LinearLayoutManager.HORIZONTAL) {
+                imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
+                imgH = (int) (imgW / 1.79f);
+            } else {
+                imgW = ViewGroup.LayoutParams.MATCH_PARENT;
+                imgH = ConvertUtils.dp2px(96);
+            }
+
+        }
     }
 
     @Override
@@ -44,10 +76,12 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
         int layoutId = getLayoutId(viewHolder);
         if (layoutId == R.layout.item_find_video) {
             //视频
+            ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
             TextView mTvLikedNum = viewHolder.findViewById(R.id.tv_LikedNum);
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
+            mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
 
             if (item instanceof SearchBean.DataBean.VideoListBean) {
                 SearchBean.DataBean.VideoListBean videoListBean = (SearchBean.DataBean.VideoListBean) item;

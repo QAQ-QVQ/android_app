@@ -1,14 +1,21 @@
 package com.hjy.gamecommunity.adapter;
 
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NumberUtils;
 import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseutil.LoadingImageUtil;
+import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
@@ -22,12 +29,37 @@ import java.util.List;
 public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
 
-    public FindVideoAdapter() {
+    public FindVideoAdapter(RecyclerView.LayoutManager layout) {
+        initItemWH(layout);
 
     }
 
-    public FindVideoAdapter(List<T> beanList) {
+    public FindVideoAdapter(List<T> beanList,RecyclerView.LayoutManager layout) {
         super(beanList);
+        initItemWH(layout);
+    }
+
+    /**
+     * @param layout
+     */
+    private int imgW, imgH;
+
+    private void initItemWH(RecyclerView.LayoutManager layout) {
+        if (layout instanceof GridLayoutManager) {
+            imgW = ViewGroup.LayoutParams.MATCH_PARENT;
+            imgH = ConvertUtils.dp2px(96);
+        } else if (layout instanceof LinearLayoutManager) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layout;
+            int orientation = linearLayoutManager.getOrientation();
+            if (orientation == LinearLayoutManager.HORIZONTAL) {
+                imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
+                imgH = (int) (imgW / 1.79f);
+            } else {
+                imgW = ViewGroup.LayoutParams.MATCH_PARENT;
+                imgH = ConvertUtils.dp2px(96);
+            }
+
+        }
     }
 
     @Override
@@ -63,12 +95,13 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
         // Log.d("VideoAdapter", "onBindViewHolder:" +position+"--"+ layoutId);
         if (layoutId == R.layout.item_live_customer_service) {
             //客服直播
+            ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
             LinearLayout mLlLab = viewHolder.findViewById(R.id.ll_Lab);
             TextView mTvName = viewHolder.findViewById(R.id.tv_Name);
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
-
+            mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
             if (item instanceof AnchorList.DataBean) {
                 AnchorList.DataBean dataBean = (AnchorList.DataBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
@@ -87,12 +120,13 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
         } else if (layoutId == R.layout.item_find_live_game) {
             //游戏直播
-
+            ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
             LinearLayout mLlLab = viewHolder.findViewById(R.id.ll_Lab);
             TextView mTvName = viewHolder.findViewById(R.id.tv_Name);
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
+            mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
             if (item instanceof AnchorList.DataBean) {
                 AnchorList.DataBean dataBean = (AnchorList.DataBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
@@ -110,12 +144,12 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
         } else if (layoutId == R.layout.item_find_video) {
             //视频
-
+            ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
             TextView mTvLikedNum = viewHolder.findViewById(R.id.tv_LikedNum);
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
-
+            mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
             if (item instanceof VideoList.DataBean.ListBean) {
                 VideoList.DataBean.ListBean listBean = (VideoList.DataBean.ListBean) item;
                 LoadingImageUtil.loadingImag(listBean.getCover_picture(), mRivImage, true);

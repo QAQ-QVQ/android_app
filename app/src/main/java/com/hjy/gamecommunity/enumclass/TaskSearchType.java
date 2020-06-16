@@ -10,8 +10,8 @@ public enum TaskSearchType {
     TYPE0("", "全部"),
     TYPE1("10", "直播"),
     TYPE2("20", "视频"),
-    TYPE3("30", "家族"),
-    TYPE4("40", "游戏"),
+    TYPE3("40", "家族"),
+    TYPE4("30", "游戏"),
     TYPE5("50", "资讯");
 
     private final String key;
@@ -35,6 +35,7 @@ public enum TaskSearchType {
                 return temp.desc;
             }
         }
+
         return "";
     }
 
@@ -52,6 +53,24 @@ public enum TaskSearchType {
         }
         return "";
     }
+
+    /**
+     * @param _desc
+     * @return
+     */
+    public static int indexOf(String _desc) {
+        int index = -1;
+        TaskSearchType[] taskSearchTypes = values();
+        for (int i = 0; i < taskSearchTypes.length; i++) {
+            TaskSearchType taskSearchType = taskSearchTypes[i];
+            if (taskSearchType.getDesc().equals(_desc)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
 
     public String getKey() {
         return key;

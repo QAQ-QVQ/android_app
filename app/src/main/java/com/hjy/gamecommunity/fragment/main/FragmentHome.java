@@ -192,7 +192,7 @@ public class FragmentHome extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerViewVideo.setLayoutManager(linearLayoutManager);
         mRecyclerViewVideo.setNestedScrollingEnabled(false);
-        videoAdapter = new FindVideoAdapter();
+        videoAdapter = new FindVideoAdapter(linearLayoutManager);
         mRecyclerViewVideo.setAdapter(videoAdapter);
 
         //资讯Adapter
