@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
+    android:layout_marginLeft="4dp"
     android:orientation="vertical"
     android:paddingBottom="12dp"
     app:zqy_sll_backgroundColor="@android:color/white"
@@ -15,7 +15,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl"
-        android:layout_width="171dp"
+        android:layout_width="172dp"
         android:layout_height="96dp"
         tools:ignore="MissingConstraints">
 

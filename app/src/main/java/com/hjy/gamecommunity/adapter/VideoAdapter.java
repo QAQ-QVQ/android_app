@@ -4,11 +4,9 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NumberUtils;
 import com.hjy.baserequest.bean.SearchBean;
 import com.hjy.baseui.adapter.BaseAdapter;
@@ -43,17 +41,17 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
 
     private void initItemWH(RecyclerView.LayoutManager layout) {
         if (layout instanceof GridLayoutManager) {
-            imgW = ViewGroup.LayoutParams.MATCH_PARENT;
-            imgH = ConvertUtils.dp2px(96);
+            imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
+            imgH = (int) (imgW / 1.79f);
         } else if (layout instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layout;
             int orientation = linearLayoutManager.getOrientation();
             if (orientation == LinearLayoutManager.HORIZONTAL) {
-                imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
+                imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
                 imgH = (int) (imgW / 1.79f);
             } else {
-                imgW = ViewGroup.LayoutParams.MATCH_PARENT;
-                imgH = ConvertUtils.dp2px(96);
+                imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
+                imgH = (int) (imgW / 1.79f);
             }
 
         }

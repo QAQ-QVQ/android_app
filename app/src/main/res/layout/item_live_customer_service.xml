@@ -15,7 +15,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl"
-        android:layout_width="171dp"
+        android:layout_width="172dp"
         android:layout_height="96dp"
         tools:ignore="MissingConstraints">
 
