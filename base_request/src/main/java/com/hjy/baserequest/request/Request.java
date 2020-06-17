@@ -58,8 +58,9 @@ public class Request {
     public static Request getInstance() {
         if (request == null) {
             synchronized (Request.class) {
-                if (request == null)
+                if (request == null){
                     request = new Request();
+                }
             }
         }
         return request;
@@ -245,8 +246,9 @@ public class Request {
                 //Log.d("jsonObject", "jsonObject:" + jsonObjectString.toString());
                 okgo_postJson(url, jsonObjectString.toString(), absCallback);
             }
-        } else
+        } else{
             absCallback.onFinish();
+        }
     }
 
 
