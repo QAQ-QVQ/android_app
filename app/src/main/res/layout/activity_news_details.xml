@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activity.news.ActivityNewsDetails">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <include layout="@layout/bui_bar_black_white"></include>
+
+        <com.hjy.baseui.ui.view.imageview.ColorStateImageView
+            android:id="@+id/csiv_Share"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="16dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/share_t"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:zqy_csiv_clickImgAlpha="0.5"
+            app:zqy_csiv_imgColor="@color/bui_black_light" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_RichText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:textIsSelectable="true" />
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

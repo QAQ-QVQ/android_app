@@ -31,10 +31,12 @@ import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
+import com.hjy.gamecommunity.activity.news.ActivityNewsList;
 import com.hjy.gamecommunity.activity.search.ActivitySearch;
+import com.hjy.gamecommunity.adapter.FindNewsAdapter;
 import com.hjy.gamecommunity.adapter.FindVideoAdapter;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
-import com.hjy.gamecommunity.adapter.RealTimeInfoAdapter;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -67,7 +69,7 @@ public class FragmentHome extends BaseFragment {
     private RecyclerView mRecyclerViewRealTimeInfo;
     private ColorStateImageView mScivSearch;
     private FindVideoAdapter videoAdapter;
-    private RealTimeInfoAdapter realTimeInfoAdapter;
+    private FindNewsAdapter findNewsAdapter;
     private NestedScrollView mScrollInterceptScrollView;
     private ConstraintLayout mClSearch;
     private TextView mTvTitle;
@@ -198,8 +200,8 @@ public class FragmentHome extends BaseFragment {
         //资讯Adapter
         mRecyclerViewRealTimeInfo.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewRealTimeInfo.setNestedScrollingEnabled(false);
-        realTimeInfoAdapter = new RealTimeInfoAdapter();
-        mRecyclerViewRealTimeInfo.setAdapter(realTimeInfoAdapter);
+        findNewsAdapter = new FindNewsAdapter();
+        mRecyclerViewRealTimeInfo.setAdapter(findNewsAdapter);
 
 
         //设置 Header 样式
@@ -210,7 +212,10 @@ public class FragmentHome extends BaseFragment {
         //设置 Footer  样式
         mSrlRealTimeInfo.setRefreshFooter(new ClassicsFooter(getContext()));
         mSrlRealTimeInfo.setEnableHeaderTranslationContent(false);//是否下拉Header的时候向下平移列表或者内容
-
+        mSrlRealTimeInfo.setEnableAutoLoadMore(false);//是否启用列表惯性滑动到底部时自动加载更多
+        //设置刷新加载时禁止所有列表操作
+        mSrlRealTimeInfo.setDisableContentWhenRefresh(true);
+        mSrlRealTimeInfo.setDisableContentWhenLoading(true);
         mSrlRealTimeInfo.autoRefresh();//自动刷新
     }
 
@@ -298,7 +303,7 @@ public class FragmentHome extends BaseFragment {
         mTvMoreRealTimeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(), ActivityNewsList.class));
             }
         });
         //客服直播、游戏直播、游戏视频  \滑动监听
@@ -351,10 +356,16 @@ public class FragmentHome extends BaseFragment {
         });
 
         //资讯Adapter
-        realTimeInfoAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+        findNewsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Object item, int position) {
+                if (item instanceof NewsList.DataBean.ListBean) {
+                    NewsList.DataBean.ListBean listBean = (NewsList.DataBean.ListBean) item;
 
+                    Intent intent = new Intent(getContext(), ActivityNewsDetails.class);
+                    intent.putExtra(ActivityNewsDetails.NEWS_ID, listBean.getId());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -467,9 +478,9 @@ public class FragmentHome extends BaseFragment {
                 List<NewsList.DataBean.ListBean> newsListDataList = newsListData.getList();
                 if (newsListDataList != null && newsListDataList.size() > 0) {
                     if (pageNews == 1)
-                        realTimeInfoAdapter.replaceAll(newsListDataList);
+                        findNewsAdapter.replaceAll(newsListDataList);
                     else
-                        realTimeInfoAdapter.addItemsToLast(newsListDataList);
+                        findNewsAdapter.addItemsToLast(newsListDataList);
                 } else {
                     if (pageNews == 1) {
                         ToastUtil.tost(newsList.getMsg());

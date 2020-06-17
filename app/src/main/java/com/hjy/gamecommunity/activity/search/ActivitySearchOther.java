@@ -1,5 +1,6 @@
 package com.hjy.gamecommunity.activity.search;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,6 +26,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.adapter.FamilyAdapter;
 import com.hjy.gamecommunity.adapter.GameAdapter;
 import com.hjy.gamecommunity.adapter.LiveAdapter;
@@ -107,7 +109,7 @@ public class ActivitySearchOther extends BaseActivity {
             case SearchEnum.VALUE6:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                baseAdapter = new NewsAdapter();
+                baseAdapter = new NewsAdapter(NewsAdapter.ONE_PICTURES);
                 break;
         }
         mRecyclerView.setAdapter(baseAdapter);
@@ -117,6 +119,8 @@ public class ActivitySearchOther extends BaseActivity {
         if (!TextUtils.isEmpty(keywords)) {
             mAppCompatEditText.setText(keywords);
             Request.getInstance().search(searchType, keywords, searchJsonEntityCallback);
+        } else {
+            mAppCompatEditText.setHint("搜" + searchDesc);
         }
     }
 
@@ -207,6 +211,9 @@ public class ActivitySearchOther extends BaseActivity {
                 } else if (item instanceof SearchBean.DataBean.NewsListBean) {
                     // 资讯
                     SearchBean.DataBean.NewsListBean newsListBean = (SearchBean.DataBean.NewsListBean) item;
+                    Intent intent = new Intent(getContext(), ActivityNewsDetails.class);
+                    intent.putExtra(ActivityNewsDetails.NEWS_ID, newsListBean.getId());
+                    startActivity(intent);
                 }
             }
         });

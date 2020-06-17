@@ -1,5 +1,6 @@
 package com.hjy.gamecommunity.fragment.search;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.activity.search.ActivitySearchShow;
 import com.hjy.gamecommunity.adapter.FamilyAdapter;
 import com.hjy.gamecommunity.adapter.GameAdapter;
@@ -208,7 +210,7 @@ public class FragmentSearch extends BaseFragment {
             contentViewContainer.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
             contentViewContainer.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
 
-            NewsAdapter newsAdapter = new NewsAdapter(news_list);
+            NewsAdapter newsAdapter = new NewsAdapter(news_list,NewsAdapter.ONE_PICTURES);
             contentViewContainer.getmRecyclerView().setAdapter(newsAdapter);
             initlistener(contentViewContainer, newsAdapter);
         }
@@ -266,6 +268,9 @@ public class FragmentSearch extends BaseFragment {
                 } else if (item instanceof SearchBean.DataBean.NewsListBean) {
                     // 资讯
                     SearchBean.DataBean.NewsListBean newsListBean = (SearchBean.DataBean.NewsListBean) item;
+                    Intent intent = new Intent(getContext(), ActivityNewsDetails.class);
+                    intent.putExtra(ActivityNewsDetails.NEWS_ID, newsListBean.getId());
+                    startActivity(intent);
                 }
             }
         });

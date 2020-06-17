@@ -45,7 +45,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"
                 tools:replace="name,resource" />
-        </provider> <!-- *****************************************activity START*************************************************** -->
+        </provider>
+        <!-- *****************************************activity START*************************************************** -->
         <activity android:name=".activity.main.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,24 +78,30 @@
             android:name=".activity.login.ActivityPasswordSetNewPassword"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-        <!--adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏-->
+        <!-- adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏 -->
         <activity
             android:name=".activity.search.ActivitySearch"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.search.ActivitySearchOther"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.search.ActivitySearchShow"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".activity.news.ActivityNewsDetails"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.news.ActivityNewsList"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <!-- *****************************************activity END*************************************************** -->
         <!-- **************************极光 start ******************************* -->
         <!-- 极光渠道配置 -->

@@ -25,6 +25,9 @@ public abstract class JsonEntityCallback<T> extends BaseCallback {
         this.classOfBean = classOfBean;
     }
 
+    public JsonEntityCallback() {
+
+    }
 
 
     @Override

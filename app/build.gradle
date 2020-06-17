@@ -148,5 +148,4 @@ dependencies {
     implementation('com.tencent.tinker:tinker-android-lib:1.9.9') {
         exclude group: 'com.android.support'
     }
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

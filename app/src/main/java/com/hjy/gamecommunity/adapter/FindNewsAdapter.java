@@ -22,24 +22,24 @@ import java.util.List;
  * 时间: 2020/6/10 16:01
  * 描述: 发现-资讯Adapter
  */
-public class RealTimeInfoAdapter<T> extends BaseAdapter<T> {
+public class FindNewsAdapter<T> extends BaseAdapter<T> {
     private TextView mTvTitle;
     private RadiusImageView mRivImage1;
     private RadiusImageView mRivImage2;
     private RadiusImageView mRivImage3;
     private LinearLayout mLlImage;
 
-    public RealTimeInfoAdapter() {
+    public FindNewsAdapter() {
 
     }
 
-    public RealTimeInfoAdapter(List<T> beanList) {
+    public FindNewsAdapter(List<T> beanList) {
         super(beanList);
     }
 
     @Override
     public int getLayout(T item, int position) {
-        return R.layout.item_realtimeinfo;
+        return R.layout.item_news_three_pictures;
     }
 
     /**

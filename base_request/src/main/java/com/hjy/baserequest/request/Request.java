@@ -15,6 +15,7 @@ import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baserequest.bean.MessagePush;
+import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.bean.SearchBean;
@@ -416,7 +417,21 @@ public class Request {
     }
 
     /**
+     * -资讯详情
+     *
+     * @param news_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void newsDetail(int news_id, JsonEntityCallback<NewsDetail> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("news_id", news_id);
+        request(POST, API.newsDetail, jsonObject, jsonEntityCallback);
+    }
+
+    /**
      * 搜索
+     *
      * @param type
      * @param keywords
      * @param jsonEntityCallback

@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
     }
 
-    public FindVideoAdapter(List<T> beanList,RecyclerView.LayoutManager layout) {
+    public FindVideoAdapter(List<T> beanList, RecyclerView.LayoutManager layout) {
         super(beanList);
         initItemWH(layout);
     }
@@ -44,7 +45,9 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
     private void initItemWH(RecyclerView.LayoutManager layout) {
         if (layout instanceof GridLayoutManager) {
-            imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layout;
+            int spanCount = gridLayoutManager.getSpanCount();
+            imgW = (int) (ViewSeting.getScreenWidth() / (spanCount + 0.2f));
             imgH = (int) (imgW / 1.79f);
         } else if (layout instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layout;
@@ -53,8 +56,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
                 imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
                 imgH = (int) (imgW / 1.79f);
             } else {
-                imgW = (int) (ViewSeting.getScreenWidth() / 2.2f);
-                imgH = (int) (imgW / 1.79f);
+                imgW = ViewGroup.LayoutParams.MATCH_PARENT;
+                imgH = ViewGroup.LayoutParams.WRAP_CONTENT;
             }
 
         }
@@ -173,7 +176,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
         }
 
-       // viewHolder.setWaterRipple();//设置水波纹点击效果
+        // viewHolder.setWaterRipple();//设置水波纹点击效果
 
 
     }
