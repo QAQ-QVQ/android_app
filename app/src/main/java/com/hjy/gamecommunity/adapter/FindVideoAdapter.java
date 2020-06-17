@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.NumberUtils;
-import com.hjy.baserequest.bean.AnchorList;
-import com.hjy.baserequest.bean.VideoList;
+import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ViewSeting;
@@ -66,8 +65,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
     @Override
     public int getLayout(T item, int position) {
         int layoutId = 0;
-        if (item instanceof AnchorList.DataBean) {
-            AnchorList.DataBean dataBean = (AnchorList.DataBean) item;
+        if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
+            AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
             switch (dataBean.getType()) {
                 case 1://客服主播
                     layoutId = R.layout.item_live_customer_service;
@@ -79,7 +78,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
                     break;
                 default:
             }
-        } else if (item instanceof VideoList.DataBean.ListBean) {
+        } else if (item instanceof AnchorAndVideoList.DataBean.VideoListBean) {
             //视频
             layoutId = R.layout.item_find_video;
             // Log.d("VideoAdapter", "视频layoutId:" +position+"--"+ layoutId);
@@ -103,8 +102,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
             mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
-            if (item instanceof AnchorList.DataBean) {
-                AnchorList.DataBean dataBean = (AnchorList.DataBean) item;
+            if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
+                AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
                 mTvTitle.setText("客服直播");
                 if (!TextUtils.isEmpty(dataBean.getNickname()))
@@ -128,8 +127,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
             mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
-            if (item instanceof AnchorList.DataBean) {
-                AnchorList.DataBean dataBean = (AnchorList.DataBean) item;
+            if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
+                AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
                 mTvTitle.setText("客服直播");
                 mTvName.setText(dataBean.getNickname());
@@ -151,8 +150,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             TextView mTvHotspotNum = viewHolder.findViewById(R.id.tv_HotspotNum);
             TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);
             mCl.setLayoutParams(new LinearLayout.LayoutParams(imgW, imgH));
-            if (item instanceof VideoList.DataBean.ListBean) {
-                VideoList.DataBean.ListBean listBean = (VideoList.DataBean.ListBean) item;
+            if (item instanceof AnchorAndVideoList.DataBean.VideoListBean) {
+                AnchorAndVideoList.DataBean.VideoListBean listBean = (AnchorAndVideoList.DataBean.VideoListBean) item;
                 LoadingImageUtil.loadingImag(listBean.getCover_picture(), mRivImage, true);
                 mTvTitle.setText(listBean.getTitle());
 

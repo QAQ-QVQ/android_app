@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hjy.baserequest.bean.AccountsLoginUserBean;
+import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
@@ -377,6 +378,16 @@ public class Request {
         request(POST, API.findBanner, jsonObject, jsonEntityCallback);
     }
 
+
+    /**
+     * 发现-（客服/游戏主播& 视频）
+     *
+     * @param jsonEntityCallback
+     */
+    public void anchorAndVideoList(JsonEntityCallback<AnchorAndVideoList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.anchorAndVideoList, jsonObject, jsonEntityCallback);
+    }
 
     /**
      * （客服直播、游戏直播）
