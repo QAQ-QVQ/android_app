@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <!--提示信息区-->
+    <LinearLayout
+        android:id="@+id/ll_Msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <TextView
+            android:id="@+id/tv_Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xxx"
+            android:textColor="@color/bui_black_light1"
+            android:textSize="18sp" />
+
+
+        <com.hjy.baseui.ui.view.textview.SuperTextView
+            android:id="@+id/tv_More"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更多>"
+            android:textColor="@color/bui_black_light"
+            android:textSize="10sp"
+            app:zqy_stv_clickAlpha="0.5" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

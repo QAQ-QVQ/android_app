@@ -16,7 +16,7 @@ android {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'armeabi-v7a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-       }
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -131,7 +131,7 @@ dependencies {
     implementation project(path: ':xui_lib_v1.0.9')//可以说是最强最全的ui库了（sdk尽量別使用）
 
     //完整版引入（6.0.3以上用的是androidx），支持IJKplayer、ExoPlayer、MediaPlaye切换、自定义内核
-    implementation ('com.shuyu:GSYVideoPlayer:6.0.3') {
+    implementation('com.shuyu:GSYVideoPlayer:6.0.3') {
         exclude group: 'com.android.support'
     }
     //富文本，用于 资讯或新闻 详情页
@@ -145,7 +145,7 @@ dependencies {
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     //指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
-    implementation ('com.tencent.tinker:tinker-android-lib:1.9.9') {
+    implementation('com.tencent.tinker:tinker-android-lib:1.9.9') {
         exclude group: 'com.android.support'
     }
 }

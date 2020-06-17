@@ -15,8 +15,10 @@ import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baserequest.bean.MessagePush;
+import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.bean.SearchBean;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
@@ -414,6 +416,33 @@ public class Request {
         jsonObject.addProperty("page", page);
         jsonObject.addProperty("limit", limit);
         request(POST, API.newsList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * -资讯详情
+     *
+     * @param news_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void newsDetail(int news_id, JsonEntityCallback<NewsDetail> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("news_id", news_id);
+        request(POST, API.newsDetail, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 搜索
+     *
+     * @param type
+     * @param keywords
+     * @param jsonEntityCallback
+     */
+    public void search(String type, String keywords, JsonEntityCallback<SearchBean> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", type);
+        jsonObject.addProperty("keywords", keywords);
+        request(POST, API.search, jsonObject, jsonEntityCallback);
     }
 
 

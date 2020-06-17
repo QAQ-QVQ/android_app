@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".activity.search.ActivitySearch"
+    tools:ignore="MissingConstraints">
+
+    <LinearLayout
+        android:id="@+id/ll_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="6dp"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include layout="@layout/bui_back_black_transparent"></include>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+           >
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/appCompatEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/gray_solid_corners_style"
+                android:drawableLeft="@drawable/search_gray_t"
+                android:drawablePadding="10dp"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:inputType="textAutoComplete"
+                android:maxLines="1"
+                android:paddingLeft="15dp"
+                android:paddingTop="6dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="6dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="#999999"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/ib_xx"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ed_delete_t" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/gray_light"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="指定搜索内容"
+            android:textColor="@color/bui_black_light"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

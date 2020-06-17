@@ -19,6 +19,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.enumclass.SmsEnum;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -181,7 +182,7 @@ public class ActivityGetVerificationCode extends BaseActivity implements View.On
                         ToastUtil.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
-                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "app_forgetPassword", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, SmsEnum.i().getKey(SmsEnum.VALUE3), new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {

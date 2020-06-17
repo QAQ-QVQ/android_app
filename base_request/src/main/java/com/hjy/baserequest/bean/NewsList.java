@@ -10,11 +10,10 @@ import java.util.List;
  */
 public class NewsList implements Serializable {
 
-
     /**
      * code : 200
      * msg : 资讯列表
-     * data : {"list":[{"id":1,"title":"test","cover_picture":"https://qiyuapp.oss-cn-beijing.aliyuncs.com/images/1.png"}],"count":1}
+     * data : {"list":[{"id":3,"title":"资讯3","cover_picture":"[\"https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg\"]"},{"id":1,"title":"资讯1test","cover_picture":"[\"https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg\",\"https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg\"]"},{"id":2,"title":"资讯2","cover_picture":"[\"https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg\"]"}],"count":3}
      */
 
     private int code;
@@ -47,8 +46,8 @@ public class NewsList implements Serializable {
 
     public static class DataBean implements Serializable {
         /**
-         * list : [{"id":1,"title":"test","cover_picture":"https://qiyuapp.oss-cn-beijing.aliyuncs.com/images/1.png"}]
-         * count : 1
+         * list : [{"id":3,"title":"资讯3","cover_picture":"[\"https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg\"]"},{"id":1,"title":"资讯1test","cover_picture":"[\"https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg\",\"https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg\"]"},{"id":2,"title":"资讯2","cover_picture":"[\"https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg\"]"}]
+         * count : 3
          */
 
         private int count;
@@ -71,10 +70,11 @@ public class NewsList implements Serializable {
         }
 
         public static class ListBean implements Serializable {
+
             /**
              * id : 1
-             * title : test
-             * cover_picture : https://qiyuapp.oss-cn-beijing.aliyuncs.com/images/1.png
+             * title : 资讯1test
+             * cover_picture : ["https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg","https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3892521478,1695688217&fm=26&gp=0.jpg"]
              */
 
             private int id;

@@ -204,7 +204,6 @@ public class SuperDrawable extends GradientDrawable {
      */
     public SuperDrawable setSColors(int[] colors) {
         this.colors = colors;
-
         return this;
     }
 
