@@ -36,6 +36,7 @@ import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
 import com.hjy.gamecommunity.dialog.ExitDialog;
+import com.hjy.gamecommunity.enumclass.SmsEnum;
 
 import java.util.List;
 import java.util.Timer;
@@ -281,7 +282,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                         ToastUtil.tost("请输入正确的手机号");
                     } else {
                         //获取短信验证码
-                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, "app_quickLogin", new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+                        Request.getInstance().smsVerificationCode(mEdLoginPhoneString, SmsEnum.i().getKey(SmsEnum.VALUE1), new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
                             @Override
                             protected void onSuccess(DescAndCode descAndCode) {
                                 if (descAndCode.getCode() == 200) {

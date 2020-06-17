@@ -24,7 +24,7 @@ import com.hjy.gamecommunity.adapter.GameAdapter;
 import com.hjy.gamecommunity.adapter.LiveAdapter;
 import com.hjy.gamecommunity.adapter.NewsAdapter;
 import com.hjy.gamecommunity.adapter.VideoAdapter;
-import com.hjy.gamecommunity.enumclass.TaskSearchType;
+import com.hjy.gamecommunity.enumclass.SearchEnum;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,7 +51,7 @@ public class FragmentSearch extends BaseFragment {
     public void refreshData(final String searchType, final String keywords) {
         currentSearchType = searchType;
         currentKeywords = keywords;
-        searchDesc = TaskSearchType.searchDesc(currentSearchType);
+        searchDesc = SearchEnum.i().getValue(currentSearchType);
         if (isVisible) {
             Request.getInstance().search(searchType, keywords, searchJsonEntityCallback);
         }
@@ -130,15 +130,15 @@ public class FragmentSearch extends BaseFragment {
 
         if (live_list != null && live_list.size() > 0) {
             ContentViewContainer contentViewContainer = getContentViewContainer();
-            stringFragmentSearchMap.put("直播", contentViewContainer);
+            stringFragmentSearchMap.put(SearchEnum.VALUE2, contentViewContainer);
             mLlContent.addView(contentViewContainer.getRootView());
-            contentViewContainer.getmTvTitle().setText("直播");
+            contentViewContainer.getmTvTitle().setText(SearchEnum.VALUE2);
 
             int dp2px = ConvertUtils.dp2px(8);
             contentViewContainer.getmRecyclerView().setPadding(dp2px, 0, dp2px, 0);
 
             RecyclerView.LayoutManager layoutManager;
-            if (searchDesc.equals("全部")) {
+            if (searchDesc.equals(SearchEnum.VALUE1)) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 layoutManager = linearLayoutManager;
@@ -154,15 +154,15 @@ public class FragmentSearch extends BaseFragment {
         }
         if (video_list != null && video_list.size() > 0) {
             ContentViewContainer contentViewContainer = getContentViewContainer();
-            stringFragmentSearchMap.put("视频", contentViewContainer);
+            stringFragmentSearchMap.put(SearchEnum.VALUE3, contentViewContainer);
             mLlContent.addView(contentViewContainer.getRootView());
-            contentViewContainer.getmTvTitle().setText("视频");
+            contentViewContainer.getmTvTitle().setText(SearchEnum.VALUE3);
 
             int dp2px = ConvertUtils.dp2px(8);
             contentViewContainer.getmRecyclerView().setPadding(dp2px, 0, dp2px, 0);
 
             RecyclerView.LayoutManager layoutManager;
-            if (searchDesc.equals("全部")) {
+            if (searchDesc.equals(SearchEnum.VALUE1)) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 layoutManager = linearLayoutManager;
@@ -178,9 +178,9 @@ public class FragmentSearch extends BaseFragment {
         }
         if (family_list != null && family_list.size() > 0) {
             ContentViewContainer contentViewContainer = getContentViewContainer();
-            stringFragmentSearchMap.put("家族", contentViewContainer);
+            stringFragmentSearchMap.put(SearchEnum.VALUE4, contentViewContainer);
             mLlContent.addView(contentViewContainer.getRootView());
-            contentViewContainer.getmTvTitle().setText("家族");
+            contentViewContainer.getmTvTitle().setText(SearchEnum.VALUE4);
             contentViewContainer.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
             contentViewContainer.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -190,9 +190,9 @@ public class FragmentSearch extends BaseFragment {
         }
         if (game_list != null && game_list.size() > 0) {
             ContentViewContainer contentViewContainer = getContentViewContainer();
-            stringFragmentSearchMap.put("游戏", contentViewContainer);
+            stringFragmentSearchMap.put(SearchEnum.VALUE5, contentViewContainer);
             mLlContent.addView(contentViewContainer.getRootView());
-            contentViewContainer.getmTvTitle().setText("游戏");
+            contentViewContainer.getmTvTitle().setText(SearchEnum.VALUE5);
             contentViewContainer.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
             contentViewContainer.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
 
@@ -202,9 +202,9 @@ public class FragmentSearch extends BaseFragment {
         }
         if (news_list != null && news_list.size() > 0) {
             ContentViewContainer contentViewContainer = getContentViewContainer();
-            stringFragmentSearchMap.put("资讯", contentViewContainer);
+            stringFragmentSearchMap.put(SearchEnum.VALUE6, contentViewContainer);
             mLlContent.addView(contentViewContainer.getRootView());
-            contentViewContainer.getmTvTitle().setText("资讯");
+            contentViewContainer.getmTvTitle().setText(SearchEnum.VALUE6);
             contentViewContainer.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
             contentViewContainer.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
 
@@ -213,7 +213,7 @@ public class FragmentSearch extends BaseFragment {
             initlistener(contentViewContainer, newsAdapter);
         }
 
-        if (!searchDesc.equals("全部")) {
+        if (!searchDesc.equals(SearchEnum.VALUE1)) {
             //如果当前搜索内容不是全部  则隐藏提示view
             ContentViewContainer contentViewContainer = stringFragmentSearchMap.get(searchDesc);
             if (contentViewContainer != null)
@@ -234,18 +234,6 @@ public class FragmentSearch extends BaseFragment {
             @Override
             public void onClick(View v) {
                 String mTvTitleString = contentViewContainer.getmTvTitle().getText().toString();
-                switch (mTvTitleString) {
-                    case "直播":
-                        break;
-                    case "视频":
-                        break;
-                    case "家族":
-                        break;
-                    case "游戏":
-                        break;
-                    case "资讯":
-                        break;
-                }
 
                 if (getActivity() instanceof ActivitySearchShow) {
                     ActivitySearchShow activitySearchShow = (ActivitySearchShow) getActivity();

@@ -30,7 +30,7 @@ import com.hjy.gamecommunity.adapter.GameAdapter;
 import com.hjy.gamecommunity.adapter.LiveAdapter;
 import com.hjy.gamecommunity.adapter.NewsAdapter;
 import com.hjy.gamecommunity.adapter.VideoAdapter;
-import com.hjy.gamecommunity.enumclass.TaskSearchType;
+import com.hjy.gamecommunity.enumclass.SearchEnum;
 
 import java.util.List;
 
@@ -78,33 +78,33 @@ public class ActivitySearchOther extends BaseActivity {
 
         keywords = getIntent().getStringExtra(KEYWORDS);
         searchType = getIntent().getStringExtra(SEARCHTYPE);
-        searchDesc = TaskSearchType.searchDesc(searchType);
+        searchDesc = SearchEnum.i().getValue(searchType);
 
         int dp2px = ConvertUtils.dp2px(8);
         switch (searchDesc) {
-            case "直播":
+            case SearchEnum.VALUE2:
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager);
                 baseAdapter = new LiveAdapter(gridLayoutManager);
                 break;
-            case "视频":
+            case SearchEnum.VALUE3:
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager2);
                 baseAdapter = new VideoAdapter(gridLayoutManager2);
                 break;
-            case "家族":
+            case SearchEnum.VALUE4:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 baseAdapter = new FamilyAdapter();
                 break;
-            case "游戏":
+            case SearchEnum.VALUE5:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 baseAdapter = new GameAdapter();
                 break;
-            case "资讯":
+            case SearchEnum.VALUE6:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 baseAdapter = new NewsAdapter();
@@ -228,19 +228,19 @@ public class ActivitySearchOther extends BaseActivity {
                 List<SearchBean.DataBean.NewsListBean> news_list = searchBeanData.getNews_list();//资讯
 
                 switch (searchDesc) {
-                    case "直播":
+                    case SearchEnum.VALUE2:
                         baseAdapter.replaceAll(live_list);
                         break;
-                    case "视频":
+                    case SearchEnum.VALUE3:
                         baseAdapter.replaceAll(video_list);
                         break;
-                    case "家族":
+                    case SearchEnum.VALUE4:
                         baseAdapter.replaceAll(family_list);
                         break;
-                    case "游戏":
+                    case SearchEnum.VALUE5:
                         baseAdapter.replaceAll(game_list);
                         break;
-                    case "资讯":
+                    case SearchEnum.VALUE6:
                         baseAdapter.replaceAll(news_list);
                         break;
                 }

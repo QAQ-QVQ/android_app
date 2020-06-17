@@ -19,7 +19,7 @@ import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
-import com.hjy.gamecommunity.enumclass.TaskSearchType;
+import com.hjy.gamecommunity.enumclass.SearchEnum;
 import com.hjy.gamecommunity.fragment.search.FragmentSearch;
 import com.xuexiang.xui.widget.tabbar.TabSegment;
 
@@ -70,12 +70,12 @@ public class ActivitySearchShow extends BaseActivity {
         String searchType = getIntent().getStringExtra(SEARCHTYPE);
 
 
-        for (TaskSearchType value : TaskSearchType.values()) {
-            mTabSegment.addTab(new TabSegment.Tab(value.getDesc()));
+        for (String value : SearchEnum.i().getValue()) {
+            mTabSegment.addTab(new TabSegment.Tab(value));
 
             FragmentSearch fragmentSearchAll = new FragmentSearch();
-            fragmentSearchAll.refreshData(value.getKey(), keywords);
-            mFragments.put(value.getDesc(), fragmentSearchAll);
+            fragmentSearchAll.refreshData(SearchEnum.i().getKey(value), keywords);
+            mFragments.put(value, fragmentSearchAll);
         }
 
         List<Fragment> fragmentList = new ArrayList<>();
@@ -90,10 +90,9 @@ public class ActivitySearchShow extends BaseActivity {
         //不使用ViewPager的话，必须notifyDataChanged，否则不能正常显示
 //        mTabSegment.notifyDataChanged();
 //        mTabSegment.selectTab(0);
-
         if (!TextUtils.isEmpty(keywords)) {
             mAppCompatEditText.setText(keywords);
-            selectTab(TaskSearchType.searchDesc(searchType));
+            selectTab(SearchEnum.i().getValue(searchType));
         }
     }
 
@@ -145,7 +144,7 @@ public class ActivitySearchShow extends BaseActivity {
                         for (Map.Entry<String, FragmentSearch> entry : mFragments.entrySet()) {
                             String key = entry.getKey();
                             FragmentSearch value = entry.getValue();
-                            value.refreshData(TaskSearchType.searchKey(key), textViewString);
+                            value.refreshData(SearchEnum.i().getKey(key), textViewString);
                         }
                     } else {
                         ToastUtil.tost("请输入搜索内容");
@@ -199,9 +198,9 @@ public class ActivitySearchShow extends BaseActivity {
 
 
     public void selectTab(String title) {
-        int indexOf = TaskSearchType.indexOf(title);
+        int indexOf = SearchEnum.i().indexOfV(title);
         mViewPagerContent.setCurrentItem(indexOf);
-       // mTabSegment.selectTab(indexOf);
+        // mTabSegment.selectTab(indexOf);
     }
 
 

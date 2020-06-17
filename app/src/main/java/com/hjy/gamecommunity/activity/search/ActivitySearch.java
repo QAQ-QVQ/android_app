@@ -22,7 +22,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
-import com.hjy.gamecommunity.enumclass.TaskSearchType;
+import com.hjy.gamecommunity.enumclass.SearchEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +75,9 @@ public class ActivitySearch extends BaseActivity {
         mRecyclerView.setNestedScrollingEnabled(false);
 
         List<String> stringList = new ArrayList<>();
-        for (TaskSearchType value : TaskSearchType.values()) {
-            if (!value.getDesc().equals("全部"))
-                stringList.add("搜" + value.getDesc());
+        for (String value : SearchEnum.i().getValue()) {
+            if (!value.equals(SearchEnum.VALUE1))
+                stringList.add("搜" + value);
         }
         mRecyclerView.setAdapter(new BaseAdapter<String>(stringList) {
             @Override
@@ -109,7 +109,7 @@ public class ActivitySearch extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         String editTextString = mAppCompatEditText.getText().toString();
-                        jumpOther(editTextString, TaskSearchType.searchKey(item.replace("搜", "")));
+                        jumpOther(editTextString, SearchEnum.i().getKey(item.replace("搜", "")));
                     }
                 });
             }
@@ -161,7 +161,7 @@ public class ActivitySearch extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String textViewString = v.getText().toString();
                     if (!TextUtils.isEmpty(textViewString)) {
-                        jump(textViewString, TaskSearchType.searchKey("全部"));
+                        jump(textViewString, SearchEnum.i().getKey(SearchEnum.VALUE1));
                     } else {
                         ToastUtil.tost("请输入搜索内容");
                     }
