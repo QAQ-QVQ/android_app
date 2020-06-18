@@ -242,7 +242,6 @@ public class FragmentHome extends BaseFragment {
                 Request.getInstance().newsList(++pageNews, limitNews = 10, newsListJsonEntityCallback);
             }
 
-
         });
 
 

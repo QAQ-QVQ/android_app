@@ -1,17 +1,13 @@
 package com.hjy.baseui.ui.view.popup;
 
 import android.app.Activity;
-import android.graphics.drawable.StateListDrawable;
-import android.support.v4.content.ContextCompat;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-
-import com.blankj.utilcode.util.ConvertUtils;
-import com.hjy.baseui.ui.SuperDrawable;
 
 
 /**
@@ -68,14 +64,14 @@ public abstract class BasePopup extends PopupWindow {
 
         setContentView(mainRootView);
 
+        setWidth(width);
 
-        setWidth(ConvertUtils.dp2px(width));
-        setHeight(ConvertUtils.dp2px(height));
+
+        setHeight(height);
+
 
         setOutsideTouchable(true);//外部可点击
         setAnimationStyle(android.R.style.Animation_Toast);//动画
-
-
 
 
         initView(mainRootView);
@@ -142,36 +138,26 @@ public abstract class BasePopup extends PopupWindow {
 
 
     /**
-     * 单背景样式
-     *
-     * @return
-     */
-    private StateListDrawable getStateListDrawable(int radius, int colorId) {
-        StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(1f)//设置点击后透明度
-                .setRadius(radius)//圆角
-                .setColorBg(ContextCompat.getColor(activity, colorId))//背景颜色
-                .buid();
-        return stateListDrawable;
-    }
-
-    /**
      * 设置PopupWindow透明度
      */
-    public void setPopupWindowAlpha(float alpha) {
-        getBackground().setAlpha(0);
-        mainRootView.setAlpha(alpha);
+    public void setPopupWindowAlpha(int alpha) {
+        getBackground().setAlpha(alpha);
     }
 
     /**
      * 设置PopupWindow圆角
      */
-    public void setPopupWindowRadiusColos(int radius, int colorId) {
-        mainRootView.setBackground(getStateListDrawable(radius, colorId));
+    public void setRootViewBackground(Drawable drawable) {
+        mainRootView.setBackground(drawable);
     }
 
 
     public View getRootView() {
         return mainRootView;
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 
     @Override

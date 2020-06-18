@@ -11,6 +11,7 @@ import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.imageview.ColorStateImageView;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.utils.ShareUtil;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
@@ -19,7 +20,11 @@ import com.zzhoujay.richtext.callback.ImageFixCallback;
 import com.zzhoujay.richtext.callback.OnImageClickListener;
 import com.zzhoujay.richtext.callback.OnImageLongClickListener;
 
+import java.util.HashMap;
 import java.util.List;
+
+import cn.jiguang.share.android.api.Platform;
+import cn.jiguang.share.android.api.ShareParams;
 
 /**
  * 作者: zhangqingyou
@@ -74,7 +79,25 @@ public class ActivityNewsDetails extends BaseActivity {
         mCsivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (detailData != null) {
+                    ShareParams shareParams = ShareUtil.getShareParams("标题（字段待确认）", "文本内容（字段待确认）", "https://www.baidu.com");
+                    ShareUtil.getInstance().shareDialog(getActivity(), mCsivShare, shareParams, new ShareUtil.SharingResultsListener() {
+                        @Override
+                        public void onComplete(Platform platform, int action, HashMap<String, Object> data) {
 
+                        }
+
+                        @Override
+                        public void onError(Platform platform, int action, int errorCode, Throwable error) {
+
+                        }
+
+                        @Override
+                        public void onCancel(Platform platform, int action) {
+
+                        }
+                    });
+                }
             }
         });
     }
@@ -128,7 +151,7 @@ public class ActivityNewsDetails extends BaseActivity {
                 .resetSize(true) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效）
                 .scaleType(ImageHolder.ScaleType.fit_auto) // 图片缩放方式
                 //.size((int) width, (int) height)
-               // .errorImage(errorImage) // 设置加载失败的错误图
+                // .errorImage(errorImage) // 设置加载失败的错误图
                 .cache(CacheType.all) // 缓存类型，默认为Cache.ALL（缓存图片和图片大小信息和文本样式信息）
                 .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
                 .clickable(true) // 是否可点击，默认只有设置了点击监听才可点击
@@ -139,10 +162,9 @@ public class ActivityNewsDetails extends BaseActivity {
                             String imageUrl = imageUrls.get(position);
                             //showMaxImage(imageUrl);
                             Log.d("imageClicked", "imageUrls:" + imageUrls.get(position));
-
                         }
                     }
-                }) // 设置图片点击回调
+                }) //设置图片点击回调
                 .imageLongClick(new OnImageLongClickListener() {
                     @Override
                     public boolean imageLongClicked(List<String> imageUrls, int position) {
@@ -163,10 +185,11 @@ public class ActivityNewsDetails extends BaseActivity {
     /***
      *
      */
+    private NewsDetail.DataBean detailData;
     JsonEntityCallback newsDetailJsonEntityCallback = new JsonEntityCallback<NewsDetail>(NewsDetail.class) {
         @Override
         protected void onSuccess(NewsDetail newsDetail) {
-            NewsDetail.DataBean detailData = newsDetail.getData();
+            detailData = newsDetail.getData();
             if (detailData != null) {
                 richText(detailData.getContent());
             }
