@@ -45,7 +45,8 @@ public class FragmentCustomerServiceMsg extends BaseFragment {
 
     @Override
     public void initData() {
-        LoadingImageUtil.loadingImag(listBean.getSecond_resource(), mIvImage, true);
+        if (listBean != null)
+            LoadingImageUtil.loadingImag(listBean.getSecond_resource(), mIvImage, true);
     }
 
     @Override
