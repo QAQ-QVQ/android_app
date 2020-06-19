@@ -11,6 +11,14 @@ import java.util.Map;
  */
 public abstract class Enum<K, V> implements EnumImp<K, V> {
 
+    private Map<K, V> kvMap;
+
+    public Enum() {
+        if (kvMap == null) {
+            kvMap = addEnum();
+        }
+    }
+
     /**
      * 添加所有Enum
      *
@@ -18,14 +26,6 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
      */
     protected abstract Map<K, V> addEnum();
 
-    private Map<K, V> kvMap;
-
-    private Map<K, V> initEnum() {
-        if (kvMap == null) {
-            kvMap = addEnum();
-        }
-        return kvMap;
-    }
 
     /**
      * 根据key查value
@@ -35,7 +35,6 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
      */
     @Override
     public V getValue(K k) {
-        Map<K, V> kvMap = initEnum();
         return kvMap.get(k);
 
     }
@@ -48,7 +47,6 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
      */
     @Override
     public K getKey(V v) {
-        Map<K, V> kvMap = initEnum();
         K _k = null;
         for (K k : kvMap.keySet()) {
             if (kvMap.get(k).equals(v)) {
@@ -61,14 +59,12 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
 
     @Override
     public List<K> getKey() {
-        Map<K, V> kvMap = initEnum();
         List<K> ks = new ArrayList<>(kvMap.keySet());
         return ks;
     }
 
     @Override
     public List<V> getValue() {
-        Map<K, V> kvMap = initEnum();
         List<V> vs = new ArrayList<>(kvMap.values());
         return vs;
     }
@@ -81,7 +77,6 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
      */
     @Override
     public int indexOfK(K k) {
-        Map<K, V> kvMap = initEnum();
         int index = -1;
         Object[] toArray = kvMap.keySet().toArray();
         for (int i = 0; i < toArray.length; i++) {
@@ -101,11 +96,9 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
      */
     @Override
     public int indexOfV(V v) {
-        Map<K, V> kvMap = initEnum();
         int index = -1;
         Object[] toArray = kvMap.values().toArray();
         for (int i = 0; i < toArray.length; i++) {
-
             if (toArray[i].equals(v)) {
                 index = i;
                 break;
@@ -118,16 +111,13 @@ public abstract class Enum<K, V> implements EnumImp<K, V> {
 
     @Override
     public int size() {
-        Map<K, V> kvMap = initEnum();
         return kvMap.size();
     }
 
     @Override
     public String toString() {
-        Map<K, V> kvMap = initEnum();
         return kvMap.toString();
     }
-
 
 }
 

@@ -319,6 +319,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
 
             case R.id.tv_VisitorLogin://游客登录
                 Request.getInstance().visitorLogin(visitorLoginJsonEntityCallback);
+
                 break;
         }
     }

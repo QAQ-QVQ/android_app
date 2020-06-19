@@ -18,6 +18,9 @@ public class SmsEnum extends Enum<String, String> {
     public final static String VALUE3 = "忘记密码";
     public final static String VALUE4 = "修改密码";
 
+    private SmsEnum() {
+        super();
+    }
 
     public static SmsEnum i() {
         if (mInstance == null) {

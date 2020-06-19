@@ -25,7 +25,6 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View mRootView) {
-
         mTv = (TextView) findViewById(R.id.tv);
         mTv.setOnClickListener(this);
     }

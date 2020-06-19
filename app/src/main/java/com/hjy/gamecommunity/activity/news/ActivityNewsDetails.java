@@ -15,8 +15,6 @@ import com.hjy.gamecommunity.utils.ShareUtil;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
-import com.zzhoujay.richtext.RichType;
-import com.zzhoujay.richtext.callback.ImageFixCallback;
 import com.zzhoujay.richtext.callback.OnImageClickListener;
 import com.zzhoujay.richtext.callback.OnImageLongClickListener;
 
@@ -108,53 +106,19 @@ public class ActivityNewsDetails extends BaseActivity {
      * @param richText
      */
     private void richText(String richText) {
-        RichText.from(richText, RichType.markdown)
+        RichText.fromMarkdown(richText)
                 .bind(this)
-                .autoFix(false) // 是否自动修复，默认true
+                .autoFix(true) // 是否自动修复，默认true
                 .autoPlay(true) // gif图片是否自动播放
                 .showBorder(false) // 是否显示图片边框
                 .borderColor(getResources().getColor(R.color.colorPrimary)) // 图片边框颜色
                 .borderSize(5) // 边框尺寸
                 .borderRadius(20) // 图片边框圆角弧度
-                .fix(new ImageFixCallback() {
-                    @Override
-                    public void onInit(ImageHolder holder) {
-
-                    }
-
-                    @Override
-                    public void onLoading(ImageHolder holder) {
-
-                    }
-
-                    @Override
-                    public void onSizeReady(ImageHolder holder, int imageWidth, int imageHeight, ImageHolder.SizeHolder sizeHolder) {
-//                        int screenWidth = ViewSeting.getScreenWidth();
-//                        int width2 = (int) (screenWidth * 0.9);
-//                        int height2 = (int) (width2 * 1.5);
-//                        holder.setWidth(width2);
-//                        holder.setHeight(height2);
-
-
-                    }
-
-                    @Override
-                    public void onImageReady(ImageHolder holder, int width, int height) {
-
-                    }
-
-                    @Override
-                    public void onFailure(ImageHolder holder, Exception e) {
-
-                    }
-                }) // 设置自定义修复图片宽高
                 .resetSize(true) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效）
                 .scaleType(ImageHolder.ScaleType.fit_auto) // 图片缩放方式
-                //.size((int) width, (int) height)
-                // .errorImage(errorImage) // 设置加载失败的错误图
                 .cache(CacheType.all) // 缓存类型，默认为Cache.ALL（缓存图片和图片大小信息和文本样式信息）
                 .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
-                .clickable(true) // 是否可点击，默认只有设置了点击监听才可点击
+                .clickable(false) // 是否可点击，默认只有设置了点击监听才可点击
                 .imageClick(new OnImageClickListener() {
                     @Override
                     public void imageClicked(List<String> imageUrls, int position) {

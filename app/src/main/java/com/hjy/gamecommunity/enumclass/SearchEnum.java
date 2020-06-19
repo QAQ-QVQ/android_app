@@ -19,6 +19,9 @@ public class SearchEnum extends Enum<String, String> {
     public final static String VALUE5 = "游戏";
     public final static String VALUE6 = "资讯";
 
+    private SearchEnum() {
+        super();
+    }
 
     public static SearchEnum i() {
         if (mInstance == null) {
