@@ -87,7 +87,7 @@ public class TabLayoutX extends HorizontalScrollView {
 
     private static final int DEFAULT_HEIGHT_WITH_TEXT_ICON = 72; // dps
     static final int DEFAULT_GAP_TEXT_ICON = 8; // dps
-    private static final int INVALID_WIDTH = -1;
+    private static final int INVALID_WIDTH = -1;//
     private static int DEFAULT_HEIGHT = -1; // dps -1:根据字体大小自适应高度
     private static final int TAB_MIN_WIDTH_MARGIN = 56; //dps
     static final int FIXED_WRAP_GUTTER_MIN = 16; //dps
