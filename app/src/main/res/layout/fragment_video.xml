@@ -7,6 +7,23 @@
     android:background="@android:color/white"
     tools:ignore="MissingConstraints">
 
+    <com.hjy.baseui.ui.view.tablayout.TabLayoutX
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:zqy_tabIndicatorColor="@color/colorPrimaryDark"
+        app:zqy_tabIndicatorHeight="2dp"
+        app:zqy_tabLineOffset="15dp"
+        app:zqy_tabPaddingBottom="3dp"
+        app:zqy_tabPaddingTop="10dp"
+        app:zqy_tabSelectedTextColor="@color/colorPrimaryDark"
+        app:zqy_tabTextColor="@color/gray_dark"
+        app:zqy_textStyle="bold"></com.hjy.baseui.ui.view.tablayout.TabLayoutX>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
