@@ -41,7 +41,6 @@ public class CacheUtil {
         return getSystemPath() + "/user";
     }
 
-
     //数据缓存目录
     public static String getPackageDataPath() {
         return getSystemPath() + "/data";
@@ -84,7 +83,6 @@ public class CacheUtil {
     //下载缓存目录（可清除）
     public static String getDownloadPath() {
         return getStoragePath() + "/download";
-
     }
 
 

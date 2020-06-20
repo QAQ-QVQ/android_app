@@ -20,6 +20,7 @@ import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.bean.SearchBean;
+import com.hjy.baserequest.bean.VideoDetail;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
@@ -61,7 +62,7 @@ public class Request {
     public static Request getInstance() {
         if (request == null) {
             synchronized (Request.class) {
-                if (request == null){
+                if (request == null) {
                     request = new Request();
                 }
             }
@@ -249,7 +250,7 @@ public class Request {
                 //Log.d("jsonObject", "jsonObject:" + jsonObjectString.toString());
                 okgo_postJson(url, jsonObjectString.toString(), absCallback);
             }
-        } else{
+        } else {
             absCallback.onFinish();
         }
     }
@@ -413,6 +414,38 @@ public class Request {
         jsonObject.addProperty("page", page);
         jsonObject.addProperty("limit", limit);
         request(POST, API.videoList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 视频详情
+     *
+     * @param video_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void videoDetail(int video_id, JsonEntityCallback<VideoDetail> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("video_id", video_id);
+        request(POST, API.videoDetail, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 视频点赞
+     *
+     * @param video_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void videoAddLike(int video_id, JsonEntityCallback<DescAndCode> jsonEntityCallback) {
+        String user_id = "";
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            user_id = userData.getUser_id();
+        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("video_id", video_id);
+        jsonObject.addProperty("user_id", user_id);
+        request(POST, API.videoAddLike, jsonObject, jsonEntityCallback);
     }
 
     /**

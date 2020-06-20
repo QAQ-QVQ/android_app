@@ -45,6 +45,8 @@ public class API {
     public static final String anchorAndVideoList = LIVE_URL_DEFAULT + "/live/index/anchorAndVideoList";//发现-（客服/游戏主播& 视频）
     public static final String anchorList = LIVE_URL_DEFAULT + "/live/anchor/anchorList";//发现-（客服直播、游戏直播）
     public static final String videoList = LIVE_URL_DEFAULT + "/home/video/videoList";//视频列表
+    public static final String videoDetail = LIVE_URL_DEFAULT + "/home/video/videoDetail";//视频详情
+    public static final String videoAddLike = LIVE_URL_DEFAULT + "/home/video/videoAddLike";//视频点赞
     public static final String newsList = LIVE_URL_DEFAULT + "/home/news/newsList";//发现-资讯列表
     public static final String newsDetail = LIVE_URL_DEFAULT + "/home/news/newsDetail";//资讯详情
     public static final String search = LIVE_URL_DEFAULT + "/live/index/search";//搜索

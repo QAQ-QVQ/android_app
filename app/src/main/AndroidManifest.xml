@@ -45,8 +45,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"
                 tools:replace="name,resource" />
-        </provider>
-        <!-- *****************************************activity START*************************************************** -->
+        </provider> <!-- *****************************************activity START*************************************************** -->
         <activity android:name=".activity.main.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,8 +76,7 @@
         <activity
             android:name=".activity.login.ActivityPasswordSetNewPassword"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <!-- adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏 -->
+            android:screenOrientation="portrait" /> <!-- adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏 -->
         <activity
             android:name=".activity.search.ActivitySearch"
             android:launchMode="singleTask"
@@ -97,11 +95,15 @@
         <activity
             android:name=".activity.news.ActivityNewsDetails"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.news.ActivityNewsList"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivityVideoPlay"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <!-- *****************************************activity END*************************************************** -->
         <!-- **************************极光 start ******************************* -->
         <!-- 极光渠道配置 -->

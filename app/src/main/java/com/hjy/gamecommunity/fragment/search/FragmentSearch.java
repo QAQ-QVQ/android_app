@@ -19,6 +19,7 @@ import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.ActivityVideoPlay;
 import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.activity.search.ActivitySearchShow;
 import com.hjy.gamecommunity.adapter.FamilyAdapter;
@@ -210,7 +211,7 @@ public class FragmentSearch extends BaseFragment {
             contentViewContainer.getmRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
             contentViewContainer.getmRecyclerView().setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
 
-            NewsAdapter newsAdapter = new NewsAdapter(news_list,NewsAdapter.ONE_PICTURES);
+            NewsAdapter newsAdapter = new NewsAdapter(news_list, NewsAdapter.ONE_PICTURES);
             contentViewContainer.getmRecyclerView().setAdapter(newsAdapter);
             initlistener(contentViewContainer, newsAdapter);
         }
@@ -259,6 +260,9 @@ public class FragmentSearch extends BaseFragment {
                 } else if (item instanceof SearchBean.DataBean.VideoListBean) {
                     // 視頻
                     SearchBean.DataBean.VideoListBean videoListBean = (SearchBean.DataBean.VideoListBean) item;
+                    Intent intent = new Intent(getContext(), ActivityVideoPlay.class);
+                    intent.putExtra(ActivityVideoPlay.VIDEO_ID, videoListBean.getId());
+                    startActivity(intent);
                 } else if (item instanceof SearchBean.DataBean.FamilyListBean) {
                     // 家族
                     SearchBean.DataBean.FamilyListBean familyListBean = (SearchBean.DataBean.FamilyListBean) item;

@@ -14,6 +14,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.entity.TabEntities;
+import com.hjy.gamecommunity.enumclass.TabEnum;
 import com.hjy.gamecommunity.fragment.main.FragmenMessage;
 import com.hjy.gamecommunity.fragment.main.FragmenPersonalCenter;
 import com.hjy.gamecommunity.fragment.main.FragmenVideo;
@@ -67,13 +68,13 @@ public class MainActivity extends BaseActivity {
         mTabEntities = new ArrayList();//tab实体
 
 
-        mTabEntities.add(new TabEntities("发现", FragmentHome.class.getCanonicalName(), R.mipmap.home_select, R.mipmap.home_unselect));
-        mTabEntities.add(new TabEntities("视频", FragmenVideo.class.getCanonicalName(), R.mipmap.video_select, R.mipmap.video_unselect));
+        mTabEntities.add(new TabEntities(TabEnum.VALUE1, FragmentHome.class.getCanonicalName(), R.mipmap.home_select, R.mipmap.home_unselect));
+        mTabEntities.add(new TabEntities(TabEnum.VALUE2, FragmenVideo.class.getCanonicalName(), R.mipmap.video_select, R.mipmap.video_unselect));
 
-        mTabEntities.add(new TabEntities("家族", FragmentFamily.class.getCanonicalName(), R.mipmap.family_select, R.mipmap.family_unselect));
+        mTabEntities.add(new TabEntities(TabEnum.VALUE3, FragmentFamily.class.getCanonicalName(), R.mipmap.family_select, R.mipmap.family_unselect));
 
-        mTabEntities.add(new TabEntities("消息", FragmenMessage.class.getCanonicalName(), R.mipmap.message_select, R.mipmap.message_unselect));
-        mTabEntities.add(new TabEntities("我的", FragmenPersonalCenter.class.getCanonicalName(), R.mipmap.personal_center_select, R.mipmap.personal_center_unselect));
+        mTabEntities.add(new TabEntities(TabEnum.VALUE4, FragmenMessage.class.getCanonicalName(), R.mipmap.message_select, R.mipmap.message_unselect));
+        mTabEntities.add(new TabEntities(TabEnum.VALUE5, FragmenPersonalCenter.class.getCanonicalName(), R.mipmap.personal_center_select, R.mipmap.personal_center_unselect));
 
 
         for (int i = 0; i < mTabEntities.size(); i++) {
@@ -114,7 +115,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void selectTabView(String tabTitle) {
+    public void selectTabView(String tabTitle) {
         for (int i = 0; i < viewList.size(); i++) {
             View view = viewList.get(i);
             TabEntities tabEntities = mTabEntities.get(i);
@@ -152,7 +153,9 @@ public class MainActivity extends BaseActivity {
             showFragment(R.id.linearLayout, FragmenPersonalCenter.class);
         }
     }
+
     private ExitDialog exitDialog;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

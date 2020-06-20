@@ -30,12 +30,15 @@ import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.ActivityVideoPlay;
+import com.hjy.gamecommunity.activity.main.MainActivity;
 import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.activity.news.ActivityNewsList;
 import com.hjy.gamecommunity.activity.search.ActivitySearch;
 import com.hjy.gamecommunity.adapter.FindNewsAdapter;
 import com.hjy.gamecommunity.adapter.FindVideoAdapter;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
+import com.hjy.gamecommunity.enumclass.TabEnum;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -293,7 +296,10 @@ public class FragmentHome extends BaseFragment {
         mTvMoreVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.selectTabView(TabEnum.VALUE2);
+                }
             }
         });
 
@@ -358,7 +364,11 @@ public class FragmentHome extends BaseFragment {
                         default:
                     }
                 } else if (item instanceof AnchorAndVideoList.DataBean.VideoListBean) {
+                    AnchorAndVideoList.DataBean.VideoListBean videoListBean = (AnchorAndVideoList.DataBean.VideoListBean) item;
                     //游戏视频
+                    Intent intent = new Intent(getContext(), ActivityVideoPlay.class);
+                    intent.putExtra(ActivityVideoPlay.VIDEO_ID, videoListBean.getId());
+                    startActivity(intent);
                 }
             }
         });
