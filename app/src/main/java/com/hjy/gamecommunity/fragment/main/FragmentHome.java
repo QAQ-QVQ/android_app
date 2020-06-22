@@ -82,7 +82,6 @@ public class FragmentHome extends BaseFragment {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
-
     }
 
     @Override

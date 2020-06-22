@@ -25,7 +25,6 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
     public FindVideoAdapter() {
         initImgWH();
-
     }
 
     public FindVideoAdapter(List<T> beanList) {
@@ -50,7 +49,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
             switch (dataBean.getType()) {
                 case 1://客服主播
-                    layoutId = R.layout.item_live_customer_service_fixed;
+                    layoutId = R.layout.item_find_live_customer_service_fixed;
                     // Log.d("VideoAdapter", "客服主播layoutId:" +position+"--"+  layoutId);
                     break;
                 case 2://游戏主播
@@ -74,7 +73,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
     public void onBindViewHolder(BaseViewHolder viewHolder, T item, int position) {
         int layoutId = getLayoutId(viewHolder);
         // Log.d("VideoAdapter", "onBindViewHolder:" +position+"--"+ layoutId);
-        if (layoutId == R.layout.item_live_customer_service_fixed) {
+        if (layoutId == R.layout.item_find_live_customer_service_fixed) {
             //客服直播
             ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
