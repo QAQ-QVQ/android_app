@@ -38,6 +38,7 @@ import com.hjy.gamecommunity.activity.search.ActivitySearch;
 import com.hjy.gamecommunity.adapter.FindNewsAdapter;
 import com.hjy.gamecommunity.adapter.FindVideoAdapter;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
+import com.hjy.gamecommunity.enumclass.BannerEnum;
 import com.hjy.gamecommunity.enumclass.TabEnum;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
@@ -108,7 +109,13 @@ public class FragmentHome extends BaseFragment {
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
-            setStatusBarLightMode(false);
+            int visibility = mTvTitle.getVisibility();
+            if (visibility == View.VISIBLE) {
+                setStatusBarLightMode(true);
+            } else {
+                setStatusBarLightMode(false);
+            }
+
             if (mBannerView != null)
                 mBannerView.startLoop();
         } else {
@@ -183,6 +190,15 @@ public class FragmentHome extends BaseFragment {
                         FindBanner.DataBean.ListBean listBean = bannerDataList.get(position);
                         if (listBean.getIs_jump() == 1) {
                             openUrl(listBean.getLink_url());
+                        } else {
+                            switch (BannerEnum.i().getValue(listBean.getType())) {
+                                case BannerEnum.IMG:
+                                    break;
+                                case BannerEnum.VIDEO:
+                                    break;
+                                case BannerEnum.LIVE:
+                                    break;
+                            }
                         }
                     }
                 });
@@ -356,10 +372,8 @@ public class FragmentHome extends BaseFragment {
                     AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
                     switch (dataBean.getType()) {
                         case 1://客服主播
-
                             break;
                         case 2://游戏主播
-
                             break;
                         default:
                     }
