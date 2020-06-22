@@ -196,7 +196,7 @@ public class FragmentHome extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerViewVideo.setLayoutManager(linearLayoutManager);
         mRecyclerViewVideo.setNestedScrollingEnabled(false);
-        videoAdapter = new FindVideoAdapter(linearLayoutManager);
+        videoAdapter = new FindVideoAdapter();
         mRecyclerViewVideo.setAdapter(videoAdapter);
 
         //资讯Adapter
@@ -221,7 +221,7 @@ public class FragmentHome extends BaseFragment {
         mSrlRealTimeInfo.autoRefresh();//自动刷新
     }
 
-    //private int pageVideo = 1, limitVideo = 10;//视频列表 >  页数 - 页大小
+
     private int pageNews = 1, limitNews = 10;//资讯列表 >  页数 - 页大小
 
     @Override

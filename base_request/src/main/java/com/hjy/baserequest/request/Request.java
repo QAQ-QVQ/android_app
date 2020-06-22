@@ -15,6 +15,7 @@ import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.bean.LiveList;
 import com.hjy.baserequest.bean.MessagePush;
 import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
@@ -424,7 +425,13 @@ public class Request {
      * @param jsonEntityCallback
      */
     public void videoDetail(int video_id, JsonEntityCallback<VideoDetail> jsonEntityCallback) {
+        String user_id = "";
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            user_id = userData.getUser_id();
+        }
         JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("user_id", user_id);
         jsonObject.addProperty("video_id", video_id);
         request(POST, API.videoDetail, jsonObject, jsonEntityCallback);
     }
@@ -473,6 +480,21 @@ public class Request {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("news_id", news_id);
         request(POST, API.newsDetail, jsonObject, jsonEntityCallback);
+    }
+
+
+    /**
+     * 直播列表
+     *
+     * @param page               页数
+     * @param limit              页大小
+     * @param jsonEntityCallback
+     */
+    public void liveList(int page, int limit, JsonEntityCallback<LiveList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("limit", limit);
+        request(POST, API.liveList, jsonObject, jsonEntityCallback);
     }
 
     /**

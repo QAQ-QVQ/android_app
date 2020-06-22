@@ -66,6 +66,15 @@ public class VideoDetail implements Serializable {
         private int release_time;
         private int status;
         private int create_time;
+        private int is_like;
+
+        public int getIs_like() {
+            return is_like;
+        }
+
+        public void setIs_like(int is_like) {
+            this.is_like = is_like;
+        }
 
         public int getId() {
             return id;

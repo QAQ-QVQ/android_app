@@ -38,11 +38,11 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:zqy_sll_clickAlpha="1.0"
-            app:zqy_sll_endColor="#E43947"
+            app:zqy_sll_endColor="#ED7730"
             app:zqy_sll_gradient="linear_gradient"
             app:zqy_sll_orientation="left_right"
             app:zqy_sll_radius="5"
-            app:zqy_sll_startColor="#EE6A55">
+            app:zqy_sll_startColor="#EF9437">
 
             <ImageView
                 android:layout_width="10dp"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:text="客服直播"
+                android:text="游戏直播"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
         </com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>

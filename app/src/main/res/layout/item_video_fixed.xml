@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="4dp"
-    android:layout_marginLeft="4dp"
+    android:layout_margin="4dp"
     android:orientation="vertical"
     android:paddingBottom="12dp"
     app:zqy_sll_backgroundColor="@android:color/white"
@@ -25,40 +24,15 @@
             android:layout_height="match_parent"
             app:riv_corner_radius="5dp" />
 
-        <com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout
-            android:id="@+id/ll_Lab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="2dp"
-            android:paddingTop="4dp"
-            android:paddingRight="2dp"
-            android:paddingBottom="4dp"
+        <ImageView
+            android:id="@+id/iv_Play"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@mipmap/find_vide_play_t"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:zqy_sll_clickAlpha="1.0"
-            app:zqy_sll_endColor="#ED7730"
-            app:zqy_sll_gradient="linear_gradient"
-            app:zqy_sll_orientation="left_right"
-            app:zqy_sll_radius="5"
-            app:zqy_sll_startColor="#EF9437">
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/live_broadcast_t" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:text="游戏直播"
-                android:textColor="@android:color/white"
-                android:textSize="10sp" />
-        </com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout
             android:layout_width="match_parent"
@@ -75,9 +49,14 @@
             app:zqy_sll_radiusBottomLeft="3"
             app:zqy_sll_radiusBottomRight="3">
 
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/liked_white_t" />
 
             <TextView
-                android:id="@+id/tv_Name"
+                android:id="@+id/tv_LikedNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"

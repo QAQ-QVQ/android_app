@@ -140,17 +140,18 @@ public class FragmentSearch extends BaseFragment {
             int dp2px = ConvertUtils.dp2px(8);
             contentViewContainer.getmRecyclerView().setPadding(dp2px, 0, dp2px, 0);
 
-            RecyclerView.LayoutManager layoutManager;
+            LiveAdapter liveAdapter = new LiveAdapter(live_list);
             if (searchDesc.equals(SearchEnum.VALUE1)) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                layoutManager = linearLayoutManager;
+                liveAdapter.setMode(liveAdapter.FIXED);
+                contentViewContainer.getmRecyclerView().setLayoutManager(linearLayoutManager);
             } else {
-                layoutManager = new GridLayoutManager(getContext(), 2);
+                liveAdapter.setMode(liveAdapter.MATCH_PARENT);
+                contentViewContainer.getmRecyclerView().setLayoutManager(new GridLayoutManager(getContext(), 2));
             }
-            contentViewContainer.getmRecyclerView().setLayoutManager(layoutManager);
 
-            LiveAdapter liveAdapter = new LiveAdapter(live_list, layoutManager);
+
             contentViewContainer.getmRecyclerView().setAdapter(liveAdapter);
             initlistener(contentViewContainer, liveAdapter);
 
@@ -164,17 +165,18 @@ public class FragmentSearch extends BaseFragment {
             int dp2px = ConvertUtils.dp2px(8);
             contentViewContainer.getmRecyclerView().setPadding(dp2px, 0, dp2px, 0);
 
-            RecyclerView.LayoutManager layoutManager;
+            VideoAdapter videoAdapter = new VideoAdapter(video_list);
             if (searchDesc.equals(SearchEnum.VALUE1)) {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                layoutManager = linearLayoutManager;
+                contentViewContainer.getmRecyclerView().setLayoutManager(linearLayoutManager);
+                videoAdapter.setMode(videoAdapter.FIXED);
             } else {
-                layoutManager = new GridLayoutManager(getContext(), 2);
+                contentViewContainer.getmRecyclerView().setLayoutManager(new GridLayoutManager(getContext(), 2));
+                videoAdapter.setMode(videoAdapter.MATCH_PARENT);
             }
-            contentViewContainer.getmRecyclerView().setLayoutManager(layoutManager);
 
-            VideoAdapter videoAdapter = new VideoAdapter(video_list, layoutManager);
+
             contentViewContainer.getmRecyclerView().setAdapter(videoAdapter);
             initlistener(contentViewContainer, videoAdapter);
 

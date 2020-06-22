@@ -1,11 +1,7 @@
 package com.hjy.gamecommunity.adapter;
 
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,14 +23,14 @@ import java.util.List;
 public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
 
-    public FindVideoAdapter(RecyclerView.LayoutManager layout) {
-        initItemWH(layout);
+    public FindVideoAdapter() {
+        initImgWH();
 
     }
 
-    public FindVideoAdapter(List<T> beanList, RecyclerView.LayoutManager layout) {
+    public FindVideoAdapter(List<T> beanList) {
         super(beanList);
-        initItemWH(layout);
+        initImgWH();
     }
 
     /**
@@ -42,24 +38,9 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
      */
     private int imgW, imgH;
 
-    private void initItemWH(RecyclerView.LayoutManager layout) {
-        if (layout instanceof GridLayoutManager) {
-            GridLayoutManager gridLayoutManager = (GridLayoutManager) layout;
-            int spanCount = gridLayoutManager.getSpanCount();
-            imgW = (int) (ViewSeting.getScreenWidth() / (spanCount + 0.2f));
-            imgH = (int) (imgW / 1.79f);
-        } else if (layout instanceof LinearLayoutManager) {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layout;
-            int orientation = linearLayoutManager.getOrientation();
-            if (orientation == LinearLayoutManager.HORIZONTAL) {
-                imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
-                imgH = (int) (imgW / 1.79f);
-            } else {
-                imgW = ViewGroup.LayoutParams.MATCH_PARENT;
-                imgH = ViewGroup.LayoutParams.WRAP_CONTENT;
-            }
-
-        }
+    private void initImgWH() {
+        imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
+        imgH = (int) (imgW / 1.79f);
     }
 
     @Override
@@ -69,18 +50,18 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
             switch (dataBean.getType()) {
                 case 1://客服主播
-                    layoutId = R.layout.item_live_customer_service;
+                    layoutId = R.layout.item_live_customer_service_fixed;
                     // Log.d("VideoAdapter", "客服主播layoutId:" +position+"--"+  layoutId);
                     break;
                 case 2://游戏主播
-                    layoutId = R.layout.item_find_live_game;
+                    layoutId = R.layout.item_find_live_game_fixed;
                     // Log.d("VideoAdapter", "游戏主播layoutId:" +position+"--"+ layoutId);
                     break;
                 default:
             }
         } else if (item instanceof AnchorAndVideoList.DataBean.VideoListBean) {
             //视频
-            layoutId = R.layout.item_find_video;
+            layoutId = R.layout.item_find_video_fixed;
             // Log.d("VideoAdapter", "视频layoutId:" +position+"--"+ layoutId);
         }
 
@@ -93,7 +74,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
     public void onBindViewHolder(BaseViewHolder viewHolder, T item, int position) {
         int layoutId = getLayoutId(viewHolder);
         // Log.d("VideoAdapter", "onBindViewHolder:" +position+"--"+ layoutId);
-        if (layoutId == R.layout.item_live_customer_service) {
+        if (layoutId == R.layout.item_live_customer_service_fixed) {
             //客服直播
             ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
@@ -118,7 +99,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
             }
 
-        } else if (layoutId == R.layout.item_find_live_game) {
+        } else if (layoutId == R.layout.item_find_live_game_fixed) {
             //游戏直播
             ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);
@@ -142,7 +123,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
 
             }
 
-        } else if (layoutId == R.layout.item_find_video) {
+        } else if (layoutId == R.layout.item_find_video_fixed) {
             //视频
             ConstraintLayout mCl = viewHolder.findViewById(R.id.cl);
             RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);

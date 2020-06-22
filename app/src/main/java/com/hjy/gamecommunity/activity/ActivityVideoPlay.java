@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.NumberUtils;
+import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.VideoDetail;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
@@ -54,12 +55,12 @@ public class ActivityVideoPlay extends BaseActivity {
         mCsivShare = findViewById(R.id.csiv_Share);
         mLlBar = findViewById(R.id.ll_bar);
         mCsivLiked = findViewById(R.id.csiv_liked);
+        mCsivLiked.setEnabled(false);
         mTvLikedNum = findViewById(R.id.tv_LikedNum);
         mTvHotspotNum = findViewById(R.id.tv_HotspotNum);
 
         mTvTitle = findViewById(R.id.tv_Title);
         mVideoPlayer = findViewById(R.id.video_player);
-
 
     }
 
@@ -127,17 +128,11 @@ public class ActivityVideoPlay extends BaseActivity {
         });
 
         mCsivLiked.setOnClickListener(new View.OnClickListener() {
-            private boolean isClick;
-
             @Override
             public void onClick(View v) {
-                isClick = !isClick;
-                if (isClick) {
-                    mCsivLiked.setImageResource(R.mipmap.liked_gradient_t);
-                } else {
-                    mCsivLiked.setImageResource(R.mipmap.liked_white_t);
+                if (data != null) {
+                    Request.getInstance().videoAddLike(data.getId(), videoAddLikeJsonEntityCallback);
                 }
-
             }
         });
     }
@@ -174,13 +169,28 @@ public class ActivityVideoPlay extends BaseActivity {
         super.onBackPressed();
     }
 
+
+    /**
+     * 设置点赞
+     *
+     * @param isLiked 是否点赞
+     */
+    private void setLikedStatus(boolean isLiked) {
+        if (isLiked) {
+            mCsivLiked.setImageResource(R.mipmap.liked_gradient_t);
+        } else {
+            mCsivLiked.setImageResource(R.mipmap.liked_white_t);
+        }
+    }
+
     /**
      * 视频详情
      */
+    private VideoDetail.DataBean data;
     JsonEntityCallback videoDetailJsonEntityCallback = new JsonEntityCallback<VideoDetail>(VideoDetail.class) {
         @Override
         protected void onSuccess(VideoDetail videoDetail) {
-            VideoDetail.DataBean data = videoDetail.getData();
+            data = videoDetail.getData();
             if (data != null) {
                 //增加封面
                 ImageView imageView = new ImageView(getContext());
@@ -210,11 +220,28 @@ public class ActivityVideoPlay extends BaseActivity {
                     mTvHotspotNum.setText(format + "万");
                 }
 
+                if (data.getIs_like() == 1) {
+                    setLikedStatus(true);
+                } else {
+                    mCsivLiked.setEnabled(true);//未点赞才可点击
+                    setLikedStatus(false);
+                }
 
             } else {
                 ToastUtil.tost(videoDetail.getMsg());
             }
-
+        }
+    };
+    /**
+     * 视频点赞
+     */
+    JsonEntityCallback videoAddLikeJsonEntityCallback = new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+        @Override
+        protected void onSuccess(DescAndCode descAndCode) {
+            if (descAndCode.getCode() == 200) {
+                mCsivLiked.setEnabled(false);//点赞成功后不可点击
+                setLikedStatus(true);
+            }
 
         }
     };

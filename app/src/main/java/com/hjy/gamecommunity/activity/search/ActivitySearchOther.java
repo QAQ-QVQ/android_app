@@ -89,13 +89,17 @@ public class ActivitySearchOther extends BaseActivity {
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager);
-                baseAdapter = new LiveAdapter(gridLayoutManager);
+                LiveAdapter liveAdapter = new LiveAdapter();
+                liveAdapter.setMode(liveAdapter.MATCH_PARENT);
+                baseAdapter = liveAdapter;
                 break;
             case SearchEnum.VALUE3:
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager2);
-                baseAdapter = new VideoAdapter(gridLayoutManager2);
+                VideoAdapter videoAdapter = new VideoAdapter();
+                videoAdapter.setMode(videoAdapter.MATCH_PARENT);
+                baseAdapter = videoAdapter;
                 break;
             case SearchEnum.VALUE4:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));

@@ -49,5 +49,6 @@ public class API {
     public static final String videoAddLike = LIVE_URL_DEFAULT + "/home/video/videoAddLike";//视频点赞
     public static final String newsList = LIVE_URL_DEFAULT + "/home/news/newsList";//发现-资讯列表
     public static final String newsDetail = LIVE_URL_DEFAULT + "/home/news/newsDetail";//资讯详情
+    public static final String liveList = LIVE_URL_DEFAULT + "/live/live/liveList";//直播列表
     public static final String search = LIVE_URL_DEFAULT + "/live/index/search";//搜索
 }
