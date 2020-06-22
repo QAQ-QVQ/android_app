@@ -69,7 +69,7 @@
             android:paddingRight="3dp"
             android:paddingBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:zqy_sll_backgroundColor="#33000000"
+            app:zqy_sll_backgroundColor="#80000000"
             app:zqy_sll_clickAlpha="1.0"
             app:zqy_sll_radiusBottomLeft="3"
             app:zqy_sll_radiusBottomRight="3">
