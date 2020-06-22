@@ -155,7 +155,7 @@ public class LiveAdapter<T> extends BaseAdapter<T> {
         if (item instanceof SearchBean.DataBean.LiveListBean) {
             SearchBean.DataBean.LiveListBean dataBean = (SearchBean.DataBean.LiveListBean) item;
             LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
-            mTvTitle.setText("游戏直播");
+            mTvTitle.setText(dataBean.getTitle());
             mTvName.setText(dataBean.getNickname());
             int heat = dataBean.getSum_popular();
             if (heat < 10000) {
@@ -165,6 +165,19 @@ public class LiveAdapter<T> extends BaseAdapter<T> {
                 mTvHotspotNum.setText(format + "万");
             }
 
+        } else if (item instanceof LiveList.DataBean) {
+            LiveList.DataBean dataBean = (LiveList.DataBean) item;
+            LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
+            mTvTitle.setText(dataBean.getTitle());
+
+            mTvName.setText(dataBean.getAnchor_nickname());
+            int heat = dataBean.getHeat();
+            if (heat < 10000) {
+                mTvHotspotNum.setText(String.valueOf(heat));
+            } else {
+                String format = NumberUtils.format(heat / 10000.0f, 2);
+                mTvHotspotNum.setText(format + "万");
+            }
         }
     }
 
@@ -172,7 +185,7 @@ public class LiveAdapter<T> extends BaseAdapter<T> {
         if (item instanceof SearchBean.DataBean.LiveListBean) {
             SearchBean.DataBean.LiveListBean dataBean = (SearchBean.DataBean.LiveListBean) item;
             LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
-            mTvTitle.setText("客服直播");
+            mTvTitle.setText(dataBean.getTitle());
             if (!TextUtils.isEmpty(dataBean.getNickname()))
                 mTvName.setText(dataBean.getNickname());
             int heat = dataBean.getSum_popular();
@@ -183,6 +196,19 @@ public class LiveAdapter<T> extends BaseAdapter<T> {
                 mTvHotspotNum.setText(format + "万");
             }
 
+        } else if (item instanceof LiveList.DataBean) {
+            LiveList.DataBean dataBean = (LiveList.DataBean) item;
+            LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
+            mTvTitle.setText(dataBean.getTitle());
+
+            mTvName.setText(dataBean.getAnchor_nickname());
+            int heat = dataBean.getHeat();
+            if (heat < 10000) {
+                mTvHotspotNum.setText(String.valueOf(heat));
+            } else {
+                String format = NumberUtils.format(heat / 10000.0f, 2);
+                mTvHotspotNum.setText(format + "万");
+            }
         }
     }
 

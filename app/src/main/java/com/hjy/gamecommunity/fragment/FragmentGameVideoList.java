@@ -53,7 +53,7 @@ public class FragmentGameVideoList extends BaseFragment {
 
     @Override
     public void initData() {
-        //资讯Adapter
+        //Adapter
         int dp2px = ConvertUtils.dp2px(8);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(gridLayoutManager);

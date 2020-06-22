@@ -86,7 +86,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
                 AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
-                mTvTitle.setText("客服直播");
+                mTvTitle.setText(dataBean.getTitle());
                 if (!TextUtils.isEmpty(dataBean.getNickname()))
                     mTvName.setText(dataBean.getNickname());
                 int heat = dataBean.getHeat();
@@ -111,7 +111,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
             if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
                 AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
                 LoadingImageUtil.loadingImag(dataBean.getCover_picture(), mRivImage, true);
-                mTvTitle.setText("客服直播");
+                mTvTitle.setText(dataBean.getTitle());
                 mTvName.setText(dataBean.getNickname());
                 int heat = dataBean.getHeat();
                 if (heat < 10000) {

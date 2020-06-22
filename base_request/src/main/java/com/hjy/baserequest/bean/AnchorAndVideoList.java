@@ -82,6 +82,16 @@ public class AnchorAndVideoList implements Serializable {
             private String cover_picture;
             private int heat;
 
+            private String title;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
             public int getId() {
                 return id;
             }
