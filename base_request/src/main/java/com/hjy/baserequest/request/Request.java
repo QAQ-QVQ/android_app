@@ -50,7 +50,6 @@ import java.util.TreeMap;
  */
 public class Request {
 
-
     private static Request request;
     private boolean signSwitch = true;//请求参数加密开关
 

@@ -305,10 +305,12 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null)
+                    if (sharingResultsListener != null){
                         sharingResultsListener.onComplete(platform, action, data);
-                    if (shareBottomPopupDialog != null)
+                    }
+                    if (shareBottomPopupDialog != null){
                         shareBottomPopupDialog.dismiss();
+                    }
                 }
             });
 
@@ -321,10 +323,12 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null)
+                    if (sharingResultsListener != null){
                         sharingResultsListener.onError(platform, action, errorCode, error);
-                    if (shareBottomPopupDialog != null)
+                    }
+                    if (shareBottomPopupDialog != null){
                         shareBottomPopupDialog.dismiss();
+                    }
                 }
             });
 
@@ -336,10 +340,12 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null)
+                    if (sharingResultsListener != null){
                         sharingResultsListener.onCancel(platform, action);
-                    if (shareBottomPopupDialog != null)
+                    }
+                    if (shareBottomPopupDialog != null){
                         shareBottomPopupDialog.dismiss();
+                    }
                 }
             });
 
