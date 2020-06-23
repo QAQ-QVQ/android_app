@@ -105,6 +105,7 @@ public class GetSystemInfoUtil {
         CacheUtil.writeString(CacheUtil.getDeviceMD5Path(), "IMEI串", getImeiArray(false));
     }
 
+
     /**
      * 获取设备唯一标识
      *
@@ -117,17 +118,16 @@ public class GetSystemInfoUtil {
         if (isReadCache && !TextUtils.isEmpty(缓存设备码)) {
             设备码 = 缓存设备码;
         } else {
-            设备码 = DeviceUtils.getUniqueDeviceId();
+            设备码 = DeviceUtils.getUniqueDeviceId();//无缓存  则生成
         }
 
+        //如果本地无缓存则再次写入
         if (TextUtils.isEmpty(缓存设备码))
             CacheUtil.writeString(CacheUtil.getDeviceMD5Path(), "设备码", 设备码);
 
-
-        Log.d("GetSystemInfoUtil", "UniqueDeviceId:" + 设备码);
-
         return 设备码;
     }
+
 
     /**
      * 覆盖写入 设备唯一标识 到缓存

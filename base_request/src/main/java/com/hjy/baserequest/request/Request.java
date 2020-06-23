@@ -11,14 +11,17 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hjy.baserequest.bean.AccountsLoginUserBean;
+import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.AnchorList;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.bean.LiveList;
 import com.hjy.baserequest.bean.MessagePush;
 import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.bean.SearchBean;
+import com.hjy.baserequest.bean.VideoDetail;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
@@ -59,7 +62,7 @@ public class Request {
     public static Request getInstance() {
         if (request == null) {
             synchronized (Request.class) {
-                if (request == null){
+                if (request == null) {
                     request = new Request();
                 }
             }
@@ -247,7 +250,7 @@ public class Request {
                 //Log.d("jsonObject", "jsonObject:" + jsonObjectString.toString());
                 okgo_postJson(url, jsonObjectString.toString(), absCallback);
             }
-        } else{
+        } else {
             absCallback.onFinish();
         }
     }
@@ -380,6 +383,16 @@ public class Request {
 
 
     /**
+     * 发现-（客服/游戏主播& 视频）
+     *
+     * @param jsonEntityCallback
+     */
+    public void anchorAndVideoList(JsonEntityCallback<AnchorAndVideoList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.anchorAndVideoList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
      * （客服直播、游戏直播）
      *
      * @param jsonEntityCallback
@@ -401,6 +414,44 @@ public class Request {
         jsonObject.addProperty("page", page);
         jsonObject.addProperty("limit", limit);
         request(POST, API.videoList, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 视频详情
+     *
+     * @param video_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void videoDetail(int video_id, JsonEntityCallback<VideoDetail> jsonEntityCallback) {
+        String user_id = "";
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            user_id = userData.getUser_id();
+        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("user_id", user_id);
+        jsonObject.addProperty("video_id", video_id);
+        request(POST, API.videoDetail, jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 视频点赞
+     *
+     * @param video_id
+     * @param
+     * @param jsonEntityCallback
+     */
+    public void videoAddLike(int video_id, JsonEntityCallback<DescAndCode> jsonEntityCallback) {
+        String user_id = "";
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            user_id = userData.getUser_id();
+        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("video_id", video_id);
+        jsonObject.addProperty("user_id", user_id);
+        request(POST, API.videoAddLike, jsonObject, jsonEntityCallback);
     }
 
     /**
@@ -428,6 +479,21 @@ public class Request {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("news_id", news_id);
         request(POST, API.newsDetail, jsonObject, jsonEntityCallback);
+    }
+
+
+    /**
+     * 直播列表
+     *
+     * @param page               页数
+     * @param limit              页大小
+     * @param jsonEntityCallback
+     */
+    public void liveList(int page, int limit, JsonEntityCallback<LiveList> jsonEntityCallback) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("limit", limit);
+        request(POST, API.liveList, jsonObject, jsonEntityCallback);
     }
 
     /**

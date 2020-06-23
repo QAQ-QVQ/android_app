@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
@@ -63,7 +64,9 @@ public class ActivityNewsList extends BaseActivity {
         mTvTextBar.setText("资讯");
 
         //资讯Adapter
+        int dp2px = ConvertUtils.dp2px(8);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
         newsAdapter = new NewsAdapter(NewsAdapter.THREE_PICTURES);
         mRecyclerView.setAdapter(newsAdapter);
 

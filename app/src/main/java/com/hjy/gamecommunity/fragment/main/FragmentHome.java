@@ -17,10 +17,9 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.hjy.baserequest.bean.AnchorList;
+import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.FindBanner;
 import com.hjy.baserequest.bean.NewsList;
-import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.adapter.BaseAdapter;
@@ -31,12 +30,16 @@ import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.ActivityVideoPlay;
+import com.hjy.gamecommunity.activity.main.MainActivity;
 import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.activity.news.ActivityNewsList;
 import com.hjy.gamecommunity.activity.search.ActivitySearch;
 import com.hjy.gamecommunity.adapter.FindNewsAdapter;
 import com.hjy.gamecommunity.adapter.FindVideoAdapter;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
+import com.hjy.gamecommunity.enumclass.BannerEnum;
+import com.hjy.gamecommunity.enumclass.TabEnum;
 import com.hjy.gamecommunity.fragment.FragmentCustomerServiceMsg;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -79,7 +82,6 @@ public class FragmentHome extends BaseFragment {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
-
     }
 
     @Override
@@ -106,7 +108,13 @@ public class FragmentHome extends BaseFragment {
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
-            setStatusBarLightMode(false);
+            int visibility = mTvTitle.getVisibility();
+            if (visibility == View.VISIBLE) {
+                setStatusBarLightMode(true);
+            } else {
+                setStatusBarLightMode(false);
+            }
+
             if (mBannerView != null)
                 mBannerView.startLoop();
         } else {
@@ -181,6 +189,15 @@ public class FragmentHome extends BaseFragment {
                         FindBanner.DataBean.ListBean listBean = bannerDataList.get(position);
                         if (listBean.getIs_jump() == 1) {
                             openUrl(listBean.getLink_url());
+                        } else {
+                            switch (BannerEnum.i().getValue(listBean.getType())) {
+                                case BannerEnum.IMG:
+                                    break;
+                                case BannerEnum.VIDEO:
+                                    break;
+                                case BannerEnum.LIVE:
+                                    break;
+                            }
                         }
                     }
                 });
@@ -194,7 +211,7 @@ public class FragmentHome extends BaseFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerViewVideo.setLayoutManager(linearLayoutManager);
         mRecyclerViewVideo.setNestedScrollingEnabled(false);
-        videoAdapter = new FindVideoAdapter(linearLayoutManager);
+        videoAdapter = new FindVideoAdapter();
         mRecyclerViewVideo.setAdapter(videoAdapter);
 
         //资讯Adapter
@@ -219,7 +236,7 @@ public class FragmentHome extends BaseFragment {
         mSrlRealTimeInfo.autoRefresh();//自动刷新
     }
 
-    private int pageVideo = 1, limitVideo = 10;//视频列表 >  页数 - 页大小
+
     private int pageNews = 1, limitNews = 10;//资讯列表 >  页数 - 页大小
 
     @Override
@@ -230,8 +247,8 @@ public class FragmentHome extends BaseFragment {
                 //获取banner
                 Request.getInstance().findBanner(bannerJsonEntityCallback);
 
-                //获取（客服直播、游戏直播）
-                Request.getInstance().anchorList(anchorListJsonEntityCallback);
+                // 发现-（客服/游戏主播& 视频）
+                Request.getInstance().anchorAndVideoList(anchorAndVideoListJsonEntityCallback);
 
                 //发现-资讯列表
                 Request.getInstance().newsList(pageNews = 1, limitNews = 10, newsListJsonEntityCallback);
@@ -242,7 +259,6 @@ public class FragmentHome extends BaseFragment {
                 //发现-资讯列表
                 Request.getInstance().newsList(++pageNews, limitNews = 10, newsListJsonEntityCallback);
             }
-
 
         });
 
@@ -295,7 +311,10 @@ public class FragmentHome extends BaseFragment {
         mTvMoreVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.selectTabView(TabEnum.VALUE2);
+                }
             }
         });
 
@@ -307,50 +326,62 @@ public class FragmentHome extends BaseFragment {
             }
         });
         //客服直播、游戏直播、游戏视频  \滑动监听
-        mRecyclerViewVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            //用来标记是否正在向最后一个滑动
-            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    //获取最后一个完全显示的ItemPosition
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-                    // 判断是否滚动到底部，并且是向右滚动
-                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        //加载更多功能的代码
-                        //获取（游戏视频）
-                        Request.getInstance().videoList(++pageVideo, limitVideo = 10, videoListJsonEntityCallback);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
-                if (dx > 0) {
-                    //大于0表示正在向右滚动
-                    isSlidingToLast = true;
-                } else {
-                    //小于等于0表示停止或向左滚动
-                    isSlidingToLast = false;
-                }
-            }
-        });
+//        mRecyclerViewVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            //用来标记是否正在向最后一个滑动
+//            boolean isSlidingToLast = false;
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                // 当不滚动时
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    //获取最后一个完全显示的ItemPosition
+//                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+//                    int totalItemCount = manager.getItemCount();
+//                    // 判断是否滚动到底部，并且是向右滚动
+//                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+//                        //加载更多功能的代码
+//                        // 发现-（客服/游戏主播& 视频）
+//                        Request.getInstance().anchorAndVideoList(anchorAndVideoListJsonEntityCallback);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+//                if (dx > 0) {
+//                    //大于0表示正在向右滚动
+//                    isSlidingToLast = true;
+//                } else {
+//                    //小于等于0表示停止或向左滚动
+//                    isSlidingToLast = false;
+//                }
+//            }
+//        });
 
         //（客服直播、游戏直播、游戏视频）Adapter
         videoAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Object item, int position) {
-                if (item instanceof AnchorList.DataBean) {
+                if (item instanceof AnchorAndVideoList.DataBean.AnchorListBean) {
                     //客服直播、游戏直播
-                } else if (item instanceof VideoList.DataBean.ListBean) {
+                    AnchorAndVideoList.DataBean.AnchorListBean dataBean = (AnchorAndVideoList.DataBean.AnchorListBean) item;
+                    switch (dataBean.getType()) {
+                        case 1://客服主播
+                            break;
+                        case 2://游戏主播
+                            break;
+                        default:
+                    }
+                } else if (item instanceof AnchorAndVideoList.DataBean.VideoListBean) {
+                    AnchorAndVideoList.DataBean.VideoListBean videoListBean = (AnchorAndVideoList.DataBean.VideoListBean) item;
                     //游戏视频
+                    Intent intent = new Intent(getContext(), ActivityVideoPlay.class);
+                    intent.putExtra(ActivityVideoPlay.VIDEO_ID, videoListBean.getId());
+                    startActivity(intent);
                 }
             }
         });
@@ -426,16 +457,26 @@ public class FragmentHome extends BaseFragment {
     };
 
     /**
-     * （客服直播、游戏直播）
+     * 发现-（客服/游戏主播& 视频）
      */
-    JsonEntityCallback anchorListJsonEntityCallback = new JsonEntityCallback<AnchorList>(AnchorList.class) {
+    JsonEntityCallback anchorAndVideoListJsonEntityCallback = new JsonEntityCallback<AnchorAndVideoList>(AnchorAndVideoList.class) {
         @Override
-        protected void onSuccess(AnchorList anchorList) {
-            List<AnchorList.DataBean> anchorListData = anchorList.getData();
-            if (anchorListData != null && anchorListData.size() > 0) {
-                videoAdapter.replaceAll(anchorListData);
+        protected void onSuccess(AnchorAndVideoList anchorAndVideoList) {
+            AnchorAndVideoList.DataBean data = anchorAndVideoList.getData();
+            if (data != null) {
+                List<AnchorAndVideoList.DataBean.AnchorListBean> anchor_list = data.getAnchor_list();
+                List<AnchorAndVideoList.DataBean.VideoListBean> video_list = data.getVideo_list();
+
+                List<Object> objectList = new ArrayList<>();
+                if (anchor_list != null)
+                    objectList.addAll(anchor_list);
+                if (video_list != null)
+                    objectList.addAll(video_list);
+
+                videoAdapter.replaceAll(objectList);
+
             } else {
-                ToastUtil.tost(anchorList.getMsg());
+                ToastUtil.tost(anchorAndVideoList.getMsg());
             }
         }
 
@@ -443,30 +484,30 @@ public class FragmentHome extends BaseFragment {
         public void onFinish() {
             super.onFinish();
             //获取（游戏视频）  -- 游戏视频 将拼接在  客服直播、游戏直播  后面
-            Request.getInstance().videoList(pageVideo = 1, limitVideo = 10, videoListJsonEntityCallback);
+            // Request.getInstance().videoList(pageVideo = 1, limitVideo = 10, videoListJsonEntityCallback);
         }
     };
     /**
      * 游戏视频列表
      */
-    JsonEntityCallback videoListJsonEntityCallback = new JsonEntityCallback<VideoList>(VideoList.class) {
-        @Override
-        protected void onSuccess(VideoList videoList) {
-            VideoList.DataBean data = videoList.getData();
-            if (data != null) {
-                List<VideoList.DataBean.ListBean> list = data.getList();
-                if (list != null && list.size() > 0) {
-                    videoAdapter.addItemsToLast(list);
-                } else {
-                    if (pageVideo == 1) {
-                        ToastUtil.tost(videoList.getMsg());
-                    } else {
-                        ToastUtil.tost("没有更多啦!");
-                    }
-                }
-            }
-        }
-    };
+//    JsonEntityCallback videoListJsonEntityCallback = new JsonEntityCallback<VideoList>(VideoList.class) {
+//        @Override
+//        protected void onSuccess(VideoList videoList) {
+//            VideoList.DataBean data = videoList.getData();
+//            if (data != null) {
+//                List<VideoList.DataBean.ListBean> list = data.getList();
+//                if (list != null && list.size() > 0) {
+//                    videoAdapter.addItemsToLast(list);
+//                } else {
+//                    if (pageVideo == 1) {
+//                        ToastUtil.tost(videoList.getMsg());
+//                    } else {
+//                        ToastUtil.tost("没有更多啦!");
+//                    }
+//                }
+//            }
+//        }
+//    };
     /**
      * 发现-资讯列表
      */

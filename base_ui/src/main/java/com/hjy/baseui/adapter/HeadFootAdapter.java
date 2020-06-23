@@ -65,7 +65,6 @@ public abstract class HeadFootAdapter<T> extends BaseAdapter<T> {
                 onCommonBindViewHolder(viewHolder, item, i - 1);
             } else {
                 onCommonBindViewHolder(viewHolder, item, i);
-
             }
         }
 

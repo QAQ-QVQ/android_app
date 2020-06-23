@@ -1,8 +1,12 @@
 package com.hjy.baseui.ui.view.popup.tips;
 
 import android.app.Activity;
+import android.graphics.drawable.StateListDrawable;
+import android.support.v4.content.ContextCompat;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.hjy.baseui.R;
+import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.baseui.ui.view.popup.BasePopup;
 
 
@@ -14,7 +18,7 @@ import com.hjy.baseui.ui.view.popup.BasePopup;
 public abstract class BaseTipsPopup extends BasePopup {
 
     public BaseTipsPopup(Activity activity) {
-        super(activity, 216, 216);
+        super(activity, ConvertUtils.dp2px(216), ConvertUtils.dp2px(216));
         init();
     }
 
@@ -24,8 +28,23 @@ public abstract class BaseTipsPopup extends BasePopup {
     }
 
     private void init() {
-        setPopupWindowAlpha(0.9f);//设置PopupWindow透明度
-        setPopupWindowRadiusColos(5, R.color.bui_black_light);//设置PopupWindow圆角和背景色
+        setPopupWindowAlpha(0);//设置PopupWindow透明度
+        setRootViewBackground(getStateListDrawable(5, R.color.bui_black_light));//设置PopupWindow圆角和背景色
     }
+
+
+    /**
+     * 单背景样式
+     *
+     * @return
+     */
+    private StateListDrawable getStateListDrawable(int radius, int colorId) {
+        StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.9f)//设置点击后透明度
+                .setRadius(radius)//圆角
+                .setColorBg(ContextCompat.getColor(getRootView().getContext(), colorId))//背景颜色
+                .buid();
+        return stateListDrawable;
+    }
+
 
 }

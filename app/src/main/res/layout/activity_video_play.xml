@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.ActivityVideoPlay"
+    tools:ignore="MissingConstraints">
+
+    <LinearLayout
+        android:id="@+id/ll_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include layout="@layout/bui_back_white_transparent"></include>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
+        <com.hjy.baseui.ui.view.imageview.ColorStateImageView
+            android:id="@+id/csiv_Share"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="16dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/share_t"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:zqy_csiv_clickImgAlpha="0.5"
+            app:zqy_csiv_imgColor="@color/bui_white" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="12dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="xxxxxxxx\nxxxx"
+        android:textColor="@color/bui_white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bar" />
+
+    <com.hjy.gamecommunity.view.VideoPlayer
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="248dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/csiv_liked"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/liked_white_t" />
+
+        <TextView
+            android:id="@+id/tv_LikedNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="xxx"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
+        <ImageView
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/hotspot_t" />
+
+        <TextView
+            android:id="@+id/tv_HotspotNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="xxx"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

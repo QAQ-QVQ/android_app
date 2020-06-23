@@ -26,6 +26,7 @@ import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.view.textview.SuperTextView;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.ActivityVideoPlay;
 import com.hjy.gamecommunity.activity.news.ActivityNewsDetails;
 import com.hjy.gamecommunity.adapter.FamilyAdapter;
 import com.hjy.gamecommunity.adapter.GameAdapter;
@@ -88,13 +89,17 @@ public class ActivitySearchOther extends BaseActivity {
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager);
-                baseAdapter = new LiveAdapter(gridLayoutManager);
+                LiveAdapter liveAdapter = new LiveAdapter();
+                liveAdapter.setMode(liveAdapter.MATCH_PARENT);
+                baseAdapter = liveAdapter;
                 break;
             case SearchEnum.VALUE3:
                 mRecyclerView.setPadding(dp2px, 0, dp2px, 0);
                 GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(gridLayoutManager2);
-                baseAdapter = new VideoAdapter(gridLayoutManager2);
+                VideoAdapter videoAdapter = new VideoAdapter();
+                videoAdapter.setMode(videoAdapter.MATCH_PARENT);
+                baseAdapter = videoAdapter;
                 break;
             case SearchEnum.VALUE4:
                 mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bui_white));
@@ -202,6 +207,9 @@ public class ActivitySearchOther extends BaseActivity {
                 } else if (item instanceof SearchBean.DataBean.VideoListBean) {
                     // 視頻
                     SearchBean.DataBean.VideoListBean videoListBean = (SearchBean.DataBean.VideoListBean) item;
+                    Intent intent = new Intent(getContext(), ActivityVideoPlay.class);
+                    intent.putExtra(ActivityVideoPlay.VIDEO_ID, videoListBean.getId());
+                    startActivity(intent);
                 } else if (item instanceof SearchBean.DataBean.FamilyListBean) {
                     // 家族
                     SearchBean.DataBean.FamilyListBean familyListBean = (SearchBean.DataBean.FamilyListBean) item;

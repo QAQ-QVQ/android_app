@@ -14,40 +14,40 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="TabLayout">
-        <attr name="tabIndicatorColor" format="color" />
-        <attr name="tabIndicatorHeight" format="dimension" />
-        <attr name="tabContentStart" format="dimension" />
-        <attr name="tabBackground" format="reference" />
-        <attr name="tabMode">
+    <declare-styleable name="TabLayoutX">
+        <attr name="zqy_tabIndicatorColor" format="color" />
+        <attr name="zqy_tabIndicatorHeight" format="dimension" />
+        <attr name="zqy_tabContentStart" format="dimension" />
+        <attr name="zqy_tabBackground" format="reference" />
+        <attr name="zqy_tabMode">
             <enum name="scrollable" value="0" />
             <enum name="fixed" value="1" />
         </attr>
-        <attr name="tabGravity">
+        <attr name="zqy_tabGravity">
             <enum name="fill" value="0" />
             <enum name="center" value="1" />
         </attr>
-        <attr name="tabMinWidth" format="dimension" />
-        <attr name="tabMaxWidth" format="dimension" />
-        <attr name="tabTextAppearance" format="reference" />
-        <attr name="tabTextColor" format="color" />
-        <attr name="tabSelectedTextColor" format="color" />
-        <attr name="tabPaddingStart" format="dimension" />
-        <attr name="tabPaddingTop" format="dimension" />
-        <attr name="tabPaddingEnd" format="dimension" />
-        <attr name="tabPaddingBottom" format="dimension" />
-        <attr name="tabPadding" format="dimension" />
+        <attr name="zqy_tabMinWidth" format="dimension" />
+        <attr name="zqy_tabMaxWidth" format="dimension" />
+        <attr name="zqy_tabTextAppearance" format="reference" />
+        <attr name="zqy_tabTextColor" format="color" />
+        <attr name="zqy_tabSelectedTextColor" format="color" />
+        <attr name="zqy_tabPaddingStart" format="dimension" />
+        <attr name="zqy_tabPaddingTop" format="dimension" />
+        <attr name="zqy_tabPaddingEnd" format="dimension" />
+        <attr name="zqy_tabPaddingBottom" format="dimension" />
+        <attr name="zqy_tabPadding" format="dimension" />
 
         <!--底部分隔栏的颜色-->
-        <attr name="bottomLineColor" format="color" />
+        <attr name="zqy_bottomLineColor" format="color" />
         <!--竖直分隔线的颜色-->
-        <attr name="dividerColor" format="color" />
+        <attr name="zqy_dividerColor" format="color" />
         <!--底部分隔栏的高度-->
-        <attr name="bottomLineHeight" format="dimension" />
+        <attr name="zqy_bottomLineHeight" format="dimension" />
         <!--竖直分隔线的宽与高-->
-        <attr name="dividerWidth" format="dimension" />、
-        <attr name="dividerHeight" format="dimension" />
-        <attr name="bottomLineMode">
+        <attr name="zqy_dividerWidth" format="dimension" />、
+        <attr name="zqy_dividerHeight" format="dimension" />
+        <attr name="zqy_bottomLineMode">
             <!--不显示底部分割栏-->
             <enum name="none" value="0" />
             <!--显示在滑动栏外面-->
@@ -55,8 +55,19 @@
             <!--显示在滑动栏里面-->
             <enum name="inner" value="2" />
         </attr>
+
+        <attr name="zqy_textStyle">
+            <!--正常-->
+            <enum name="normal" value="0" />
+            <!--加粗-->
+            <enum name="bold" value="1" />
+            <!--斜体-->
+            <enum name="italic" value="2" />
+            <!--加粗斜体-->
+            <enum name="bold_italic" value="3" />
+        </attr>
         <!--下划线的宽度-->
-        <attr name="tabLineOffset" format="dimension" />
+        <attr name="zqy_tabLineOffset" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="RoundProgressBarWidthNumber">

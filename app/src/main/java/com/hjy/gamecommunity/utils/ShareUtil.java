@@ -1,4 +1,4 @@
-package com.hjy.gamecommunity.share;
+package com.hjy.gamecommunity.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.MetaDataUtils;
 import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.UtilsManage;
-import com.hjy.baseutil.ViewSeting;
-import com.hjy.gamecommunity.dialog.BottomPopup;
+import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.popupwindow.ShareBottomPopup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,15 +64,14 @@ public class ShareUtil {
      */
 
     public static ShareParams getShareParams(String titles, String text, String url) {
-        String app_name = MetaDataUtils.getMetaDataInApp("APP_NAME");
+        // String app_name = MetaDataUtils.getMetaDataInApp("APP_NAME");
         ShareParams shareParams = new ShareParams();
         shareParams.setTitle(titles);
         shareParams.setText(text);
         shareParams.setShareType(Platform.SHARE_WEBPAGE);
         shareParams.setUrl(url);//必须
-        // shareParams.setImageData(ImageUtils.getBitmap(R.mipmap.ic_launcher));
-        String packageName = UtilsManage.getApplication().getPackageName();
-
+        shareParams.setImageData(ImageUtils.getBitmap(R.mipmap.ic_launcher));
+        // String packageName = UtilsManage.getApplication().getPackageName();
         return shareParams;
     }
 
@@ -147,11 +145,11 @@ public class ShareUtil {
      * @param activity
      * @param
      */
-    private BottomPopup shareBottomPopupDialog;
+    private ShareBottomPopup shareBottomPopup;
     private ShareParams shareParams;
     private List<String> platformName;
 
-    public void share_Dialog(final Activity activity, View rootView, ShareParams shareParams, SharingResultsListener sharingResultsListener) {
+    public void shareDialog(final Activity activity, View rootView, ShareParams shareParams, SharingResultsListener sharingResultsListener) {
         if (platformName == null) {
             platformName = new ArrayList<>();
             platformName.add(QQ.Name);
@@ -160,18 +158,31 @@ public class ShareUtil {
             platformName.add(WechatMoments.Name);
             platformName.add(SinaWeibo.Name);
         }
-        share_Dialog(activity, rootView, shareParams, platformName, sharingResultsListener);
+        shareDialog(activity, rootView, shareParams, platformName, sharingResultsListener);
     }
 
-    public void share_Dialog(final Activity activity, View rootView, ShareParams shareParams, List<String> platformName, SharingResultsListener sharingResultsListener) {
+    /**
+     * 分享带面板
+     *
+     * @param activity
+     * @param rootView
+     * @param shareParams            分享参数
+     * @param platformName           分享平台
+     * @param sharingResultsListener
+     */
+    public void shareDialog(final Activity activity, View rootView, ShareParams shareParams, List<String> platformName, SharingResultsListener sharingResultsListener) {
         this.shareParams = shareParams;
         this.sharingResultsListener = sharingResultsListener;
         //分享弹窗
-        if (shareBottomPopupDialog == null) {
-            shareBottomPopupDialog = new BottomPopup(activity, ViewSeting.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (shareBottomPopup == null) {
+            shareBottomPopup = new ShareBottomPopup(activity, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } else {
+            if (!shareBottomPopup.getActivity().equals(activity)) {
+                shareBottomPopup = new ShareBottomPopup(activity, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            }
         }
-        listener(shareBottomPopupDialog.getViewsList(), platformName);
-        shareBottomPopupDialog.show(rootView);
+        listener(shareBottomPopup.getViewsList(), platformName);
+        shareBottomPopup.show(rootView);
     }
 
     /**
@@ -182,7 +193,7 @@ public class ShareUtil {
      */
 
 
-    public void share_Dialog2(String name, ShareParams shareParams, SharingResultsListener sharingResultsListener) {
+    public void shareNoPanel(String name, ShareParams shareParams, SharingResultsListener sharingResultsListener) {
         this.sharingResultsListener = sharingResultsListener;
         JShareInterface.share(name, shareParams, mPlatActionListener);
     }
@@ -277,7 +288,7 @@ public class ShareUtil {
             @Override
             public void onClick(View view) {
                 Log.d("ShareUtil", "取消分享");
-                shareBottomPopupDialog.dismiss();
+                shareBottomPopup.dismiss();
             }
         });
     }
@@ -305,12 +316,10 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null){
+                    if (sharingResultsListener != null)
                         sharingResultsListener.onComplete(platform, action, data);
-                    }
-                    if (shareBottomPopupDialog != null){
-                        shareBottomPopupDialog.dismiss();
-                    }
+                    if (shareBottomPopup != null)
+                        shareBottomPopup.dismiss();
                 }
             });
 
@@ -323,12 +332,10 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null){
+                    if (sharingResultsListener != null)
                         sharingResultsListener.onError(platform, action, errorCode, error);
-                    }
-                    if (shareBottomPopupDialog != null){
-                        shareBottomPopupDialog.dismiss();
-                    }
+                    if (shareBottomPopup != null)
+                        shareBottomPopup.dismiss();
                 }
             });
 
@@ -340,12 +347,10 @@ public class ShareUtil {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    if (sharingResultsListener != null){
+                    if (sharingResultsListener != null)
                         sharingResultsListener.onCancel(platform, action);
-                    }
-                    if (shareBottomPopupDialog != null){
-                        shareBottomPopupDialog.dismiss();
-                    }
+                    if (shareBottomPopup != null)
+                        shareBottomPopup.dismiss();
                 }
             });
 

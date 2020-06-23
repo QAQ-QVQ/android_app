@@ -26,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -62,7 +63,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.hjy.baseui.R;
 
 import java.lang.annotation.Retention;
@@ -77,81 +77,18 @@ import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_SETTLING;
 
 /**
- * TabLayout provides a horizontal layout to display tabs.
- * <p>
- * <p>Population of the tabs to display is
- * done through {@link Tab} instances. You create tabs via {@link #newTab()}. From there you can
- * change the tab's label or icon via {@link Tab#setText(int)} and {@link Tab#setIcon(int)}
- * respectively. To display the tab, you need to add it to the layout via one of the
- * {@link #addTab(Tab)} methods. For example:
- * <pre>
- * TabLayout tabLayout = ...;
- * tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
- * tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
- * tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
- * </pre>
- * You should set a listener via {@link #setOnTabSelectedListener(OnTabSelectedListener)} to be
- * notified when any tab's selection state has been changed.
- * <p>
- * <p>You can also add items to TabLayout in your layout through the use of {@link TabItem}.
- * An example usage is like so:</p>
- * <p>
- * <pre>
- * &lt;android.support.design.widget.TabLayout
- *         android:layout_height=&quot;wrap_content&quot;
- *         android:layout_width=&quot;match_parent&quot;&gt;
- *
- *     &lt;android.support.design.widget.TabItem
- *             android:text=&quot;@string/tab_text&quot;/&gt;
- *
- *     &lt;android.support.design.widget.TabItem
- *             android:icon=&quot;@drawable/ic_android&quot;/&gt;
- *
- * &lt;/android.support.design.widget.TabLayout&gt;
- * </pre>
- * <p>
- * <h3>ViewPager integration</h3>
- * <p>
- * If you're using a {@link ViewPager} together
- * with this layout, you can call {@link #setupWithViewPager(ViewPager)} to link the two together.
- * This layout will be automatically populated from the {@link PagerAdapter}'s page titles.</p>
- * <p>
- * <p>
- * This view also supports being used as part of a ViewPager's decor, and can be added
- * directly to the ViewPager in a layout resource file like so:</p>
- * <p>
- * <pre>
- * &lt;android.support.v4.view.ViewPager
- *     android:layout_width=&quot;match_parent&quot;
- *     android:layout_height=&quot;match_parent&quot;&gt;
- *
- *     &lt;android.support.design.widget.TabLayout
- *         android:layout_width=&quot;match_parent&quot;
- *         android:layout_height=&quot;wrap_content&quot;
- *         android:layout_gravity=&quot;top&quot; /&gt;
- *
- * &lt;/android.support.v4.view.ViewPager&gt;
- * </pre>
- *
- * @attr ref android.support.design.R.styleable#TabLayout_tabPadding
- * @attr ref android.support.design.R.styleable#TabLayout_tabPaddingStart
- * @attr ref android.support.design.R.styleable#TabLayout_tabPaddingTop
- * @attr ref android.support.design.R.styleable#TabLayout_tabPaddingEnd
- * @attr ref android.support.design.R.styleable#TabLayout_tabPaddingBottom
- * @attr ref android.support.design.R.styleable#TabLayout_tabContentStart
- * @attr ref android.support.design.R.styleable#TabLayout_tabBackground
- * @attr ref android.support.design.R.styleable#TabLayout_tabMinWidth
- * @attr ref android.support.design.R.styleable#TabLayout_tabMaxWidth
- * @attr ref android.support.design.R.styleable#TabLayout_tabTextAppearance
- * @see <a href="http://www.google.com/design/spec/components/tabs.html">Tabs</a>
+ * 自定义tab 1. 可自定义下划线   2.可根据字体大小自适应高度
+ * Author: zhangqingyou
+ * Date: 2020/4/20 14:45
+ * Des:
  */
 @ViewPager.DecorView
-public class TabLayout extends HorizontalScrollView {
+public class TabLayoutX extends HorizontalScrollView {
 
     private static final int DEFAULT_HEIGHT_WITH_TEXT_ICON = 72; // dps
     static final int DEFAULT_GAP_TEXT_ICON = 8; // dps
-    private static final int INVALID_WIDTH = -1;
-    private static final int DEFAULT_HEIGHT = 48; // dps
+    private static final int INVALID_WIDTH = -1;//
+    private static int DEFAULT_HEIGHT = -1; // dps -1:根据字体大小自适应高度
     private static final int TAB_MIN_WIDTH_MARGIN = 56; //dps
     static final int FIXED_WRAP_GUTTER_MIN = 16; //dps
     static final int MOTION_NON_ADJACENT_OFFSET = 24;
@@ -179,6 +116,7 @@ public class TabLayout extends HorizontalScrollView {
      * @see #getTabMode()
      */
     public static final int MODE_FIXED = 1;
+    private int mTabTextStyle;
 
     /**
      * @hide
@@ -190,7 +128,7 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Gravity used to fill the {@link TabLayout} as much as possible. This option only takes effect
+     * Gravity used to fill the {@link TabLayoutX} as much as possible. This option only takes effect
      * when used with {@link #MODE_FIXED}.
      *
      * @see #setTabGravity(int)
@@ -199,7 +137,7 @@ public class TabLayout extends HorizontalScrollView {
     public static final int GRAVITY_FILL = 0;
 
     /**
-     * Gravity used to lay out the tabs in the center of the {@link TabLayout}.
+     * Gravity used to lay out the tabs in the center of the {@link TabLayoutX}.
      *
      * @see #setTabGravity(int)
      * @see #getTabGravity()
@@ -287,15 +225,15 @@ public class TabLayout extends HorizontalScrollView {
     // Pool we use as a simple RecyclerBin
     private final Pools.Pool<TabView> mTabViewPool = new Pools.SimplePool<>(12);
 
-    public TabLayout(Context context) {
+    public TabLayoutX(Context context) {
         this(context, null);
     }
 
-    public TabLayout(Context context, AttributeSet attrs) {
+    public TabLayoutX(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TabLayoutX(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         ThemeUtils.checkAppCompatTheme(context);
@@ -308,63 +246,68 @@ public class TabLayout extends HorizontalScrollView {
         super.addView(mTabStrip, 0, new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabLayout,
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabLayoutX,
                 defStyleAttr, R.style.Widget_Design_TabLayout);
 
         //自己的自定义属性
-        mTabLineOffset = a.getDimensionPixelSize(R.styleable.TabLayout_tabLineOffset, 0);
+        mTabLineOffset = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabLineOffset, 0);
 
         mTabStrip.setSelectedIndicatorHeight(
-                a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorHeight, 0));
-        mTabStrip.setSelectedIndicatorColor(a.getColor(R.styleable.TabLayout_tabIndicatorColor, 0));
+                a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabIndicatorHeight, 0));
+        mTabStrip.setSelectedIndicatorColor(a.getColor(R.styleable.TabLayoutX_zqy_tabIndicatorColor, 0));
 
         mTabPaddingStart = mTabPaddingTop = mTabPaddingEnd = mTabPaddingBottom = a
-                .getDimensionPixelSize(R.styleable.TabLayout_tabPadding, 0);
-        mTabPaddingStart = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingStart,
+                .getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabPadding, 0);
+        mTabPaddingStart = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabPaddingStart,
                 mTabPaddingStart);
-        mTabPaddingTop = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingTop,
+        mTabPaddingTop = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabPaddingTop,
                 mTabPaddingTop);
-        mTabPaddingEnd = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingEnd,
+        mTabPaddingEnd = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabPaddingEnd,
                 mTabPaddingEnd);
-        mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.TabLayout_tabPaddingBottom,
+        mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabPaddingBottom,
                 mTabPaddingBottom);
 
-        mTabTextAppearance = a.getResourceId(R.styleable.TabLayout_tabTextAppearance,
+        mTabTextAppearance = a.getResourceId(R.styleable.TabLayoutX_zqy_tabTextAppearance,
                 R.style.TextAppearance_Design_Tab);
+
+        mTabTextStyle = a.getInt(R.styleable.TabLayoutX_zqy_textStyle, 0);
+
 
         // Text colors/sizes come from the text appearance first
         final TypedArray ta = context.obtainStyledAttributes(mTabTextAppearance,
                 android.support.v7.appcompat.R.styleable.TextAppearance);
         try {
+
             mTabTextSize = ta.getDimensionPixelSize(
                     android.support.v7.appcompat.R.styleable.TextAppearance_android_textSize, 0);
             mTabTextColors = ta.getColorStateList(
                     android.support.v7.appcompat.R.styleable.TextAppearance_android_textColor);
+
         } finally {
             ta.recycle();
         }
 
-        if (a.hasValue(R.styleable.TabLayout_tabTextColor)) {
+        if (a.hasValue(R.styleable.TabLayoutX_zqy_tabTextColor)) {
             // If we have an explicit text color set, use it instead
-            mTabTextColors = a.getColorStateList(R.styleable.TabLayout_tabTextColor);
+            mTabTextColors = a.getColorStateList(R.styleable.TabLayoutX_zqy_tabTextColor);
         }
 
-        if (a.hasValue(R.styleable.TabLayout_tabSelectedTextColor)) {
+        if (a.hasValue(R.styleable.TabLayoutX_zqy_tabSelectedTextColor)) {
             // We have an explicit selected text color set, so we need to make merge it with the
             // current colors. This is exposed so that developers can use theme attributes to set
             // this (theme attrs in ColorStateLists are Lollipop+)
-            final int selected = a.getColor(R.styleable.TabLayout_tabSelectedTextColor, 0);
+            final int selected = a.getColor(R.styleable.TabLayoutX_zqy_tabSelectedTextColor, 0);
             mTabTextColors = createColorStateList(mTabTextColors.getDefaultColor(), selected);
         }
 
-        mRequestedTabMinWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMinWidth,
+        mRequestedTabMinWidth = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabMinWidth,
                 INVALID_WIDTH);
-        mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.TabLayout_tabMaxWidth,
+        mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabMaxWidth,
                 INVALID_WIDTH);
-        mTabBackgroundResId = a.getResourceId(R.styleable.TabLayout_tabBackground, 0);
-        mContentInsetStart = a.getDimensionPixelSize(R.styleable.TabLayout_tabContentStart, 0);
-        mMode = a.getInt(R.styleable.TabLayout_tabMode, MODE_FIXED);
-        mTabGravity = a.getInt(R.styleable.TabLayout_tabGravity, GRAVITY_FILL);
+        mTabBackgroundResId = a.getResourceId(R.styleable.TabLayoutX_zqy_tabBackground, 0);
+        mContentInsetStart = a.getDimensionPixelSize(R.styleable.TabLayoutX_zqy_tabContentStart, 0);
+        mMode = a.getInt(R.styleable.TabLayoutX_zqy_tabMode, MODE_FIXED);
+        mTabGravity = a.getInt(R.styleable.TabLayoutX_zqy_tabGravity, GRAVITY_FILL);
         a.recycle();
 
         // TODO add attr for these
@@ -377,12 +320,11 @@ public class TabLayout extends HorizontalScrollView {
     }
 
 
-
     /**
      * Sets the tab indicator's color for the currently selected tab.
      *
      * @param color color to use for the indicator
-     * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorColor
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabIndicatorColor
      */
     public void setSelectedTabIndicatorColor(@ColorInt int color) {
         mTabStrip.setSelectedIndicatorColor(color);
@@ -392,7 +334,7 @@ public class TabLayout extends HorizontalScrollView {
      * Sets the tab indicator's height for the currently selected tab.
      *
      * @param height height to use for the indicator in pixels
-     * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorHeight
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabIndicatorHeight
      */
     public void setSelectedTabIndicatorHeight(int height) {
         mTabStrip.setSelectedIndicatorHeight(height);
@@ -673,7 +615,7 @@ public class TabLayout extends HorizontalScrollView {
      * </ul>
      *
      * @param mode one of {@link #MODE_FIXED} or {@link #MODE_SCROLLABLE}.
-     * @attr ref android.support.design.R.styleable#TabLayout_tabMode
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabMode
      */
     public void setTabMode(@Mode int mode) {
         if (mode != mMode) {
@@ -683,7 +625,7 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Returns the current mode used by this {@link TabLayout}.
+     * Returns the current mode used by this {@link TabLayoutX}.
      *
      * @see #setTabMode(int)
      */
@@ -696,7 +638,7 @@ public class TabLayout extends HorizontalScrollView {
      * Set the gravity to use when laying out the tabs.
      *
      * @param gravity one of {@link #GRAVITY_CENTER} or {@link #GRAVITY_FILL}.
-     * @attr ref android.support.design.R.styleable#TabLayout_tabGravity
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabGravity
      */
     public void setTabGravity(@TabGravity int gravity) {
         if (mTabGravity != gravity) {
@@ -738,15 +680,15 @@ public class TabLayout extends HorizontalScrollView {
     /**
      * Sets the text colors for the different states (normal, selected) used for the tabs.
      *
-     * @attr ref android.support.design.R.styleable#TabLayout_tabTextColor
-     * @attr ref android.support.design.R.styleable#TabLayout_tabSelectedTextColor
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabTextColor
+     * @attr ref android.support.design.R.styleable#TabLayoutX_zqy_tabSelectedTextColor
      */
     public void setTabTextColors(int normalColor, int selectedColor) {
         setTabTextColors(createColorStateList(normalColor, selectedColor));
     }
 
     /**
-     * The one-stop shop for setting up this {@link TabLayout} with a {@link ViewPager}.
+     * The one-stop shop for setting up this {@link TabLayoutX} with a {@link ViewPager}.
      * <p>
      * <p>This is the same as calling {@link #setupWithViewPager(ViewPager, boolean)} with
      * auto-refresh enabled.</p>
@@ -758,7 +700,7 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * The one-stop shop for setting up this {@link TabLayout} with a {@link ViewPager}.
+     * The one-stop shop for setting up this {@link TabLayoutX} with a {@link ViewPager}.
      * <p>
      * <p>This method will link the given ViewPager and this TabLayout together so that
      * changes in one are automatically reflected in the other. This includes scroll state changes
@@ -1005,11 +947,32 @@ public class TabLayout extends HorizontalScrollView {
         return Math.round(getResources().getDisplayMetrics().density * dps);
     }
 
+    /**
+     * 根据字体大小获取高度
+     *
+     * @param fontSize
+     * @return
+     */
+    public int getFontHeight(float fontSize) {
+        Paint paint = new Paint();
+        paint.setTextSize(fontSize);
+        Paint.FontMetrics fm = paint.getFontMetrics();
+        return (int) Math.ceil(fm.descent - fm.top) + 2;
+    }
+
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // If we have a MeasureSpec which allows us to decide our height, try and use the default
         // height
-        final int idealHeight = dpToPx(getDefaultHeight()) + getPaddingTop() + getPaddingBottom();
+        int tabHeight = getTabHeight();
+        int idealHeight;
+        if (tabHeight == -1) {
+            idealHeight = getFontHeight(mTabTextSize) + getPaddingTop() + getPaddingBottom() + mTabPaddingTop + mTabPaddingBottom;
+        } else {
+            idealHeight = dpToPx(tabHeight) + getPaddingTop() + getPaddingBottom() + mTabPaddingTop + mTabPaddingBottom;
+        }
+
         switch (MeasureSpec.getMode(heightMeasureSpec)) {
             case MeasureSpec.AT_MOST:
                 heightMeasureSpec = MeasureSpec.makeMeasureSpec(
@@ -1240,7 +1203,7 @@ public class TabLayout extends HorizontalScrollView {
         private int mPosition = INVALID_POSITION;
         private View mCustomView;
 
-        TabLayout mParent;
+        TabLayoutX mParent;
         TabView mView;
 
         Tab() {
@@ -1633,6 +1596,7 @@ public class TabLayout extends HorizontalScrollView {
 
                     if (updateTextView) {
                         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                        mTextView.setTypeface(Typeface.defaultFromStyle(mTabTextStyle));
                         mTextView.setMaxLines(maxLines);
                         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
                     }
@@ -2052,14 +2016,14 @@ public class TabLayout extends HorizontalScrollView {
                 if (mTabLineOffset == 0) {
                     canvas.drawRect(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight,
                             mIndicatorRight, getHeight(), mSelectedIndicatorPaint);
-                }else {
+                } else {
                     //原来的下划线的长度(也就是Tab的宽度)
                     int width = mIndicatorRight - mIndicatorLeft;
                     //Tab的中心点的坐标（mIndicatorRight-width/2也是）
-                    int tabCenter = mIndicatorLeft+width/2;
-                    RectF oval3 = new RectF(tabCenter-mTabLineOffset, getHeight() - mSelectedIndicatorHeight,
-                            mIndicatorRight-width/2+mTabLineOffset, getHeight());
-                    canvas.drawRoundRect(oval3,30,30,mSelectedIndicatorPaint);
+                    int tabCenter = mIndicatorLeft + width / 2;
+                    RectF oval3 = new RectF(tabCenter - mTabLineOffset, getHeight() - mSelectedIndicatorHeight,
+                            mIndicatorRight - width / 2 + mTabLineOffset, getHeight());
+                    canvas.drawRoundRect(oval3, 30, 30, mSelectedIndicatorPaint);
                 }
             }
         }
@@ -2082,7 +2046,7 @@ public class TabLayout extends HorizontalScrollView {
         return new ColorStateList(states, colors);
     }
 
-    private int getDefaultHeight() {
+    private int getTabHeight() {
         boolean hasIconAndText = false;
         for (int i = 0, count = mTabs.size(); i < count; i++) {
             Tab tab = mTabs.get(i);
@@ -2092,6 +2056,10 @@ public class TabLayout extends HorizontalScrollView {
             }
         }
         return hasIconAndText ? DEFAULT_HEIGHT_WITH_TEXT_ICON : DEFAULT_HEIGHT;
+    }
+
+    public static void setTabHeight(int defaultHeight) {
+        DEFAULT_HEIGHT = defaultHeight;
     }
 
     private int getTabMinWidth() {
@@ -2118,7 +2086,7 @@ public class TabLayout extends HorizontalScrollView {
 
     /**
      * A {@link ViewPager.OnPageChangeListener} class which contains the
-     * necessary calls back to the provided {@link TabLayout} so that the tab position is
+     * necessary calls back to the provided {@link TabLayoutX} so that the tab position is
      * kept in sync.
      * <p>
      * <p>This class stores the provided TabLayout weakly, meaning that you can use
@@ -2127,11 +2095,11 @@ public class TabLayout extends HorizontalScrollView {
      * not cause a leak.
      */
     public static class TabLayoutOnPageChangeListener implements ViewPager.OnPageChangeListener {
-        private final WeakReference<TabLayout> mTabLayoutRef;
+        private final WeakReference<TabLayoutX> mTabLayoutRef;
         private int mPreviousScrollState;
         private int mScrollState;
 
-        public TabLayoutOnPageChangeListener(TabLayout tabLayout) {
+        public TabLayoutOnPageChangeListener(TabLayoutX tabLayout) {
             mTabLayoutRef = new WeakReference<>(tabLayout);
         }
 
@@ -2144,7 +2112,7 @@ public class TabLayout extends HorizontalScrollView {
         @Override
         public void onPageScrolled(final int position, final float positionOffset,
                                    final int positionOffsetPixels) {
-            final TabLayout tabLayout = mTabLayoutRef.get();
+            final TabLayoutX tabLayout = mTabLayoutRef.get();
             if (tabLayout != null) {
                 // Only update the text selection if we're not settling, or we are settling after
                 // being dragged
@@ -2161,7 +2129,7 @@ public class TabLayout extends HorizontalScrollView {
 
         @Override
         public void onPageSelected(final int position) {
-            final TabLayout tabLayout = mTabLayoutRef.get();
+            final TabLayoutX tabLayout = mTabLayoutRef.get();
             if (tabLayout != null && tabLayout.getSelectedTabPosition() != position
                     && position < tabLayout.getTabCount()) {
                 // Select the tab, only updating the indicator if we're not being dragged/settled
