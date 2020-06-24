@@ -51,7 +51,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initModule();//大苏打撒
+        initModule();//
         seetingJPush();//极光推送
         jAnalyticsInterface();//极光页面统计
         jshare();//极光分享

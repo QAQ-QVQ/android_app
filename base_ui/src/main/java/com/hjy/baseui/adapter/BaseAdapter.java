@@ -159,6 +159,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
                 notifyItemRangeChanged(sizes - size, sizes);//只刷新添加的数据
             else
                 notifyDataSetChanged();
+            b = true;
         } else
             b = false;
         /**

@@ -53,15 +53,15 @@ public class ColorStateImageView extends AppCompatImageView {
             /**
              * 通过设置滤镜来改变图片亮度@minghao
              */
-             setDrawingCacheEnabled(true);
-            if (clickImgAlphaColor != -147258369){
+            setDrawingCacheEnabled(true);
+            if (clickImgAlphaColor != -147258369) {
                 //设置点击颜色和滤镜
                 setColorFilter(clickImgAlphaColor, PorterDuff.Mode.MULTIPLY);
             }
         } else {//未点击
-            if (imgColor != -147258369)
+            if (imgColor != -147258369) {
                 this.setColorFilter(imgColor);
-
+            }
         }
     }
 
@@ -117,8 +117,8 @@ public class ColorStateImageView extends AppCompatImageView {
      * @param clickImgAlpha 值 只能在0-1之间
      */
     public void setOnClickImgAlpha(@FloatRange(from = 0, to = 1) float clickImgAlpha) {
-            if (getImgColor() != -1) {
-                setOnClickImgAlpha(getImgColor(), clickImgAlpha);
+        if (getImgColor() != -1) {
+            setOnClickImgAlpha(getImgColor(), clickImgAlpha);
         }
     }
 

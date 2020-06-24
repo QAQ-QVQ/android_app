@@ -25,7 +25,6 @@ public class SuperLinearLayout extends LinearLayout {
         init(context, attrs);
     }
 
-
     private void init(Context context, AttributeSet attrs) {
         SuperLinearLayoutDrawable superLinearLayoutDrawable = new SuperLinearLayoutDrawable();
         StateListDrawable bg = superLinearLayoutDrawable.initStateListDrawable(context, attrs);

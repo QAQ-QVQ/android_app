@@ -124,7 +124,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta7'
     //公共模组
     implementation project(path: ':base_request')
     implementation project(path: ':base_utils')
