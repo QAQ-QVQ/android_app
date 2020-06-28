@@ -102,6 +102,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/qy_gold_mine" />
 
@@ -109,9 +110,8 @@
                     android:id="@+id/gold_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_toRightOf="@+id/gold_iv"
+                    android:layout_marginStart="6dp"
+                    android:layout_centerInParent="true"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -121,8 +121,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gold_num"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_alignParentBottom="true"
                     android:text="我的金豆"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
@@ -141,6 +142,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/qy_silver_mine" />
 
@@ -149,8 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_toRightOf="@+id/silver_iv"
+                    android:layout_centerInParent="true"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -160,8 +161,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/silver_num"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
+                    android:layout_alignParentBottom="true"
                     android:text="我的银豆"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
@@ -179,6 +181,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/qy_flower_mine" />
 
@@ -188,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="18dp"
-                    android:layout_toRightOf="@+id/flower_iv"
+                    android:layout_centerInParent="true"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -199,8 +202,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/flower_num"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
                     android:text="我的鲜花"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -677,7 +681,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mine_live_linearlayout"
-            app:layout_constraintVertical_weight="1.5"></RelativeLayout>
+            app:layout_constraintVertical_weight="1.5">
+            <RelativeLayout
+                android:id="@+id/mine_customer"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/qy_mine_customer">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="在线客服"
+                    android:textSize="8sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/bui_black_light"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
