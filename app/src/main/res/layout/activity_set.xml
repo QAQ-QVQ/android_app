@@ -5,57 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bui_background_light"
-    tools:context=".activity.mine.ActivitySet"
-    android:fitsSystemWindows="true"
-    tools:ignore="MissingConstraints">
+    tools:context=".activity.mine.ActivitySet">
 
-    <Toolbar
-        android:background="@color/bui_white"
-        android:id="@+id/mine_set_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+    <include
+        layout="@layout/bui_bar_black_white"
+        app:layout_constraintBottom_toTopOf="@+id/mine_set_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/qy_mine_toolbar_back">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingEnd="50dp"
-            android:text="设置"
-            android:textColor="@color/bui_black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </Toolbar>
+        app:layout_constraintTop_toTopOf="parent"></include>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/mine_set_item"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@color/bui_white"
         app:layout_constraintBottom_toTopOf="@+id/relativelayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_set_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bar"
         app:layout_constraintVertical_weight="2">
 
     </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
-        app:layout_constraintVertical_weight="1"
         android:id="@+id/relativelayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2">
+        app:layout_constraintTop_toBottomOf="@+id/mine_set_item"
+        app:layout_constraintVertical_weight="1">
+
         <Button
             android:id="@+id/mine_logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="44dp"
             android:layout_marginRight="44dp"
@@ -65,9 +51,7 @@
             android:paddingRight="20dp"
             android:paddingBottom="12dp"
             android:text="退出登录"
-            android:textColor="@color/bui_red_light"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:textColor="@color/bui_red_light" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:background="@color/bui_white"
     android:orientation="horizontal">
 
     <include layout="@layout/bui_back_black_transparent"></include>
@@ -11,13 +12,23 @@
 
     <TextView
         android:id="@+id/tv_text_bar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="9"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginRight="40dp"
         android:gravity="center"
         android:text="xxxx"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_text_right_bar"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/bui_black_light1"
+        android:textSize="16sp" />
 </LinearLayout>

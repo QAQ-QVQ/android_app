@@ -7,7 +7,7 @@ def codename = "1"//当日迭代号
 android {
     compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 28
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -149,5 +149,6 @@ dependencies {
     implementation('com.tencent.tinker:tinker-android-lib:1.9.9') {
         exclude group: 'com.android.support'
     }
-
+    //PictureSelector图片选择
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }

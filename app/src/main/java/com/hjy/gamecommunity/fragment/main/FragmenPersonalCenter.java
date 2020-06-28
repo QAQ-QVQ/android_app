@@ -13,16 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
 import com.hjy.gamecommunity.activity.mine.ActivitySet;
 
 /**
- * 个人中心
- * Author: zhangqingyou
+ * 我的
+ * Author: dy
  * Date: 2020/4/8 15:47
  * Des:
+ * @author dy
  */
 public class FragmenPersonalCenter extends BaseFragment implements View.OnClickListener {
 
@@ -116,9 +118,14 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
      */
     private LinearLayout live;
     /**
+     * 客服
+     */
+    private RelativeLayout customer;
+    /**
      * 礼包数量
      */
     private int giftNumber = 6;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_personal_center;
@@ -163,7 +170,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         game.setOnClickListener(this);
         live = findViewById(R.id.mine_live);
         live.setOnClickListener(this);
-
+        customer = findViewById(R.id.mine_customer);
+        customer.setOnClickListener(this);
     }
 
     @Override
@@ -175,10 +183,10 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initData() {
-        SpannableString textGift = new SpannableString("还有 "+giftNumber+" 个礼包");
+        SpannableString textGift = new SpannableString("还有 " + giftNumber + " 个礼包");
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
-        textGift.setSpan(styleSpan,3,5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        textGift.setSpan(new ForegroundColorSpan(Color.parseColor("#EE3847")),3,5,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        textGift.setSpan(styleSpan, 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        textGift.setSpan(new ForegroundColorSpan(Color.parseColor("#EE3847")), 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         giftNum.setText(textGift);
     }
 
@@ -229,6 +237,9 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 break;
             case R.id.mine_live:
                 // TODO: 2020/6/23 直播
+                break;
+            case R.id.mine_customer:
+                // TODO: 2020/6/23 客服
                 break;
             default:
                 break;
