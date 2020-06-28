@@ -17,8 +17,10 @@
 
     <color name="bui_black_light1">#333333</color>
     <color name="bui_black_light">#666666</color>
+    <color name="bui_black_light2">#999999</color>
     <color name="bui_black_dark">#0E050A</color>
     <color name="bui_red_light">#EA534E</color>
+    <color name="bui_background_light">#F4F4F4</color>
 
     <!--三方-->
     <color name="multiple_image_select_primaryDark">#5CC2A9</color>
