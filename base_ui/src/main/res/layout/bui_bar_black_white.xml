@@ -6,7 +6,6 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-
     <include layout="@layout/bui_back_black_transparent"></include>
 
 

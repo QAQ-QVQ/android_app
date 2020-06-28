@@ -26,8 +26,8 @@ public class FamilyAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public int getLayout(T item, int position) {
-        return R.layout.item_family;
 
+        return R.layout.item_family;
     }
 
     @Override
@@ -47,7 +47,6 @@ public class FamilyAdapter<T> extends BaseAdapter<T> {
             mTvText.setText("游戏:" + familyListBean.getGame_name() + " | 区服：" + familyListBean.getCp_server_name());
         }
 
-        viewHolder.setWaterRipple();
     }
 
     @Override

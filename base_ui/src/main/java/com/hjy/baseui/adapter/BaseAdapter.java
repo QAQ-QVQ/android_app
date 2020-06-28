@@ -44,11 +44,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
         if (mList != null) {
             int checkLayout = getLayout(mList.get(viewType), viewType);
             if (checkLayout != 0) {
-                View inflate = LayoutInflater.from(context).inflate(checkLayout, viewGroup, false);
-                baseViewHolder = new BaseViewHolder(inflate, checkLayout);
                 if (!layoutIdsList.contains(checkLayout)) {
                     layoutIdsList.add(checkLayout);
                 }
+                View inflate = LayoutInflater.from(context).inflate(checkLayout, viewGroup, false);
+                baseViewHolder = new BaseViewHolder(inflate, checkLayout);
             }
         }
         return baseViewHolder;
@@ -358,21 +358,71 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
             });
     }
 
+//    /**
+//     * 是否点击有水波纹效果
+//     *
+//     * @param isWaterRipple 是否点击有水波纹效果
+//     */
+//    public void setWaterRipple(boolean isWaterRipple) {
+//        this.isWaterRipple = isWaterRipple;
+//    }
+
+//    /**
+//     * 设置水波纹View宽高 （水波纹View为itemView的父布局）
+//     * 默认宽度为  MATCH_PARENT
+//     * 默认高度为  WRAP_CONTENT
+//     *
+//     * @param viewW
+//     * @param viewH
+//     */
+//    int viewW = ViewGroup.LayoutParams.MATCH_PARENT, viewH = ViewGroup.LayoutParams.WRAP_CONTENT;
+//
+//    public void setWaterRippleViewHW(int viewW, int viewH) {
+//        this.viewW = viewW;
+//        this.viewH = viewH;
+//    }
+//
+//    /**
+//     * 获取水波纹view （把itemView添加到水波纹view中）
+//     */
+//    private View getWaterRippleView(View itemView) {
+//        LinearLayout linearLayout = new LinearLayout(getContext());
+//        linearLayout.setGravity(Gravity.CENTER);
+//        linearLayout.setOrientation(LinearLayout.VERTICAL);
+//        linearLayout.setLayoutParams(new ViewGroup.LayoutParams(viewW, viewH));
+//        linearLayout.addView(itemView);
+//
+//        TypedValue typedValue = new TypedValue();
+//        Resources.Theme theme = itemView.getContext().getTheme();
+//        int top = itemView.getPaddingTop();
+//        int bottom = itemView.getPaddingBottom();
+//        int left = itemView.getPaddingLeft();
+//        int right = itemView.getPaddingRight();
+//        if (theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)) {
+//            linearLayout.setBackgroundResource(typedValue.resourceId);
+//        }
+//       // linearLayout.setPadding(left, top, right, bottom);
+//
+//        return linearLayout;
+//    }
+
+
     public class BaseViewHolder extends RecyclerView.ViewHolder {
         private int layoutId;
 
         public BaseViewHolder(View itemView) {
             super(itemView);
-            //  setWaterRipple(itemView);
         }
 
         public BaseViewHolder(View itemView, @LayoutRes int layoutId) {
             this(itemView);
             this.layoutId = layoutId;
+            setWaterRipple();
         }
 
+
         /**
-         * 设置水波纹背景
+         * 设置水波纹背景 (itemView未设置Background才有效)
          */
         public void setWaterRipple() {
             if (itemView.getBackground() == null) {
@@ -387,7 +437,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
                 }
                 itemView.setPadding(left, top, right, bottom);
             }
+
         }
+
 
         public <T extends View> T findViewById(int id) {
             return itemView.findViewById(id);

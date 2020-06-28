@@ -26,18 +26,19 @@ public class GameAdapter<T> extends BaseAdapter<T> {
         imgInterval = ConvertUtils.dp2px(2);
         imgWH = ConvertUtils.dp2px(26);
 
+
     }
 
     public GameAdapter(List<T> beanList) {
         super(beanList);
         imgInterval = ConvertUtils.dp2px(2);
         imgWH = ConvertUtils.dp2px(26);
+
     }
 
     @Override
     public int getLayout(T item, int position) {
         return R.layout.item_game;
-
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GameAdapter<T> extends BaseAdapter<T> {
             }
         }
 
-        viewHolder.setWaterRipple();
+
     }
 
     @Override

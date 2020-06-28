@@ -3,8 +3,8 @@ package com.hjy.baseui.ui.view.linearlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
 
 import com.hjy.baseui.R;
@@ -27,7 +27,7 @@ public class SuperLinearLayoutDrawable {
 
     private float clickAlpha;//按下时 背景颜色和字体颜色 透明度
 
-    public StateListDrawable initStateListDrawable(Context context, AttributeSet attrs) {//SuperLinearLayout_zqy_sll
+    public Drawable initStateListDrawable(Context context, AttributeSet attrs) {//SuperLinearLayout_zqy_sll
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SuperLinearLayout);
         clickAlpha = typedArray.getFloat(R.styleable.SuperLinearLayout_zqy_sll_clickAlpha, 0.7f);
 

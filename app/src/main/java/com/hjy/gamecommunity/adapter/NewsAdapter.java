@@ -98,9 +98,6 @@ public class NewsAdapter<T> extends BaseAdapter<T> {
                 }
             }
         }
-
-
-        viewHolder.setWaterRipple();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.hjy.baseui.ui.view.linearlayout;
 
 import android.content.Context;
-import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
@@ -27,7 +27,7 @@ public class SuperLinearLayout extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         SuperLinearLayoutDrawable superLinearLayoutDrawable = new SuperLinearLayoutDrawable();
-        StateListDrawable bg = superLinearLayoutDrawable.initStateListDrawable(context, attrs);
+        Drawable bg = superLinearLayoutDrawable.initStateListDrawable(context, attrs);
         setBackground(bg);
 
     }
