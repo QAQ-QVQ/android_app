@@ -20,8 +20,7 @@ import java.io.File;
  */
 public class LoadingImageUtil {
 
-
-    private static void loadingImag(Object imageUrl, ImageView imageView, boolean isplaceholder, int image_loading_item, int image_failure_item) {
+    public static void loadingImag(Object imageUrl, ImageView imageView, boolean isplaceholder, int image_loading_item, int image_failure_item) {
         RequestBuilder<Drawable> objectDrawableRequestBuilder = Glide.with(UtilsManage.getApplication())
                 .load(imageUrl);
         RequestOptions requestOptions = new RequestOptions();
@@ -83,7 +82,6 @@ public class LoadingImageUtil {
         objectDrawableRequestBuilder.apply(requestOptions);//加载配置信息
         objectDrawableRequestBuilder.into(imageView);
     }
-
 
     /**
      * 设置图片圆角角度（不一定有效）

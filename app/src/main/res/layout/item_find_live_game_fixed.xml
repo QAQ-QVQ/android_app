@@ -9,8 +9,22 @@
     android:paddingBottom="12dp"
     app:zqy_sll_backgroundColor="@android:color/white"
     app:zqy_sll_clickAlpha="1.0"
-    app:zqy_sll_clickColorBg="@color/bui_gray2"
+    app:zqy_sll_clickColorBg="@color/bui_gray"
     app:zqy_sll_radius="5">
+
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:singleLine="true"
+        android:text="xxx"
+        android:textColor="@color/bui_black_light1"
+        android:textSize="14sp" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl"
@@ -18,11 +32,14 @@
         android:layout_height="96dp"
         tools:ignore="MissingConstraints">
 
-        <com.xuexiang.xui.widget.imageview.RadiusImageView
-            android:id="@+id/riv_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:riv_corner_radius="5dp" />
+        <View
+            android:id="@+id/v"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout
             android:id="@+id/ll_Lab"
@@ -59,20 +76,11 @@
                 android:textSize="10sp" />
         </com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>
 
-        <View
-            android:id="@+id/v"
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="bottom"
             android:layout_marginTop="3dp"
+            android:gravity="bottom"
             android:orientation="horizontal"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
@@ -81,12 +89,28 @@
             app:layout_constraintTop_toBottomOf="@+id/v"
             app:zqy_sll_backgroundColor="#80000000"
             app:zqy_sll_clickAlpha="1.0"
+            app:zqy_sll_clickColorBg="#80000000"
             app:zqy_sll_radiusBottomLeft="3"
             app:zqy_sll_radiusBottomRight="3">
 
 
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/hotspot_t" />
+
             <TextView
                 android:id="@+id/tv_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="xxx"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_HotspotNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
@@ -98,37 +122,14 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"></View>
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/hotspot_t" />
-
-            <TextView
-                android:id="@+id/tv_HotspotNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:text="xxx"
-                android:textColor="@android:color/white"
-                android:textSize="10sp" />
         </com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:id="@+id/riv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:riv_corner_radius="5dp" />
 
-    <TextView
-        android:id="@+id/tv_Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:singleLine="true"
-        android:text="xxx"
-        android:textColor="@color/bui_black_light1"
-        android:textSize="14sp" />
+    </android.support.constraint.ConstraintLayout>
 
 </com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>

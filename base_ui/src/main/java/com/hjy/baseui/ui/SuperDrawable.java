@@ -333,6 +333,9 @@ public class SuperDrawable extends GradientDrawable {
     }
 
 
+
+
+
     /**
      * @param :colorBg              未点击状态背景色
      * @param :colorBorder          未点击状态的描边色
@@ -348,7 +351,6 @@ public class SuperDrawable extends GradientDrawable {
      * @return
      */
     private StateListDrawable initStateListDrawable() {
-
 
         //创建drawable
         SuperDrawable normalGb = new SuperDrawable();//未点击
@@ -380,6 +382,7 @@ public class SuperDrawable extends GradientDrawable {
         }
 
         SuperDrawable pressedGb = new SuperDrawable();//点击
+
         //pressedGb.setShape(GradientDrawable.OVAL);
         //渐变颜色 和 单背景色 不能同时设置
         if (colors != null) {
@@ -409,13 +412,15 @@ public class SuperDrawable extends GradientDrawable {
         }
 
         StateListDrawable stalistDrawable = new StateListDrawable();
-        int pressed = android.R.attr.state_pressed;
+        int pressed = android.R.attr.state_pressed;//点击
         // //注意该处的顺序，只要有一个状态与之相配，背景就会被换掉
         //  所以不要把大范围放在前面了，如果sd.addState(new[]{},normal)放在第一个的话，就没有什么效果了
         stalistDrawable.addState(new int[]{-pressed}, normalGb);//未选中
         stalistDrawable.addState(new int[]{pressed}, pressedGb);//选中
         ////没有任何状态时显示的图片，就设置空集合，默认状态
-        stalistDrawable.addState(new int[]{}, normalGb);
+       // stalistDrawable.addState(new int[]{}, normalGb);
+
+       // GradientDrawable gradientDrawable=new GradientDrawable();
         return stalistDrawable;
     }
 

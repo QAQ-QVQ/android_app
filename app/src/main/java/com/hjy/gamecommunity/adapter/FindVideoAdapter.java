@@ -40,6 +40,8 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
     private void initImgWH() {
         imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
         imgH = (int) (imgW / 1.79f);
+
+
     }
 
     @Override
@@ -151,10 +153,7 @@ public class FindVideoAdapter<T> extends BaseAdapter<T> {
                     mTvHotspotNum.setText(format + "万");
                 }
             }
-
         }
-
-        // viewHolder.setWaterRipple();//设置水波纹点击效果
     }
 
     @Override

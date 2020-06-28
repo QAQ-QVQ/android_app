@@ -146,7 +146,7 @@ public class LiveAdapter<T> extends BaseAdapter<T> {
 
         }
 
-        // viewHolder.setWaterRipple();//设置水波纹点击效果
+
 
 
     }

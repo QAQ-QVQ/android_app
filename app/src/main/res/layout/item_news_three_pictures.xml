@@ -11,9 +11,9 @@
     android:paddingRight="6dp"
     android:paddingBottom="15dp"
     app:zqy_sll_backgroundColor="@android:color/white"
-    app:zqy_sll_clickColorBg="@color/bui_gray2"
     app:zqy_sll_clickAlpha="1.0"
-    app:zqy_sll_radius="5">
+    app:zqy_sll_clickColorBg="@color/bui_gray"
+    app:zqy_sll_radius="0">
 
     <TextView
         android:id="@+id/tv_Title"

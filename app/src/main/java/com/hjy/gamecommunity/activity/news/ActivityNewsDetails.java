@@ -40,7 +40,6 @@ public class ActivityNewsDetails extends BaseActivity {
     @Override
     public Object getLayout() {
         return R.layout.activity_news_details;
-
     }
 
     @Override
@@ -135,7 +134,7 @@ public class ActivityNewsDetails extends BaseActivity {
                         Log.d("imageLongClicked", "imageUrls:" + imageUrls.get(position));
                         return false;
                     }
-                }) // 设置图片长按回调
+                }) //设置图片长按回调
                 .into(mTvRichText);
     }
 

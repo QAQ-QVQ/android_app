@@ -8,11 +8,13 @@
     android:orientation="vertical"
     tools:ignore="MissingConstraints">
 
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--自定义阴影 放在这儿是让阴影盖在fragment上-->
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -20,9 +22,9 @@
             android:layout_weight="1"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/ll_tab"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-        <!--自定义阴影 放在这儿是让阴影盖在fragment上-->
         <com.hjy.baseui.ui.view.ShadowLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

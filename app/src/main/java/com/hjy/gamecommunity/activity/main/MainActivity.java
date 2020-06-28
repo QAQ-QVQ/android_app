@@ -70,9 +70,7 @@ public class MainActivity extends BaseActivity {
 
         mTabEntities.add(new TabEntities(TabEnum.VALUE1, FragmentHome.class.getCanonicalName(), R.mipmap.home_select, R.mipmap.home_unselect));
         mTabEntities.add(new TabEntities(TabEnum.VALUE2, FragmenVideo.class.getCanonicalName(), R.mipmap.video_select, R.mipmap.video_unselect));
-
         mTabEntities.add(new TabEntities(TabEnum.VALUE3, FragmentFamily.class.getCanonicalName(), R.mipmap.family_select, R.mipmap.family_unselect));
-
         mTabEntities.add(new TabEntities(TabEnum.VALUE4, FragmenMessage.class.getCanonicalName(), R.mipmap.message_select, R.mipmap.message_unselect));
         mTabEntities.add(new TabEntities(TabEnum.VALUE5, FragmenPersonalCenter.class.getCanonicalName(), R.mipmap.personal_center_select, R.mipmap.personal_center_unselect));
 
@@ -87,8 +85,6 @@ public class MainActivity extends BaseActivity {
             imageView.setImageResource((Integer) tabEntities.getTabUnselectImg());
             TextView textView = view.findViewById(R.id.tv_text);
             textView.setText(tabEntities.getTabTitle());
-
-
         }
 
 
@@ -107,7 +103,6 @@ public class MainActivity extends BaseActivity {
                 public void onClick(View v) {
                     TextView textView = v.findViewById(R.id.tv_text);
                     selectTabView(textView.getText().toString());
-
                 }
             });
         }

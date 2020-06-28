@@ -48,6 +48,9 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
     private void initImgWH() {
         imgW = (int) (ViewSeting.getScreenWidth() / 2.3f);
         imgH = (int) (imgW / 1.79f);
+
+
+
     }
 
     @Override
@@ -90,8 +93,6 @@ public class VideoAdapter<T> extends BaseAdapter<T> {
             initData(item, mRivImage, mTvLikedNum, mTvHotspotNum, mTvTitle);
 
         }
-
-        // viewHolder.setWaterRipple();//设置水波纹点击效果
 
 
     }
