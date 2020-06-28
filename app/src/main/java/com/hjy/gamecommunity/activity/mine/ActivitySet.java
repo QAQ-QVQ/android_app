@@ -2,9 +2,6 @@ package com.hjy.gamecommunity.activity.mine;
 
 import android.graphics.drawable.StateListDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
@@ -39,6 +36,7 @@ public class ActivitySet extends BaseActivity {
         transparentStatusBar();
         //设置状态栏是否为浅色模式
         setStatusBarLightMode(true);
+
         toolbar = findViewById(R.id.mine_set_toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.qy_mine_toolbar_back,null));
         logout = findViewById(R.id.mine_logout_button);
@@ -74,12 +72,10 @@ public class ActivitySet extends BaseActivity {
     private StateListDrawable setClickDrawable() {
         //设置点击后透明度
         StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.7f)
-                //圆角
-                .setRadius(50)
+                .setRadius(50)//圆角
                 .setColorBorder(ContextCompat.getColor(this, R.color.bui_red_light))
                 .setBorderWidth(1)
-                //背景颜色
-                .setColorBg(ContextCompat.getColor(this, R.color.bui_white))
+                .setColorBg(ContextCompat.getColor(this, R.color.bui_white))//背景颜色
                 .buid();
         return stateListDrawable;
     }

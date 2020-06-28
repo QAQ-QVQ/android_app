@@ -437,7 +437,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.Ba
                 }
                 itemView.setPadding(left, top, right, bottom);
             }
-
         }
 
 
