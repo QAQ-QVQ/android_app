@@ -12,7 +12,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 /**
  * 作者: zhangqingyou
- * 时间: 2020/6/28 17:48
+ * 时间: 2020/6/28 17:50
  * 描述:  互动消息
  */
 public class FragmentInteractMsg extends BaseFragment {

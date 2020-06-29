@@ -47,7 +47,6 @@ public class FragmenMessage extends BaseFragment {
     }
 
     private Map<String, BaseFragment> fragmentMap = new LinkedHashMap<>();
-
     @Override
     public void initData() {
         FragmentFamilyMsg fragmentFamilyMsg = new FragmentFamilyMsg();

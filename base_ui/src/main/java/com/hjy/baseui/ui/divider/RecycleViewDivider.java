@@ -1,4 +1,4 @@
-package com.hjy.baseui.ui.view;
+package com.hjy.baseui.ui.divider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
