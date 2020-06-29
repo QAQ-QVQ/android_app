@@ -26,16 +26,16 @@
         app:zqy_tabPaddingTop="10dp"
         app:zqy_tabSelectedTextColor="@color/colorPrimaryDark"
         app:zqy_tabTextColor="@color/gray_dark"
-        app:zqy_textStyle="bold"></com.hjy.baseui.ui.view.tablayout.TabLayoutX>
+        app:zqy_textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/bui_background_light"></View>
+        android:background="@color/bui_background_light" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></android.support.v4.view.ViewPager>
+        android:layout_weight="1" />
 </LinearLayout>
