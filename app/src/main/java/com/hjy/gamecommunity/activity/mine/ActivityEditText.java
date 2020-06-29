@@ -1,6 +1,7 @@
 package com.hjy.gamecommunity.activity.mine;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class ActivityEditText extends BaseActivitySubordinate {
      * 确定
      */
     private TextView submitTv;
+    private ConstraintLayout toolbar;
     private boolean flag;
     @Override
     public Object getLayout() {
@@ -50,8 +52,10 @@ public class ActivityEditText extends BaseActivitySubordinate {
         title = getIntent().getStringExtra("title");
         initToobar(this, title);
         submitTv = findViewById(R.id.tv_text_submit_bar);
-        multiLineEditText.getEditText().requestFocus();
-        multiLineEditText.getEditText().setFocusable(true);
+//        multiLineEditText.getEditText().requestFocus();
+//        multiLineEditText.getEditText().setFocusable(true);
+//        toolbar = findViewById(R.id.toolbar);
+//        setPaddingTop(toolbar);
     }
 
     @Override

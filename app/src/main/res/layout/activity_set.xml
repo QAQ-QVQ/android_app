@@ -5,54 +5,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/bui_background_light"
+    android:background="@color/bui_white"
     tools:context=".activity.mine.ActivitySet">
 
     <include
         layout="@layout/bui_bar_black_white"
-        app:layout_constraintBottom_toTopOf="@+id/mine_set_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></include>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mine_set_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@color/bui_white"
-        app:layout_constraintBottom_toTopOf="@+id/relativelayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_bar"
-        app:layout_constraintVertical_weight="2">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <RelativeLayout
-        android:id="@+id/relativelayout"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/bui_background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_set_item"
-        app:layout_constraintVertical_weight="1">
+        app:layout_constraintTop_toBottomOf="@+id/ll_bar">
 
-        <Button
-            android:id="@+id/mine_logout_button"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mine_set_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="44dp"
-            android:layout_marginRight="44dp"
-            android:background="@color/bui_gray"
-            android:paddingLeft="20dp"
-            android:paddingTop="12dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="12dp"
-            android:text="退出登录"
-            android:textColor="@color/bui_red_light" />
-    </RelativeLayout>
+            android:layout_marginTop="12dp"
+            android:background="@color/bui_white"
+            app:layout_constraintBottom_toTopOf="@+id/relativelayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="2">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mine_set_item"
+            app:layout_constraintVertical_weight="1">
+
+            <Button
+                android:id="@+id/mine_logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="44dp"
+                android:layout_marginRight="44dp"
+                android:background="@color/bui_gray"
+                android:paddingLeft="20dp"
+                android:paddingTop="12dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="12dp"
+                android:text="退出登录"
+                android:textColor="@color/bui_red_light" />
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>
