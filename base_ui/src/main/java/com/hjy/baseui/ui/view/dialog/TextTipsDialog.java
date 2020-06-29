@@ -105,7 +105,7 @@ public class TextTipsDialog extends BaseDialog {
         return this;
     }
 
-    public TextTipsDialog setOnLeftButtonClickListener(String text,final OnNoClickListener onNoClickListener) {
+    public TextTipsDialog setOnLeftButtonClickListener(String text,final OnClickListener onNoClickListener) {
         mTvButton1.setText(text);
         mTvButton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +117,7 @@ public class TextTipsDialog extends BaseDialog {
         return this;
     }
 
-    public TextTipsDialog setOnRightButtonClickListener(String text,final OnYesClickListener onYesClickListener) {
+    public TextTipsDialog setOnRightButtonClickListener(String text,final OnClickListener onYesClickListener) {
         mTvButton2.setText(text);
         mTvButton2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,10 +157,8 @@ public class TextTipsDialog extends BaseDialog {
     }
 
 
-  interface  OnNoClickListener{
+  interface  OnClickListener{
       void onClick(TextTipsDialog textTipsDialog,View v);
   }
-    interface  OnYesClickListener{
-        void onClick(TextTipsDialog textTipsDialog,View v);
-    }
+
 }
