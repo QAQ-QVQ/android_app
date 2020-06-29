@@ -12,23 +12,15 @@
 
     <TextView
         android:id="@+id/tv_text_bar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_weight="9"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_marginEnd="40dp"
         android:text="xxxx"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
-    <TextView
-        android:id="@+id/tv_text_right_bar"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/bui_black_light1"
-        android:textSize="16sp" />
+
 </LinearLayout>
