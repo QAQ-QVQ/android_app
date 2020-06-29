@@ -133,7 +133,7 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                         // TODO: 2020/6/24 昵称
                         intent = new Intent(getContext(), ActivityEditText.class);
                         intent.putExtra("title", "修改昵称");
-                        startActivityForResult(intent, Activity.RESULT_OK);
+                        startActivityForResult(intent, 2000);
                         break;
                     case 1:
 
@@ -330,12 +330,13 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         if (requestCode == 2000) {
             String nickname;
             String personalsignature;
-            switch (requestCode) {
+            switch (resultCode) {
                 //昵称
                 case 2001:
                     nickname = data.getExtras().getString("message");
                     if (!nickname.isEmpty()) {
                         userList.get(0).setMsg(nickname);
+                        userAdapter.notifyDataSetChanged();
                     }
                     break;
                 //个性签名
@@ -343,6 +344,7 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     personalsignature = data.getExtras().getString("message");
                     if (!personalsignature.isEmpty()) {
                         userList.get(3).setMsg(personalsignature);
+                        userAdapter.notifyDataSetChanged();
                     }
                     break;
                 default:

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bui_background_light"
+    android:background="@color/bui_white"
     android:fitsSystemWindows="true"
     tools:context=".activity.mine.ActivityUserMessage"
     tools:ignore="MissingConstraints">
@@ -16,63 +16,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></include>
 
-    <RelativeLayout
-        android:id="@+id/mine_user_relativelayout"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:background="@color/bui_white"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_bar">
-
-        <TextView
-            android:id="@+id/mine_user_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:gravity="center|left"
-            android:text="头像："
-            android:textColor="@color/bui_black_light1"
-            android:textSize="16sp" />
-
-        <com.xuexiang.xui.widget.imageview.RadiusImageView
-            android:id="@+id/mine_user_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_margin="5dp"
-            android:layout_toLeftOf="@+id/mine_user_next"
-            android:src="@drawable/ic_launcher_background"
-            app:riv_corner_radius="@dimen/mine_icon_radius" />
-
-        <ImageView
-            android:id="@+id/mine_user_next"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="5dp"
-            android:scaleType="center"
-            android:src="@drawable/qy_next_mine" />
-
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mine_user_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@color/bui_white"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_user_relativelayout"
-        app:layout_constraintVertical_bias="0">
+        android:background="@color/bui_background_light"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bar">
 
-    </android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:id="@+id/mine_user_relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:background="@color/bui_white"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/mine_user_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:gravity="center|left"
+                android:text="头像："
+                android:textColor="@color/bui_black_light1"
+                android:textSize="16sp" />
+
+            <com.xuexiang.xui.widget.imageview.RadiusImageView
+                android:id="@+id/mine_user_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_toLeftOf="@+id/mine_user_next"
+                android:src="@drawable/ic_launcher_background"
+                app:riv_corner_radius="@dimen/mine_icon_radius" />
+
+            <ImageView
+                android:id="@+id/mine_user_next"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="5dp"
+                android:scaleType="center"
+                android:src="@drawable/qy_next_mine" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mine_user_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/bui_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mine_user_relativelayout"
+            app:layout_constraintVertical_bias="0">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>
