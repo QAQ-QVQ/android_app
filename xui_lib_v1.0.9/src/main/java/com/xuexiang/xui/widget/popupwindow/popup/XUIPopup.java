@@ -217,7 +217,7 @@ public class XUIPopup extends XUIBasePopup {
     /**
      * 显示箭头（上/下）
      */
-    private void showArrow() {
+    public void showArrow() {
         View showArrow = null;
         switch (mDirection) {
             case DIRECTION_BOTTOM:
@@ -267,7 +267,7 @@ public class XUIPopup extends XUIBasePopup {
     }
 
 
-    private void setViewVisibility(View view, boolean visible) {
+    public void setViewVisibility(View view, boolean visible) {
         if (view != null) {
             view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         }

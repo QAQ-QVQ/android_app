@@ -25,13 +25,13 @@ import android.widget.PopupWindow;
  * @since 2019/1/14 下午10:02
  */
 public abstract class XUIBasePopup {
-    private Context mContext;
-    private PopupWindow mPopupWindow;
-    private RootView mRootViewWrapper;
+    protected Context mContext;
+    protected PopupWindow mPopupWindow;
+    protected RootView mRootViewWrapper;
     protected View mRootView;
     protected Drawable mBackground = null;
     protected WindowManager mWindowManager;
-    private PopupWindow.OnDismissListener mDismissListener;
+    protected PopupWindow.OnDismissListener mDismissListener;
 
     protected Point mScreenSize = new Point();
     protected int mWindowHeight = 0;
@@ -39,6 +39,8 @@ public abstract class XUIBasePopup {
 
     //cache
     private boolean mNeedCacheSize = true;
+
+
 
     /**
      * Constructor.
@@ -62,6 +64,7 @@ public abstract class XUIBasePopup {
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
     }
+
 
     /**
      * On dismiss

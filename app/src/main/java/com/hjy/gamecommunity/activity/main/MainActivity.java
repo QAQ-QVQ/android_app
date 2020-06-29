@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hjy.baseui.ui.BaseActivity;
-import com.hjy.baseutil.GlideCacheUtil;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.entity.TabEntities;
@@ -56,7 +55,6 @@ public class MainActivity extends BaseActivity {
 
         viewList.add(2, mLlFamily);//家族view添加到中间位置
 
-        GlideCacheUtil.getInstance()
     }
 
     private ArrayList<TabEntities> mTabEntities;//tab实体

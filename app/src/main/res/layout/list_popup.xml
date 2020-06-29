@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <!--自定义阴影 -->
+    <com.hjy.baseui.ui.view.ShadowLayout
+        android:id="@+id/sl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shadowColor="@color/bui_grayBar"
+        app:shadowRadius="3dp"
+        app:shadowRoundRadius="0dp"
+        app:shadowShape="rectangle"
+        app:shadowSide="all">
+
+        <FrameLayout
+            android:id="@+id/box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical" />
+    </com.hjy.baseui.ui.view.ShadowLayout>
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/arrow_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="?attr/xui_popup_arrow_up_margin_top"
+        android:visibility="gone"
+        app:srcCompat="?attr/xui_popup_arrow_up" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/arrow_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="?attr/xui_popup_arrow_down_margin_bottom"
+        android:visibility="gone"
+        app:srcCompat="?attr/xui_popup_arrow_down" />
+
+</FrameLayout>

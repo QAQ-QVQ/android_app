@@ -6,18 +6,26 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.PopupWindow;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.divider.HorizontalDividerItemDecoration;
+import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.message.FamilyMsgAdapter;
+import com.hjy.gamecommunity.popupwindow.ListPopup;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
+import com.xuexiang.xui.utils.DensityUtils;
+import com.xuexiang.xui.widget.popupwindow.popup.XUIPopup;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.Arrays;
 
@@ -40,6 +48,7 @@ public class FragmentFamilyMsg extends BaseFragment {
     public void initView(View mRootView) {
         mRecyclerView = findViewById(R.id.recyclerView);
         mSmartRefreshLayout = findViewById(R.id.smartRefreshLayout);
+        initListPopup();
     }
 
     @Override
@@ -111,9 +120,64 @@ public class FragmentFamilyMsg extends BaseFragment {
         familyMsgAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener<Object>() {
             @Override
             public void onItemClick(View view, Object item, int position) {
+                int[] location = new int[2];
+                //取在整个屏幕内的绝对坐标
+                view.getLocationOnScreen(location);
+                //view距离window 左边的距离（即x轴方向
+                // int contentViewX = location[0];
+                // view距离window 顶边的距离（即y轴方向）
+                int contentViewY = location[1];
 
+                //view中心坐标 y轴
+                if (contentViewY >= ViewSeting.getScreenHeight() * 0.6) {
+                    mListPopup.setPreferredDirection(XUIPopup.DIRECTION_TOP);//弹出方向
+                } else {
+                    mListPopup.setPreferredDirection(XUIPopup.DIRECTION_BOTTOM);//弹出方向
+                }
+                mListPopup.show(view);
             }
         });
+    }
+
+    /**
+     * 初始化列表弹出
+     */
+    private ListPopup mListPopup;
+
+    private void initListPopup() {
+        if (mListPopup == null) {
+            String[] listItems = new String[]{
+                    "标为未读",
+                    "消息置顶",
+                    "移除消息",
+                    "消息免打扰",
+            };
+
+            XUISimpleAdapter adapter = XUISimpleAdapter.create(getContext(), listItems);
+            mListPopup = new ListPopup(getContext(), adapter);
+
+            mListPopup.create(DensityUtils.dp2px(110), DensityUtils.dp2px(165), new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ToastUtils.toast("Item " + (i + 1));
+                    mListPopup.dismiss();
+                }
+            });
+            mListPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                }
+            });
+            mListPopup.setAnimStyle(XUIPopup.ANIM_GROW_FROM_CENTER);//弹出动画
+            mListPopup.setPreferredDirection(XUIPopup.DIRECTION_BOTTOM);//弹出方向
+
+
+            int rightMargin = DensityUtils.dp2px(62);
+            int offsetY = DensityUtils.dp2px(25);
+            mListPopup.setPositionOffsetX(rightMargin);//设置根据计算得到的位置后的偏移值
+            mListPopup.setPositionOffsetYWhenBottom(-offsetY);//DIRECTION_BOTTOM 时的 offsetY
+            mListPopup.setPositionOffsetYWhenTop(offsetY);
+        }
     }
 
 //    JsonEntityCallback videoListJsonEntityCallback = new JsonEntityCallback<VideoList>(VideoList.class) {

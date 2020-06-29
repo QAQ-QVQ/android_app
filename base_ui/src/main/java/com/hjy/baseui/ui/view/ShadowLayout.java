@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import com.hjy.baseui.R;
 
 /**自定义阴影
@@ -175,7 +176,7 @@ public class ShadowLayout extends FrameLayout {
 
         mPaint.setAntiAlias(true);
 
-        int[] colors = {mShadowColor, 0x00ffffff};
+        int[] colors = {mShadowColor, Color.TRANSPARENT};
 
         if (mShadowShape == SHAPE_RECTANGLE) {
 
@@ -3521,7 +3522,7 @@ public class ShadowLayout extends FrameLayout {
 
     private int[] creatTwoPositionColor() {
 
-        int[] colors = new int[]{mShadowColor, 0x00ffffff};
+        int[] colors = new int[]{mShadowColor, Color.TRANSPARENT};
 
         return colors;
 
@@ -3529,7 +3530,7 @@ public class ShadowLayout extends FrameLayout {
 
     private int[] creatThreePositionColor() {
 
-        int[] colors = new int[]{0x00ffffff, mShadowColor, 0x00ffffff};
+        int[] colors = new int[]{Color.TRANSPARENT, mShadowColor, Color.TRANSPARENT};
 
         return colors;
 
