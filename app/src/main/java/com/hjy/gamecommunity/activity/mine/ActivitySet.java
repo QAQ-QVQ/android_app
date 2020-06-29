@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hjy.baserequest.bean.MineSetBean;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.adapter.MineSetAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ public class ActivitySet extends BaseActivitySubordinate {
     /**
      * 设置适配器
      */
-    private SetAdapter setAdapter;
+    private MineSetAdapter setAdapter;
 
     @Override
     public Object getLayout() {
@@ -77,18 +79,18 @@ public class ActivitySet extends BaseActivitySubordinate {
      */
     @Override
     public void initData() {
-        setBean userMsg = new setBean(R.drawable.ic_launcher_background, "歪嘴猴", "", 0);
-        setBean security = new setBean(0, "账号与安全", "", 0);
-        setBean aboutUs = new setBean(0, "关于我们", "", 0);
-        setBean checkUpdate = new setBean(0, "检查更新", "当前版本号V1.0.0", 0);
-        setBean clearCache = new setBean(0, "清除缓存", "15.66MB", 0);
+        MineSetBean userMsg = new MineSetBean(R.drawable.ic_launcher_background, "歪嘴猴", "", 0);
+        MineSetBean security = new MineSetBean(0, "账号与安全", "", 0);
+        MineSetBean aboutUs = new MineSetBean(0, "关于我们", "", 0);
+        MineSetBean checkUpdate = new MineSetBean(0, "检查更新", "当前版本号V1.0.0", 0);
+        MineSetBean clearCache = new MineSetBean(0, "清除缓存", "15.66MB", 0);
         ArrayList setList = new ArrayList();
         setList.add(userMsg);
         setList.add(security);
         setList.add(aboutUs);
         setList.add(checkUpdate);
         setList.add(clearCache);
-        setAdapter = new SetAdapter(setList);
+        setAdapter = new MineSetAdapter(setList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
@@ -113,7 +115,7 @@ public class ActivitySet extends BaseActivitySubordinate {
 //                finish();
 //            }
 //        });
-        setAdapter.setOnclickListener(new SetAdapter.OnclickListener() {
+        setAdapter.setOnclickListener(new MineSetAdapter.OnclickListener() {
             /**
              * @param item 点击的内容
              */
@@ -170,146 +172,5 @@ public class ActivitySet extends BaseActivitySubordinate {
         return stateListDrawable;
     }
 
-    /**
-     * 设置对象
-     */
-    class setBean {
-        /**
-         * 头像
-         */
-        private int icon;
-        /**
-         * 设置标题
-         */
-        private String title;
-        /**
-         * 设置信息
-         */
-        private String msg;
-        /**
-         * 下一个图标
-         */
-        private int next;
 
-        public setBean(int icon, String title, String msg, int next) {
-            this.icon = icon;
-            this.title = title;
-            this.msg = msg;
-            this.next = next;
-        }
-
-        public int getIcon() {
-            return icon;
-        }
-
-        public void setIcon(int icon) {
-            this.icon = icon;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public int getNext() {
-            return next;
-        }
-
-        public void setNext(int next) {
-            this.next = next;
-        }
-    }
-
-    /**
-     * 设置
-     */
-    static class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
-        private List<setBean> setBeanList;
-        private OnclickListener onclickListener;
-
-        public SetAdapter(List<setBean> setBeanList) {
-            this.setBeanList = setBeanList;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.mine_set_item, null, false);
-            ViewHolder holder = new ViewHolder(view);
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-            if (setBeanList.get(i).getIcon() != 0) {
-                viewHolder.setIcon.setVisibility(View.VISIBLE);
-                viewHolder.setIcon.setImageDrawable(ContextCompat.getDrawable(App.getApplication(),setBeanList.get(i).getIcon()));
-            } else {
-                viewHolder.setIcon.setVisibility(View.GONE);
-            }
-            viewHolder.setTitle.setText(setBeanList.get(i).getTitle());
-            viewHolder.setTv.setText(setBeanList.get(i).getMsg());
-            if (setBeanList.get(i).getNext() != 0) {
-                viewHolder.setNext.setImageDrawable(ContextCompat.getDrawable(App.getApplication(),setBeanList.get(i).getNext()));
-            }
-            viewHolder.setItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onclickListener != null) {
-                        onclickListener.OnClick(i);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return setBeanList.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView setIcon;
-            TextView setTitle;
-            TextView setTv;
-            ImageView setNext;
-            RelativeLayout setItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                setIcon = view.findViewById(R.id.mine_set_icon);
-                setTitle = view.findViewById(R.id.mine_set_title);
-                setTv = view.findViewById(R.id.mine_set_tv);
-                setNext = view.findViewById(R.id.mine_set_next);
-                setItem = view.findViewById(R.id.set_item);
-            }
-        }
-
-        interface OnclickListener {
-            /**
-             * @param item 点击的内容
-             */
-            void OnClick(int item);
-
-            void LongOnClick();
-        }
-
-        public OnclickListener getOnclickListener() {
-            return onclickListener;
-        }
-
-        public void setOnclickListener(OnclickListener onclickListener) {
-            this.onclickListener = onclickListener;
-        }
-    }
 }

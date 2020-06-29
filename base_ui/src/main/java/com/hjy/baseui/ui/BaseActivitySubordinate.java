@@ -43,7 +43,7 @@ public abstract class BaseActivitySubordinate extends BaseActivity {
         toolbar = findViewById(R.id.ll_bar);
         toolbarTitle = findViewById(R.id.tv_text_bar);
         toolbarBack = findViewById(R.id.iv_back_image_bar);
-        toolbarSubmit = findViewById(R.id.tv_text_right_bar);
+//        toolbarSubmit = findViewById(R.id.tv_text_submit_bar);
         setPaddingTop(toolbar);
         if (!submit.isEmpty()){
             toolbarSubmit.setText(submit);
@@ -67,7 +67,7 @@ public abstract class BaseActivitySubordinate extends BaseActivity {
         toolbar = findViewById(R.id.ll_bar);
         toolbarTitle = findViewById(R.id.tv_text_bar);
         toolbarBack = findViewById(R.id.iv_back_image_bar);
-        setPaddingTop(toolbar);
+//        setPaddingTop(toolbar);
         toolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

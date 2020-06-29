@@ -59,6 +59,7 @@ import java.util.List;
  * @author dy
  */
 public class ActivityUserMessage extends BaseActivitySubordinate {
+    private static final String TAG = "ActivityUserMessage";
     /**
      * 选项
      */
@@ -100,8 +101,6 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         //设置状态栏是否为浅色模式
         setStatusBarLightMode(true);
         initToobar(this, "个人资料");
-//        TextView textView = findViewById(R.id.mine_user_title);
-//        textView.setText("22222");
         userItem = findViewById(R.id.mine_user_recyclerview);
         userTitle = findViewById(R.id.mine_user_title);
         userIcon = findViewById(R.id.mine_user_icon);
@@ -147,10 +146,11 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     case 0:
                         // TODO: 2020/6/24 昵称
                         intent = new Intent(getContext(), ActivityEditText.class);
-                        intent.putExtra("title","修改昵称");
-                        startActivity(intent);
+                        intent.putExtra("title", "修改昵称");
+                        startActivityForResult(intent, Activity.RESULT_OK);
                         break;
                     case 1:
+
                         showSexPickerView();
                         break;
                     case 2:
@@ -159,17 +159,18 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     case 3:
                         // TODO: 2020/6/24 个性签名
                         intent = new Intent(getContext(), ActivityEditText.class);
-                        intent.putExtra("title","个性签名");
-                        startActivity(intent);
+                        intent.putExtra("title", "个性签名");
+                        startActivityForResult(intent, 2000);
                         break;
                     default:
+                        Log.i(TAG, "OnClick: ");
                         break;
                 }
             }
 
             @Override
             public void LongOnClick() {
-
+                Log.i(TAG, "LongOnClick: ");
             }
         });
     }
@@ -335,6 +336,30 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
             }
             if (localMediaList != null) {
                 selectPic(localMediaList);
+            }
+
+        }
+        if (requestCode == 2000) {
+            String nickname;
+            String personalsignature;
+            switch (requestCode) {
+                //昵称
+                case 2001:
+                    nickname = data.getExtras().getString("message");
+                    if (nickname.isEmpty()) {
+                        userList.get(0).setMsg(nickname);
+                    }
+                    break;
+                //个性签名
+                case 2002:
+                    personalsignature = data.getExtras().getString("message");
+                    if (personalsignature.isEmpty()) {
+                        userList.get(3).setMsg(personalsignature);
+                    }
+                    break;
+                default:
+                    Log.i(TAG, "onActivityResult: ");
+                    break;
             }
         }
     }
