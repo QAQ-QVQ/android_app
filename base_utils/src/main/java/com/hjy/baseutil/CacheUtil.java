@@ -148,7 +148,7 @@ public class CacheUtil {
      * @return
      */
     public static synchronized String getDirSize(String path) {
-        return FileUtils.getDirName(path);
+        return FileUtils.getSize(path);
     }
 
 
