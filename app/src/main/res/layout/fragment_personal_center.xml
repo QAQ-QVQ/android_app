@@ -31,47 +31,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.xuexiang.xui.widget.imageview.RadiusImageView
-            android:id="@+id/mine_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="@dimen/mine_margin"
+        <FrameLayout
+            android:id="@+id/mine_icon_head_layout"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ic_launcher_background"
+            android:layout_marginTop="@dimen/mine_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mine_set"
-            app:riv_corner_radius="@dimen/mine_icon_radius" />
+            app:layout_constraintTop_toBottomOf="@+id/mine_set">
+
+            <com.xuexiang.xui.widget.imageview.RadiusImageView
+                android:id="@+id/mine_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_launcher_background"
+                app:riv_corner_radius="@dimen/mine_icon_radius" />
+
+            <ImageView
+                android:id="@+id/mine_icon_head"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/qy_icon_head" />
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/mine_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_margin"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="13dp"
             android:text="Abby小潮男"
             android:textColor="@color/bui_black_light1"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/mine_icon"
-            app:layout_constraintTop_toTopOf="@+id/mine_icon" />
+            app:layout_constraintStart_toEndOf="@+id/mine_icon_head_layout"
+            app:layout_constraintTop_toTopOf="@+id/mine_icon_head_layout" />
 
         <TextView
             android:id="@+id/mine_personalsignature"
-            app:layout_constraintHorizontal_bias="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_margin"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="13dp"
             android:text="个性签名：一起玩才是兄弟。"
             android:textColor="@color/bui_black_light2"
             android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@+id/mine_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/mine_icon_head_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mine_icon"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/mine_icon_head_layout"
             app:layout_constraintTop_toBottomOf="@+id/mine_nickname"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -86,7 +100,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/mine_set"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mine_icon"
+            app:layout_constraintTop_toBottomOf="@+id/mine_icon_head_layout"
             app:layout_constraintVertical_weight="1">
 
             <RelativeLayout
@@ -102,16 +116,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/qy_gold_mine" />
 
                 <TextView
                     android:id="@+id/gold_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="8dp"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -121,9 +135,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gold_num"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="我的金豆"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
@@ -142,16 +156,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/qy_silver_mine" />
 
                 <TextView
                     android:id="@+id/silver_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="8dp"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -161,9 +175,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/silver_num"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="我的银豆"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
@@ -181,17 +195,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/qy_flower_mine" />
 
                 <TextView
                     android:id="@+id/flower_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="8dp"
                     android:text="5"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
@@ -201,10 +214,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/flower_num"
-                    android:layout_centerHorizontal="true"
-                    android:text="我的鲜花"
-                    android:gravity="center"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="我的鲜花"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -283,11 +296,12 @@
                         android:src="@drawable/qy_next_mine" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/mine_bind_change"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -390,10 +404,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_margin="5dp"
                             android:id="@+id/mine_family_icon"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:src="@drawable/qy_family_mine" />
 
@@ -472,10 +486,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_margin="5dp"
                             android:id="@+id/mine_gift_icon"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:src="@drawable/qy_gift_mine" />
 
@@ -542,9 +556,9 @@
 
                     <ImageView
                         android:id="@+id/mine_game_icon"
-                        android:layout_margin="5dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:src="@drawable/qy_game_mine" />
 
@@ -682,6 +696,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mine_live_linearlayout"
             app:layout_constraintVertical_weight="1.5">
+
             <RelativeLayout
                 android:id="@+id/mine_customer"
                 android:layout_width="70dp"
@@ -690,15 +705,16 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="5dp"
                 android:background="@drawable/qy_mine_customer">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="在线客服"
-                    android:textSize="8sp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="8dp"
-                    android:textColor="@color/bui_black_light"/>
+                    android:text="在线客服"
+                    android:textColor="@color/bui_black_light"
+                    android:textSize="8sp" />
             </RelativeLayout>
 
 

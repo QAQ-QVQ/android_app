@@ -35,7 +35,6 @@ public class ActivityEditText extends BaseActivitySubordinate {
      * 确定
      */
     private TextView submitTv;
-    private ConstraintLayout toolbar;
     private boolean flag;
     @Override
     public Object getLayout() {
@@ -54,8 +53,6 @@ public class ActivityEditText extends BaseActivitySubordinate {
         submitTv = findViewById(R.id.tv_text_submit_bar);
 //        multiLineEditText.getEditText().requestFocus();
 //        multiLineEditText.getEditText().setFocusable(true);
-//        toolbar = findViewById(R.id.toolbar);
-//        setPaddingTop(toolbar);
     }
 
     @Override

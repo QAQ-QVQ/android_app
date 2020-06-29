@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -122,6 +123,14 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
      */
     private RelativeLayout customer;
     /**
+     * 头像框
+     */
+    private ImageView iconHead;
+    /**
+     * 头像容器
+     */
+    private FrameLayout iconHeadLayout;
+    /**
      * 礼包数量
      */
     private int giftNumber = 6;
@@ -148,7 +157,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         flowerNum = findViewById(R.id.flower_num);
         giftNum = findViewById(R.id.mine_gift_num);
         ivIcon = findViewById(R.id.mine_icon);
-        ivIcon.setOnClickListener(this);
+        iconHeadLayout = findViewById(R.id.mine_icon_head_layout);
+        iconHeadLayout.setOnClickListener(this);
         ivFamilyItem1 = findViewById(R.id.mine_family_item1);
         ivFamilyItem2 = findViewById(R.id.mine_family_item2);
         ivGameItem = findViewById(R.id.mine_game_item);
@@ -172,6 +182,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         live.setOnClickListener(this);
         customer = findViewById(R.id.mine_customer);
         customer.setOnClickListener(this);
+        iconHead = findViewById(R.id.mine_icon_head);
     }
 
     @Override
@@ -202,7 +213,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 //                startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
                 startActivity(new Intent(getContext(), ActivitySet.class));
                 break;
-            case R.id.mine_icon:
+            case R.id.mine_icon_head_layout:
                 // TODO: 2020/6/23 头像
                 break;
             case R.id.mine_nickname:

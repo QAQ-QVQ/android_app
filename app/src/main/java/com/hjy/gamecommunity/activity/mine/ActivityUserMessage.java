@@ -144,20 +144,17 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                 Intent intent;
                 switch (item) {
                     case 0:
-                        // TODO: 2020/6/24 昵称
                         intent = new Intent(getContext(), ActivityEditText.class);
                         intent.putExtra("title", "修改昵称");
                         startActivityForResult(intent, 2000);
                         break;
                     case 1:
-
                         showSexPickerView();
                         break;
                     case 2:
                         initDatePicker();
                         break;
                     case 3:
-                        // TODO: 2020/6/24 个性签名
                         intent = new Intent(getContext(), ActivityEditText.class);
                         intent.putExtra("title", "个性签名");
                         startActivityForResult(intent, 2000);
@@ -349,6 +346,7 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     if (!nickname.isEmpty()) {
                         userList.get(0).setMsg(nickname);
                         userAdapter.notifyDataSetChanged();
+                        // TODO: 2020/6/29  上传昵称
                     }
                     break;
                 //个性签名
@@ -357,6 +355,7 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     if (!personalsignature.isEmpty()) {
                         userList.get(3).setMsg(personalsignature);
                         userAdapter.notifyDataSetChanged();
+                        // TODO: 2020/6/29     上传个性签名
                     }
                     break;
                 default:
