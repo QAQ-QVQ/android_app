@@ -2,7 +2,6 @@ package com.hjy.gamecommunity.activity.mine;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -162,11 +161,7 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("ActivityUserMessage", "onSaveInstanceState");
-    }
+
 
     /**
      * 时间选择
@@ -339,14 +334,14 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                 //昵称
                 case 2001:
                     nickname = data.getExtras().getString("message");
-                    if (nickname.isEmpty()) {
+                    if (!nickname.isEmpty()) {
                         userList.get(0).setMsg(nickname);
                     }
                     break;
                 //个性签名
                 case 2002:
                     personalsignature = data.getExtras().getString("message");
-                    if (personalsignature.isEmpty()) {
+                    if (!personalsignature.isEmpty()) {
                         userList.get(3).setMsg(personalsignature);
                     }
                     break;

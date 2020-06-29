@@ -5,3 +5,8 @@
 /base_ui/*.iml
 /base_request/*.iml
 /app/*.iml
+/base_request/proguard/
+/base_utils/proguard/
+/.gradle/
+/.idea/
+/gradle/wrapper/

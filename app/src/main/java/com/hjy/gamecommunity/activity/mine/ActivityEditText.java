@@ -2,12 +2,10 @@ package com.hjy.gamecommunity.activity.mine;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.gamecommunity.R;
-import com.xuexiang.xui.widget.dialog.MiniLoadingDialog;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 
 /**
@@ -35,6 +33,7 @@ public class ActivityEditText extends BaseActivitySubordinate {
      */
     private TextView submitTv;
     private boolean flag;
+
     @Override
     public Object getLayout() {
         return R.layout.activity_edit_text;
@@ -80,11 +79,11 @@ public class ActivityEditText extends BaseActivitySubordinate {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 message = multiLineEditText.getContentText();
-                intent.putExtra("message",message);
-                if (flag){
-                    setResult(2001,intent);
-                }else {
-                    setResult(2002,intent);
+                intent.putExtra("message", message);
+                if (flag) {
+                    setResult(2001, intent);
+                } else {
+                    setResult(2002, intent);
                 }
                 finish();
             }
