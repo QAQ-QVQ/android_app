@@ -91,7 +91,6 @@ public class MainActivity extends BaseActivity {
         TabEntities tabEntities = mTabEntities.get(0);
         selectTabView(tabEntities.getTabTitle());
 
-
     }
 
     @Override

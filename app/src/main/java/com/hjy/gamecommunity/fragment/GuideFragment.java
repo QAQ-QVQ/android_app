@@ -11,7 +11,7 @@ import android.view.View;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseutil.PermissionUtils;
 import com.hjy.gamecommunity.R;
-import com.hjy.gamecommunity.activity.main.MainActivity;
+import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
 import com.xuexiang.xui.widget.banner.anim.select.ZoomInEnter;
 import com.xuexiang.xui.widget.banner.transform.DepthTransformer;
 import com.xuexiang.xui.widget.banner.transform.FadeSlideTransformer;
@@ -110,7 +110,7 @@ public class GuideFragment extends BaseFragment {
         PermissionUtils.request("读写手机存储,读取手机状态!", permissions, new PermissionUtils.PermissionCallback() {
             @Override
             public void onGranted() {
-                startActivity(new Intent(getContext(), MainActivity.class));
+                startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
                 getActivity().finish();
             }
         });

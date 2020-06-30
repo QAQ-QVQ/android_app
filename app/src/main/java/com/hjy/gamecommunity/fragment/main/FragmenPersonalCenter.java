@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
@@ -204,6 +203,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 break;
             case R.id.mine_icon:
                 // TODO: 2020/6/23 头像
+                startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
                 break;
             case R.id.mine_nickname:
                 // TODO: 2020/6/23 昵称

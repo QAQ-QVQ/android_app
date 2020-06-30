@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.MetaDataUtils;
 import com.bumptech.glide.Glide;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.hjy.baserequest.RequestManage;
 import com.hjy.baserequest.data.UserData;
 import com.hjy.baserequest.data.UserDataContainer;
@@ -59,13 +57,12 @@ public class App extends Application {
         seetingJPush();//极光推送
         jAnalyticsInterface();//极光页面统计
         jshare();//极光分享
-
-        initTinker();
         initBugly();
-        //Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
-        frescoInit();
-
         initTUIKit();//即时通信 IM
+
+
+        //Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
+       // frescoInit();
 
     }
 
@@ -85,7 +82,7 @@ public class App extends Application {
          * @param sdkAppID 您在腾讯云注册应用时分配的 SDKAppID
          * @param configs  TUIKit 的相关配置项，一般使用默认即可，需特殊配置参考 API 文档
          */
-       // TUIKit.init(this, "SDKAPPID", configs);
+        // TUIKit.init(this, "SDKAPPID", configs);
     }
 
 
@@ -156,61 +153,33 @@ public class App extends Application {
         RequestManage.init(this);
         RequestManage.setDEBUG(true);
 
-
     }
 
 
     /**
      * Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
      */
-    private void frescoInit() {
-        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
-                .setDownsampleEnabled(true)
-                .build();
-        Fresco.initialize(this, config);
-    }
+//    private void frescoInit() {
+//        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+//                .setDownsampleEnabled(true)
+//                .build();
+//        Fresco.initialize(this, config);
+//    }
 
 
     /**
-     * Bugly配置渠道信息已失效
-     * Bugly.setAppChannel(application, appChannel);
-     * User userData = RequestManage.getUserData();
-     * if (userData != null && userData.getData() != null)
-     * Bugly.setUserId(application, String.valueOf(userData.getData().getUserid()));
+     * Bugly配置渠道信息已失效 先初始化Tinker再初始化Bugly
      */
-    public static void initBugly() {
-        /*注册下载监听，监听下载事件*/
-        Beta.registerDownloadListener(new DownloadListener() {
-            @Override
-            public void onReceive(DownloadTask downloadTask) {
-                GlideCacheUtil.getInstance().clearImageAllCache(application);
-            }
-
-            @Override
-            public void onCompleted(DownloadTask downloadTask) {
-                GlideCacheUtil.getInstance().clearImageAllCache(application);
-
-            }
-
-            @Override
-            public void onFailed(DownloadTask downloadTask, int i, String s) {
-
-            }
-        });
-
-        Bugly.init(application, "eb4d356ac8", true);
-    }
-
-    /**
-     * 先初始化Tinker再初始化Bugly
-     */
-    public static void initTinker() {
+    private static void initBugly() {
         //Tinker
         // 设置是否显示弹窗提示用户重启
         Beta.canNotifyUserRestart = true;
-
         // 设置是否显示弹窗提示用户重启
         Beta.canNotifyUserRestart = true;
+        //自动检查更新开关
+        Beta.autoCheckUpgrade = true;
+        //自动初始化开关
+        Beta.autoInit = false;
 
         String jpushChannel = MetaDataUtils.getMetaDataInApp("JPUSH_CHANNEL");
         Log.d("initTinker", "appChannel:" + jpushChannel);
@@ -268,8 +237,29 @@ public class App extends Application {
             }
         };
 
+        /*注册下载监听，监听下载事件*/
+        Beta.registerDownloadListener(new DownloadListener() {
+            @Override
+            public void onReceive(DownloadTask downloadTask) {
+                GlideCacheUtil.getInstance().clearImageAllCache(application);
+            }
+
+            @Override
+            public void onCompleted(DownloadTask downloadTask) {
+                GlideCacheUtil.getInstance().clearImageAllCache(application);
+            }
+
+            @Override
+            public void onFailed(DownloadTask downloadTask, int i, String s) {
+
+            }
+        });
         //必须要所有配置设置完毕才 安装tinker
         Beta.installTinker();
+
+        Bugly.init(getApplication(), "eb4d356ac8", true);
+
+        Beta.init(getApplication(), true);
     }
 
 
