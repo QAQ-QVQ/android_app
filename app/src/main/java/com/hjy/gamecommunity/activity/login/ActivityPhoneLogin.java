@@ -1,10 +1,12 @@
 package com.hjy.gamecommunity.activity.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.media.AudioManager;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -18,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.hjy.baserequest.bean.AccountsLoginUserBean;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.data.UserData;
@@ -37,6 +39,7 @@ import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.main.MainActivity;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.enumclass.SmsEnum;
+import com.hjy.gamecommunity.enumclass.TabEnum;
 
 import java.util.List;
 import java.util.Timer;
@@ -82,7 +85,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
         mClBar = (ConstraintLayout) findViewById(R.id.cl_bar);
         mIbBackImageBar = findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
-
+        mIbBackImageBar.setVisibility(View.GONE);
         mTvVisitorLogin = (SuperTextView) findViewById(R.id.tv_VisitorLogin);
         mTvVisitorLogin.setOnClickListener(this);
 
@@ -318,7 +321,30 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.tv_VisitorLogin://游客登录
-                Request.getInstance().visitorLogin(visitorLoginJsonEntityCallback);
+                //判断 Activity 是否存在栈中
+                if (ActivityUtils.isActivityExistsInStack(MainActivity.class)) {
+                    //存在栈中
+                    List<Activity> activityList = ActivityUtils.getActivityList();
+                    for (Activity activity : activityList) {
+                        if (activity instanceof MainActivity) {
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                            final MainActivity mainActivity = (MainActivity) activity;
+                            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mainActivity.selectTabView(TabEnum.VALUE1);
+                                    finish();
+                                }
+                            }, 200);
+
+                        }
+                    }
+                } else {
+                    //不存在栈中
+                    // Request.getInstance().visitorLogin(visitorLoginJsonEntityCallback);
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                    finish();
+                }
 
                 break;
         }
@@ -367,6 +393,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
         new Timer().schedule(timerTask, 100, 1000);
     }
 
+
     /**
      * 登录成功后操作
      */
@@ -400,7 +427,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                 mAudioManager2.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FX_FOCUS_NAVIGATION_UP);
                 return true;
             case KeyEvent.KEYCODE_BACK:
-                exitDialog.show();
+               // exitDialog.show();
                 return true;
         }
         return true;
@@ -409,18 +436,18 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
     /**
      * 游客登录
      */
-    JsonEntityCallback visitorLoginJsonEntityCallback = new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
-        @Override
-        protected void onSuccess(AccountsLoginUserBean accountsLoginUserBean) {
-            AccountsLoginUserBean.DataBean dataBean = accountsLoginUserBean.getData();
-            if (dataBean != null) {
-                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
-                loginSuccessful(userData);
-            } else {
-                ToastUtil.tost(accountsLoginUserBean.getMsg());
-            }
-        }
-    };
+//    JsonEntityCallback visitorLoginJsonEntityCallback = new JsonEntityCallback<AccountsLoginUserBean>(AccountsLoginUserBean.class) {
+//        @Override
+//        protected void onSuccess(AccountsLoginUserBean accountsLoginUserBean) {
+//            AccountsLoginUserBean.DataBean dataBean = accountsLoginUserBean.getData();
+//            if (dataBean != null) {
+//                UserData userData = new UserData(String.valueOf(dataBean.getUser_id()), dataBean.getToken());
+//                loginSuccessful(userData);
+//            } else {
+//                ToastUtil.tost(accountsLoginUserBean.getMsg());
+//            }
+//        }
+//    };
 
     /**
      * 手机号登录

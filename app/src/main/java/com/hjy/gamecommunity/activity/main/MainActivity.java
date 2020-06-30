@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hjy.baseui.ui.BaseActivity;
-import com.hjy.baseutil.GlideCacheUtil;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.entity.TabEntities;
@@ -92,7 +91,6 @@ public class MainActivity extends BaseActivity {
         TabEntities tabEntities = mTabEntities.get(0);
         selectTabView(tabEntities.getTabTitle());
 
-
     }
 
     @Override
@@ -103,6 +101,7 @@ public class MainActivity extends BaseActivity {
                 public void onClick(View v) {
                     TextView textView = v.findViewById(R.id.tv_text);
                     selectTabView(textView.getText().toString());
+
                 }
             });
         }
@@ -120,7 +119,6 @@ public class MainActivity extends BaseActivity {
             if (textView.getText().toString().equals(tabTitle)) {
                 imageView.setImageResource((Integer) tabEntities.getTabSelectImg());
                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-
                 selectFragment(tabEntities.getTabTag());
             } else {
                 imageView.setImageResource((Integer) tabEntities.getTabUnselectImg());

@@ -32,7 +32,6 @@ import java.util.List;
  * Author: dy
  * Date: 2020/4/8 15:47
  * Des:
- *
  * @author dy
  */
 public class FragmenPersonalCenter extends BaseFragment implements View.OnClickListener {
@@ -154,9 +153,6 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View mRootView) {
-        if (!UserDataContainer.getInstance().isLogin()) {
-            startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
-        }
         ivSet = findViewById(R.id.mine_set);
         ivSet.setOnClickListener(this);
         setPaddingNumTop(ivSet, 12);
@@ -276,6 +272,12 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     JsonEntityCallback userinfoJsonEntityCallback = new JsonEntityCallback<UserInfo>(UserInfo.class) {
