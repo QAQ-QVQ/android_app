@@ -2,39 +2,24 @@ package com.hjy.gamecommunity.activity.mine;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.hjy.baserequest.bean.MineUserSetBean;
-import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseutil.LoadingImageUtil;
-import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.MineUserAdapter;
-import com.luck.picture.lib.PictureSelectionModel;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.xuexiang.xui.utils.Utils;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.picker.widget.OptionsPickerView;
 import com.xuexiang.xui.widget.picker.widget.TimePickerView;
@@ -44,9 +29,7 @@ import com.xuexiang.xui.widget.picker.widget.listener.OnOptionsSelectListener;
 import com.xuexiang.xui.widget.picker.widget.listener.OnTimeSelectChangeListener;
 import com.xuexiang.xui.widget.picker.widget.listener.OnTimeSelectListener;
 import com.xuexiang.xutil.data.DateUtils;
-import com.xuexiang.xutil.tip.ToastUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -128,6 +111,9 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         };
         userItem.setLayoutManager(linearLayoutManager);
         userItem.setAdapter(userAdapter);
+
+
+        Log.d("ActivityUserMessage", "initData");
     }
 
     @Override
@@ -171,6 +157,8 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
             }
         });
     }
+
+
 
     /**
      * 时间选择

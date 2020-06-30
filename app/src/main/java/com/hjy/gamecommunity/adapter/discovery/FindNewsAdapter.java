@@ -1,4 +1,4 @@
-package com.hjy.gamecommunity.adapter;
+package com.hjy.gamecommunity.adapter.discovery;
 
 import android.text.TextUtils;
 import android.view.View;

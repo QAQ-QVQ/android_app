@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    app:zqy_sll_backgroundColor="@android:color/white"
+    app:zqy_sll_clickAlpha="1.0"
+    app:zqy_sll_clickColorBg="@color/bui_gray"
+    app:zqy_sll_radius="0">
+
+    <com.xuexiang.xui.widget.imageview.RadiusImageView
+        android:id="@+id/riv_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"
+        app:riv_corner_radius="5dp" />
+    <!-- -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="xxxx"
+                android:textColor="@color/bui_black_light1"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/tv_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="123"
+                android:textColor="@color/bui_black_light2"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="xx:xxxx"
+                android:textColor="@color/bui_black_light2"
+                android:textSize="14sp" />
+
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperButton
+                android:id="@+id/sb_NumMsg"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:gravity="center"
+                android:text="99"
+                android:textColor="@color/bui_white"
+                android:textSize="12sp"
+                app:sCornersRadius="20dp"
+                app:sGravity="center"
+                app:sSolidColor="@color/red_light" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.hjy.baseui.ui.view.linearlayout.SuperLinearLayout>

@@ -25,6 +25,7 @@ import com.hjy.gamecommunity.activity.mine.ActivitySet;
  * Author: dy
  * Date: 2020/4/8 15:47
  * Des:
+ *
  * @author dy
  */
 public class FragmenPersonalCenter extends BaseFragment implements View.OnClickListener {
@@ -134,6 +135,10 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
      * 礼包数量
      */
     private int giftNumber = 6;
+    /**
+     * 小红点
+     */
+    private ImageView Update;
 
     @Override
     public int getLayoutId() {
@@ -142,6 +147,9 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View mRootView) {
+//        if (!UserDataContainer.getInstance().isLogin()) {
+//            startActivityForResult(new Intent(getContext(), ActivityPhoneLogin.class), 2000);
+//        }
         ivSet = findViewById(R.id.mine_set);
         ivSet.setOnClickListener(this);
         setPaddingNumTop(ivSet, 12);
@@ -183,6 +191,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         customer = findViewById(R.id.mine_customer);
         customer.setOnClickListener(this);
         iconHead = findViewById(R.id.mine_icon_head);
+        Update = findViewById(R.id.mine_set_update);
     }
 
     @Override
@@ -194,11 +203,15 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initData() {
+        // TODO: 2020/6/29 获取礼包
         SpannableString textGift = new SpannableString("还有 " + giftNumber + " 个礼包");
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
         textGift.setSpan(styleSpan, 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         textGift.setSpan(new ForegroundColorSpan(Color.parseColor("#EE3847")), 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         giftNum.setText(textGift);
+        // TODO: 2020/6/29 检查更新
+        Update.setVisibility(View.INVISIBLE);
+        Update.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -254,6 +267,20 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // TODO: 2020/6/30 登陆信息
+        if (resultCode == 2000) {
+            switch (requestCode) {
+                case 2001:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

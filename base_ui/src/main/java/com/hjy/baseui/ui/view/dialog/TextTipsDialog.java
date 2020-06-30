@@ -105,17 +105,31 @@ public class TextTipsDialog extends BaseDialog {
         return this;
     }
 
-    public TextTipsDialog setOnLeftButtonClickListener(String text, View.OnClickListener onNoClickListener) {
+    public TextTipsDialog setOnLeftButtonClickListener(String text,final OnClickListener onNoClickListener) {
         mTvButton1.setText(text);
-        mTvButton1.setOnClickListener(onNoClickListener);
+        mTvButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onNoClickListener!=null)
+                onNoClickListener.onClick(TextTipsDialog.this,v);
+            }
+        });
         return this;
     }
 
-    public TextTipsDialog setOnRightButtonClickListener(String text, View.OnClickListener onYesClickListener) {
+    public TextTipsDialog setOnRightButtonClickListener(String text,final OnClickListener onYesClickListener) {
         mTvButton2.setText(text);
-        mTvButton2.setOnClickListener(onYesClickListener);
+        mTvButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onYesClickListener!=null)
+                onYesClickListener.onClick(TextTipsDialog.this,v);
+            }
+        });
         return this;
     }
+
+
 
 
     @Override
@@ -141,5 +155,10 @@ public class TextTipsDialog extends BaseDialog {
 
         super.show();
     }
+
+
+  public interface  OnClickListener{
+      void onClick(TextTipsDialog textTipsDialog,View v);
+  }
 
 }

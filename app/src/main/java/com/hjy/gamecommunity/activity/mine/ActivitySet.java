@@ -56,7 +56,7 @@ public class ActivitySet extends BaseActivitySubordinate {
     /**
      * 设置列表
      */
-    private ArrayList setList;
+    private ArrayList<MineSetBean> setList;
 
     @Override
     public Object getLayout() {
@@ -84,7 +84,7 @@ public class ActivitySet extends BaseActivitySubordinate {
         MineSetBean userMsg = new MineSetBean(R.drawable.ic_launcher_background, "歪嘴猴", "", 0);
         MineSetBean security = new MineSetBean(0, "账号与安全", "", 0);
         MineSetBean aboutUs = new MineSetBean(0, "关于我们", "", 0);
-
+        // TODO: 2020/6/30 获取版本信息
         MineSetBean checkUpdate = new MineSetBean(0, "检查更新", "当前版本号V1.0.0", 0);
 
         MineSetBean clearCache = new MineSetBean(0, "清除缓存", getCacheSize(), 0);
@@ -127,7 +127,7 @@ public class ActivitySet extends BaseActivitySubordinate {
                         break;
                     //账号与安全
                     case 1:
-                        // TODO: 2020/6/24 账号与安全
+                        startActivity(new Intent(getContext(), ActivitySecurity.class));
                         break;
                     //关于我们
                     case 2:
@@ -174,17 +174,18 @@ public class ActivitySet extends BaseActivitySubordinate {
     private void checkUpdate() {
         // TODO: 2020/6/24 检查更新
         TextTipsDialog textTipsDialog = new TextTipsDialog(getActivity());
-        textTipsDialog.setTitle("发现新版本");
+        textTipsDialog.setTitle("有新版本更新");
         textTipsDialog.setText("内容");
-        textTipsDialog.setOnLeftButtonClickListener("取消", new View.OnClickListener() {
+        textTipsDialog.setOnLeftButtonClickListener("取消", new TextTipsDialog.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
                 textTipsDialog.dismiss();
             }
         });
-        textTipsDialog.setOnRightButtonClickListener("升级", new View.OnClickListener() {
+        textTipsDialog.setOnRightButtonClickListener("升级", new TextTipsDialog.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
+                textTipsDialog.dismiss();
             }
         });
         textTipsDialog.show();
@@ -212,23 +213,25 @@ public class ActivitySet extends BaseActivitySubordinate {
     private void clearCache() {
         // TODO: 2020/6/24 清除缓存
         TextTipsDialog textTipsDialog = new TextTipsDialog(getActivity());
-        textTipsDialog.setTitle("发现新版本");
-        textTipsDialog.setText("内容");
-        textTipsDialog.setOnLeftButtonClickListener("取消", new View.OnClickListener() {
+        textTipsDialog.setTitle("清除缓存");
+        textTipsDialog.setText("确定要清除缓存吗");
+        textTipsDialog.setOnLeftButtonClickListener("取消", new TextTipsDialog.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
                 textTipsDialog.dismiss();
             }
         });
-        textTipsDialog.setOnRightButtonClickListener("清除", new View.OnClickListener() {
+        textTipsDialog.setOnRightButtonClickListener("清除", new TextTipsDialog.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
                 //        CacheUtil.delteDirString(CacheUtil.getStringDataPath());
                 GlideCacheUtil.getInstance().clearImageAllCache(getActivity());
                 ToastUtil.tost("清除成功");
+                setList.get(4).setMsg(getCacheSize());
+                setAdapter.notifyDataSetChanged();
+                textTipsDialog.dismiss();
             }
         });
         textTipsDialog.show();
-
     }
 }
