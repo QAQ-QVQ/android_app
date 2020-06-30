@@ -49,7 +49,7 @@ android {
                     PACKAGE_NAME  : applicationId,
                     JSHARE_PKGNAME: applicationId,
                     JPUSH_PKGNAME : applicationId,
-                    JPUSH_APPKEY  : "f43583a474c09d91cd138e01", //JPush上注册的包名对应的appkey.
+                    JPUSH_APPKEY  : "5e963e918d29c59c79a8e045", //JPush上注册的包名对应的appkey.
                     JPUSH_CHANNEL : "gamecommunity000", //渠道号（不能使用中文）
                     TENCENT_APPID : "101551231",//腾讯开放平台注册应用得到的 appId,哪怕用不到也得放在这,不然manifest会有merge错误
             ]
@@ -150,5 +150,13 @@ dependencies {
         exclude group: 'com.android.support'
     }
     //PictureSelector图片选择
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    implementation ('com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'){
+        exclude group: 'com.android.support'
+        exclude group: 'com.github.bumptech.glide'
+    }
+    //即时通信 IM
+    implementation ('com.tencent.imsdk:tuikit:4.7.10'){
+        exclude group: 'com.android.support'
+        exclude group: 'com.github.bumptech.glide'
+    }
 }

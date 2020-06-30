@@ -86,7 +86,6 @@ public class SuperTextView extends AppCompatTextView {
                         defaultColor,
                 };
         ColorStateList colorStateList = new ColorStateList(states, colors);
-
         setTextColor(colorStateList);
     }
 }

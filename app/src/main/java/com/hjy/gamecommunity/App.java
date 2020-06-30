@@ -21,6 +21,10 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.download.DownloadListener;
 import com.tencent.bugly.beta.download.DownloadTask;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+import com.tencent.qcloud.tim.uikit.TUIKit;
+import com.tencent.qcloud.tim.uikit.config.CustomFaceConfig;
+import com.tencent.qcloud.tim.uikit.config.GeneralConfig;
+import com.tencent.qcloud.tim.uikit.config.TUIKitConfigs;
 import com.xuexiang.xui.XUI;
 
 import java.util.Locale;
@@ -61,6 +65,27 @@ public class App extends Application {
         //Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
         frescoInit();
 
+        initTUIKit();//即时通信 IM
+
+    }
+
+    /**
+     * 即时通信 IM
+     */
+    private void initTUIKit() {
+        // 配置 Config，请按需配置
+        TUIKitConfigs configs = TUIKit.getConfigs();
+        //configs.setSdkConfig(new TIMSdkConfig(SDKAPPID));
+        configs.setCustomFaceConfig(new CustomFaceConfig());
+        configs.setGeneralConfig(new GeneralConfig());
+        /*
+         * TUIKit 的初始化函数
+         *
+         * @param context  应用的上下文，一般为对应应用的 ApplicationContext
+         * @param sdkAppID 您在腾讯云注册应用时分配的 SDKAppID
+         * @param configs  TUIKit 的相关配置项，一般使用默认即可，需特殊配置参考 API 文档
+         */
+       // TUIKit.init(this, "SDKAPPID", configs);
     }
 
 
