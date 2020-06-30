@@ -169,7 +169,6 @@ public class FragmentFamilyMsg extends BaseFragment {
                 }
             });
             mListPopup.setAnimStyle(XUIPopup.ANIM_GROW_FROM_CENTER);//弹出动画
-            mListPopup.setPreferredDirection(XUIPopup.DIRECTION_BOTTOM);//弹出方向
 
 
             int rightMargin = DensityUtils.dp2px(62);
