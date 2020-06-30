@@ -21,6 +21,7 @@ import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.bean.SearchBean;
+import com.hjy.baserequest.bean.UserInfo;
 import com.hjy.baserequest.bean.VideoDetail;
 import com.hjy.baserequest.bean.VideoList;
 import com.hjy.baserequest.data.UserData;
@@ -153,12 +154,14 @@ public class Request {
     public Map<String, String> getParams(Map<String, String> map) {
         // 添加公共信息
         String user_token = "";
+        String user_id = "";
         UserData userData = UserDataContainer.getInstance().getUserData();
         if (userData != null) {
             user_token = userData.getUser_token();
+            user_id = userData.getUser_id();
         }
 
-
+        map.put("user_id",user_id);
         map.put("request_time", String.valueOf(System.currentTimeMillis() / 1000));
         map.put("token", user_token);//
         map.put("ext_info", getExtInfo());//扩展参数
@@ -549,4 +552,10 @@ public class Request {
         postRequest.params("file", new File(urlFile));
         postRequest.execute(callback);
     }
+
+    public void getUserinfo(JsonEntityCallback<UserInfo> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.search,jsonObject, jsonEntityCallback);
+    }
+
 }

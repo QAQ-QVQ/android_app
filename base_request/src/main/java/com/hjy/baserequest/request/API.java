@@ -37,6 +37,7 @@ public class API {
     public static final String phoneLogin = USER_URL_DEFAULT + "/user/user/appQuickLogin";//手机号登录
     public static final String phoneVerification = USER_URL_DEFAULT + "/user/user/forgetPasswordFirst";//手机验证
     public static final String resetPassword = USER_URL_DEFAULT + "/forgetPwdSecond";//重置密码
+    public static final String userinfo = USER_URL_DEFAULT + "/user/user/userInfo";//个人信息
 
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号
 
@@ -51,4 +52,7 @@ public class API {
     public static final String newsDetail = LIVE_URL_DEFAULT + "/home/news/newsDetail";//资讯详情
     public static final String liveList = LIVE_URL_DEFAULT + "/live/live/liveList";//直播列表
     public static final String search = LIVE_URL_DEFAULT + "/live/index/search";//搜索
+
+
+
 }

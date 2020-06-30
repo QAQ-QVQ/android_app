@@ -14,11 +14,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hjy.baserequest.bean.UserInfo;
 import com.hjy.baserequest.data.UserDataContainer;
+import com.hjy.baserequest.request.JsonArryEntityCallback;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
 import com.hjy.gamecommunity.activity.mine.ActivitySet;
+import com.lzy.okgo.model.Response;
+
+import java.util.List;
 
 /**
  * 我的
@@ -147,9 +154,9 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View mRootView) {
-//        if (!UserDataContainer.getInstance().isLogin()) {
-//            startActivityForResult(new Intent(getContext(), ActivityPhoneLogin.class), 2000);
-//        }
+        if (!UserDataContainer.getInstance().isLogin()) {
+            startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
+        }
         ivSet = findViewById(R.id.mine_set);
         ivSet.setOnClickListener(this);
         setPaddingNumTop(ivSet, 12);
@@ -203,6 +210,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initData() {
+        Request.getInstance().getUserinfo(userinfoJsonEntityCallback);
         // TODO: 2020/6/29 获取礼包
         SpannableString textGift = new SpannableString("还有 " + giftNumber + " 个礼包");
         StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
@@ -270,17 +278,10 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // TODO: 2020/6/30 登陆信息
-        if (resultCode == 2000) {
-            switch (requestCode) {
-                case 2001:
-                    break;
-                default:
-                    break;
-            }
+    JsonEntityCallback userinfoJsonEntityCallback = new JsonEntityCallback<UserInfo>(UserInfo.class) {
+        @Override
+        protected void onSuccess(UserInfo userInfo) {
+
         }
-    }
+    };
 }
