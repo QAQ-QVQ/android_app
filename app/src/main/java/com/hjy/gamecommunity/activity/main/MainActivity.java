@@ -1,6 +1,7 @@
 package com.hjy.gamecommunity.activity.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -10,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.activity.login.ActivityPhoneLogin;
 import com.hjy.gamecommunity.dialog.ExitDialog;
 import com.hjy.gamecommunity.entity.TabEntities;
 import com.hjy.gamecommunity.enumclass.TabEnum;
@@ -100,7 +103,13 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     TextView textView = v.findViewById(R.id.tv_text);
-                    selectTabView(textView.getText().toString());
+                    String tabTitleString = textView.getText().toString();
+
+                    if (tabTitleString.equals(TabEnum.VALUE5) && !UserDataContainer.getInstance().isLogin()) {
+                        startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
+                    } else {
+                        selectTabView(textView.getText().toString());
+                    }
                 }
             });
         }
