@@ -20,7 +20,7 @@
         <com.hjy.baseui.ui.view.textview.SuperTextView
             android:id="@+id/tv_VisitorLogin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center_horizontal|right"
             android:layout_marginRight="13dp"
             android:gravity="center"

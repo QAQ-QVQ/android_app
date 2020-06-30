@@ -85,7 +85,7 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
         mClBar = (ConstraintLayout) findViewById(R.id.cl_bar);
         mIbBackImageBar = findViewById(R.id.iv_back_image_bar);
         mIbBackImageBar.setOnClickListener(this);
-        mIbBackImageBar.setVisibility(View.GONE);
+        mIbBackImageBar.setVisibility(View.INVISIBLE);
         mTvVisitorLogin = (SuperTextView) findViewById(R.id.tv_VisitorLogin);
         mTvVisitorLogin.setOnClickListener(this);
 
