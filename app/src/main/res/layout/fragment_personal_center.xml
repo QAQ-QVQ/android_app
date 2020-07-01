@@ -22,29 +22,30 @@
         <RelativeLayout
             android:id="@+id/mine_set_layout"
             android:layout_width="match_parent"
-            android:gravity="center|right"
-            app:layout_constraintHorizontal_bias="1"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/mine_margin"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/mine_margin"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/mine_set"
-                android:layout_below="@+id/mine_set_update"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
+                android:layout_height="match_parent"
                 android:layout_toLeftOf="@+id/mine_set_update"
-                android:src="@drawable/qy_set_mine" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/qy_set_mine"
+                />
 
             <com.xuexiang.xui.widget.imageview.RadiusImageView
                 android:id="@+id/mine_set_update"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:paddingBottom="1dp"
                 android:src="@color/red_light"
                 app:riv_corner_radius="50dp" />
         </RelativeLayout>
@@ -98,7 +99,7 @@
             android:layout_marginTop="7dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="13dp"
-            android:text="个性签名：一起玩才是兄弟。"
+            android:text="个性签名："
             android:textColor="@color/bui_black_light2"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/mine_icon_head_layout"
@@ -276,6 +277,7 @@
 
             <LinearLayout
                 android:id="@+id/mine_tobinding"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -320,7 +322,7 @@
                 android:id="@+id/mine_bind_change"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                >
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -449,6 +451,7 @@
                         android:orientation="horizontal">
 
                         <com.xuexiang.xui.widget.imageview.RadiusImageView
+                            android:visibility="invisible"
                             android:id="@+id/mine_family_item1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -459,6 +462,7 @@
 
                         <com.xuexiang.xui.widget.imageview.RadiusImageView
                             android:id="@+id/mine_family_item2"
+                            android:visibility="invisible"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -610,6 +614,7 @@
 
                     <com.xuexiang.xui.widget.imageview.RadiusImageView
                         android:id="@+id/mine_game_item"
+                        android:visibility="invisible"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"

@@ -13,13 +13,18 @@ import com.google.gson.JsonObject;
 import com.hjy.baserequest.bean.AccountsLoginUserBean;
 import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.AnchorList;
+import com.hjy.baserequest.bean.BindRoleBean;
+import com.hjy.baserequest.bean.CheckUpdateBean;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.bean.GiftNumBean;
 import com.hjy.baserequest.bean.LiveList;
 import com.hjy.baserequest.bean.MessagePush;
+import com.hjy.baserequest.bean.MyGameInfoBean;
 import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.bean.PropertyNumberBean;
 import com.hjy.baserequest.bean.SearchBean;
 import com.hjy.baserequest.bean.UserInfo;
 import com.hjy.baserequest.bean.VideoDetail;
@@ -553,9 +558,68 @@ public class Request {
         postRequest.execute(callback);
     }
 
+    /**
+     * 获取用户信息
+     * @param jsonEntityCallback
+     */
     public void getUserinfo(JsonEntityCallback<UserInfo> jsonEntityCallback){
         JsonObject jsonObject = new JsonObject();
-        request(POST, API.search,jsonObject, jsonEntityCallback);
+        request(POST, API.userinfo,jsonObject, jsonEntityCallback);
     }
 
+    /**
+     * 获取礼包数量
+     * @param jsonEntityCallback
+     */
+    public void getGiftNum(JsonEntityCallback<GiftNumBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.giftNumber,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 我的页面获取家族信息
+     * @param jsonEntityCallback
+     */
+    public void getFamilyInfo(JsonEntityCallback<GiftNumBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.familyInfo,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 我的游戏
+     * @param jsonEntityCallback
+     *
+     */
+    public void getMyGameInfo(JsonEntityCallback<MyGameInfoBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.myGame,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取财产数量，金豆银豆鲜花
+     * @param jsonEntityCallback
+     */
+    public void getPropertyNumber(JsonEntityCallback<PropertyNumberBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.propertyNumber,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 检查更新
+     * @param jsonEntityCallback
+     */
+    public void checkUpdate(JsonEntityCallback<CheckUpdateBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", "android");
+        request(POST, API.checkUpdates,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取绑定角色
+     * @param jsonEntityCallback
+     */
+    public void getBindRole(JsonEntityCallback<BindRoleBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.currentUserRole,jsonObject, jsonEntityCallback);
+    }
 }

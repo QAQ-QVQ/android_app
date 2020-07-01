@@ -64,6 +64,15 @@ public class UserInfo implements Serializable {
         private String signature;
         private int gender;
         private int birthdate;
+        private int is_anchor;
+
+        public int getIs_anchor() {
+            return is_anchor;
+        }
+
+        public void setIs_anchor(int is_anchor) {
+            this.is_anchor = is_anchor;
+        }
 
         public int getId() {
             return id;

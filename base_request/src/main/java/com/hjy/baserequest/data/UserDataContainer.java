@@ -2,8 +2,10 @@ package com.hjy.baserequest.data;
 
 import com.google.gson.Gson;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
+import com.hjy.baserequest.request.ParameterizedTypeImpl;
 import com.hjy.baseutil.CacheUtil;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -65,17 +67,18 @@ public class UserDataContainer {
 
     public UserData getUserData() {
         //如果用户已登陆，从本地读取
-//        if (userData == null) {
-//            String userJson = CacheUtil.readString(CacheUtil.getUserPath(), userinfoCachekey);
-//            if (userJson != null) {
-//                userData = new Gson().fromJson(userJson, UserData.class);
-//                return userData;
-//            } else {
-//                return null;
-//            }
-//        } else
-//            return userData;
-        return userData;
+        if (userData == null) {
+            String userJson = CacheUtil.readString(CacheUtil.getUserPath(), userinfoCachekey);
+            if (userJson != null) {
+                userData = new Gson().fromJson(userJson, UserData.class);
+                return userData;
+            } else {
+                return null;
+            }
+        } else{
+            return userData;
+        }
+//        return userData;
 
     }
 
@@ -86,20 +89,21 @@ public class UserDataContainer {
 
     public List<PhoneLoginUserBean.DataBean.UserListBean> getUser_list() {
         //如果用户已登陆，从本地读取
-//        if (user_list == null) {
-//            String userJson = CacheUtil.readString(CacheUtil.getUserPath(), userListCachekey);
-//            if (userJson != null) {
-//                //泛型转换
-//                Type type = new ParameterizedTypeImpl(PhoneLoginUserBean.DataBean.UserListBean.class);
-//                user_list = new Gson().fromJson(userJson, type);
-//                return user_list;
-//            } else {
-//                return null;
-//            }
-//        } else
-//            return user_list;
+        if (user_list == null) {
+            String userJson = CacheUtil.readString(CacheUtil.getUserPath(), userListCachekey);
+            if (userJson != null) {
+                //泛型转换
+                Type type = new ParameterizedTypeImpl(PhoneLoginUserBean.DataBean.UserListBean.class);
+                user_list = new Gson().fromJson(userJson, type);
+                return user_list;
+            } else {
+                return null;
+            }
+        } else{
+            return user_list;
+        }
 
-        return user_list;
+//        return user_list;
 
     }
 

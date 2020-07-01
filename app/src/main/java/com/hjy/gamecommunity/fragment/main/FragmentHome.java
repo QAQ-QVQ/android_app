@@ -231,8 +231,8 @@ public class FragmentHome extends BaseFragment {
         mSrlRealTimeInfo.setEnableHeaderTranslationContent(false);//是否下拉Header的时候向下平移列表或者内容
         mSrlRealTimeInfo.setEnableAutoLoadMore(false);//是否启用列表惯性滑动到底部时自动加载更多
         //设置刷新加载时禁止所有列表操作
-        mSrlRealTimeInfo.setDisableContentWhenRefresh(true);
-        mSrlRealTimeInfo.setDisableContentWhenLoading(true);
+//        mSrlRealTimeInfo.setDisableContentWhenRefresh(true);
+//        mSrlRealTimeInfo.setDisableContentWhenLoading(true);
         mSrlRealTimeInfo.autoRefresh();//自动刷新
     }
 

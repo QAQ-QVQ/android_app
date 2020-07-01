@@ -8,11 +8,34 @@ package com.hjy.baserequest.request;
  */
 public class API {
     //统一协议
-    public static final String SYSTEM_URL_DEFAULT = "http://live.5eyx.com";//app统一协议
-    public static final String USER_URL_DEFAULT = "http://user.5eyx.com";//快速登录&账号登录&忘记密码&实名认证&登录验证 -- 统一域名
-    public static final String SMS_URL_DEFAULT = "http://sms.5eyx.com";//发送短信 -- 统一域名
-    public static final String PAY_URL_DEFAULT = "http://sdk.pay.android.5eyx.com";//支付 -- 统一域名
-    public static final String LIVE_URL_DEFAULT = "http://live.5eyx.com";//直播 -- 统一域名
+    /**
+     * app统一协议
+     */
+    public static final String SYSTEM_URL_DEFAULT = "http://live.5eyx.com";
+    /**
+     * 快速登录&账号登录&忘记密码&实名认证&登录验证 -- 统一域名
+     */
+    public static final String USER_URL_DEFAULT = "http://user.5eyx.com";
+    /**
+     * 发送短信 -- 统一域名
+     */
+    public static final String SMS_URL_DEFAULT = "http://sms.5eyx.com";
+    /**
+     * 支付 -- 统一域名
+     */
+    public static final String PAY_URL_DEFAULT = "http://sdk.pay.android.5eyx.com";
+    /**
+     * 直播 -- 统一域名
+     */
+    public static final String LIVE_URL_DEFAULT = "http://live.5eyx.com";
+    /**
+     * 游戏 -- 统一域名
+     */
+    public static final String GAME_URL_DEFAULT = "http://game.5eyx.com";
+    /**
+     * 家族 -- 统一域名
+     */
+    public static final String FAMILY_URL_DEFAULT = "http://family.5eyx.com";
 
     public static final String CDN = "http://cdn.xxxx.co";//CDN统一地址
     public static final String IMAGEURL_DEFAULT = CDN + "/img";//CDN图片地址
@@ -22,7 +45,6 @@ public class API {
 
 
     //系统
-    public static final String appUpdates = SYSTEM_URL_DEFAULT + "/xxx/xxxxx.do";//检查更新
     public static final String notice = SYSTEM_URL_DEFAULT + "/xxx/xxx/xxxxx";//获取公告
     public static final String messagePush = SYSTEM_URL_DEFAULT + "/xxx/xxx/xxxxx";//消息推送
     public static final String deviceInformation = SYSTEM_URL_DEFAULT + "/xxx/xxx.do";//搜集设备信息
@@ -37,7 +59,22 @@ public class API {
     public static final String phoneLogin = USER_URL_DEFAULT + "/user/user/appQuickLogin";//手机号登录
     public static final String phoneVerification = USER_URL_DEFAULT + "/user/user/forgetPasswordFirst";//手机验证
     public static final String resetPassword = USER_URL_DEFAULT + "/forgetPwdSecond";//重置密码
-    public static final String userinfo = USER_URL_DEFAULT + "/user/user/userInfo";//个人信息
+    /**
+     * 个人信息
+     */
+    public static final String userinfo = USER_URL_DEFAULT + "/user/user/userInfo";
+    /**
+     *  家族信息
+     */
+    public static final String familyInfo = USER_URL_DEFAULT + "/user/user/myFamilys";
+    /**
+     * 资产数量，金豆银豆鲜花
+     */
+    public static final String propertyNumber = USER_URL_DEFAULT + "/user/user/myAccount";
+    /**
+     * 检查更新
+     */
+    public static final String checkUpdates = USER_URL_DEFAULT + "/user/system/checkForUpdates";
 
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号
 
@@ -53,6 +90,19 @@ public class API {
     public static final String liveList = LIVE_URL_DEFAULT + "/live/live/liveList";//直播列表
     public static final String search = LIVE_URL_DEFAULT + "/live/index/search";//搜索
 
+    /**
+     * 礼包数量
+     */
+    public static final String giftNumber = GAME_URL_DEFAULT +"/game/game_gift_card/myGiftCardCount";
+    /**
+     * 我的游戏
+     */
+    public static final String myGame = GAME_URL_DEFAULT +"/game/game/myGame";
 
 
+    //家族相关
+    /**
+     * 绑定角色信息
+     */
+    public static final String currentUserRole = FAMILY_URL_DEFAULT +"/family/family_user_role/currentUserRole";
 }
