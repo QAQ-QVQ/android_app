@@ -26,7 +26,6 @@ public class FamilyAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public int getLayout(T item, int position) {
-
         return R.layout.item_family;
     }
 

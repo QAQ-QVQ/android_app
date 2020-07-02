@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity {
         }
 
         viewList.add(2, mLlFamily);//家族view添加到中间位置
-
     }
 
     private ArrayList<TabEntities> mTabEntities;//tab实体

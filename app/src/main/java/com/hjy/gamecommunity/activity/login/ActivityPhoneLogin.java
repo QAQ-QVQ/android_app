@@ -319,7 +319,6 @@ public class ActivityPhoneLogin extends BaseActivity implements View.OnClickList
                     Request.getInstance().phoneLogin(mEdLoginPhoneString, mEdVerificationCodeString, phoneLoginJsonEntityCallback);
                 }
                 break;
-
             case R.id.tv_VisitorLogin://游客登录
                 //判断 Activity 是否存在栈中
                 if (ActivityUtils.isActivityExistsInStack(MainActivity.class)) {

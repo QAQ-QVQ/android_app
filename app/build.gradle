@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../bugly-tinker.gradle'
-
+apply plugin: 'realm-android'
 def time = "${new Date().format("yyyyMMdd")}"//
 def codename = "1"//当日迭代号
 
@@ -159,4 +159,8 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'com.github.bumptech.glide'
     }
+   //即时通信 IM (数据版)
+    implementation 'com.tencent.imsdk:imsdk:4.8.50'
+
+
 }
