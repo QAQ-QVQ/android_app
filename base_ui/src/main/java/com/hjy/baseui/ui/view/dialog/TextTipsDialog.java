@@ -157,7 +157,7 @@ public class TextTipsDialog extends BaseDialog {
     }
 
 
-  interface  OnClickListener{
+  public interface  OnClickListener{
       void onClick(TextTipsDialog textTipsDialog,View v);
   }
 

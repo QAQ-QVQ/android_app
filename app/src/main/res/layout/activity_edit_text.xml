@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bui_white"
     android:fitsSystemWindows="true"
-    android:background="@color/bui_background_light"
     tools:context=".activity.mine.ActivityEditText">
 
     <android.support.constraint.ConstraintLayout
@@ -15,10 +15,9 @@
         android:gravity="center"
         tools:ignore="MissingConstraints">
 
-        <include
-            layout="@layout/bui_bar_black_white"></include>
+        <include layout="@layout/bui_bar_black_white"></include>
 
-        <TextView
+        <com.hjy.baseui.ui.view.textview.SuperTextView
             android:id="@+id/tv_text_submit_bar"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -31,23 +30,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:zqy_stv_clickAlpha="0.5"/>
     </android.support.constraint.ConstraintLayout>
 
-
-    <com.xuexiang.xui.widget.edittext.MultiLineEditText
-        android:id="@+id/mine_edit"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mine_margin"
-        android:background="@color/bui_white"
+        android:layout_height="0dp"
+        android:background="@color/bui_background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0"
-        app:mlet_contentPadding="@dimen/mine_margin"
-        app:mlet_contentTextColor="@color/bui_black_light1"
-        app:mlet_contentTextSize="16sp"
-        app:mlet_hintTextColor="@color/bui_black_light2"></com.xuexiang.xui.widget.edittext.MultiLineEditText>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.xuexiang.xui.widget.edittext.MultiLineEditText
+            android:id="@+id/mine_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mine_margin"
+            android:background="@color/bui_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:mlet_contentPadding="@dimen/mine_margin"
+            app:mlet_contentTextColor="@color/bui_black_light1"
+            app:mlet_contentTextSize="16sp"
+            app:mlet_hintTextColor="@color/bui_black_light2"
+            tools:ignore="MissingConstraints">
+
+        </com.xuexiang.xui.widget.edittext.MultiLineEditText>
+    </android.support.constraint.ConstraintLayout>
+
+
 </android.support.constraint.ConstraintLayout>

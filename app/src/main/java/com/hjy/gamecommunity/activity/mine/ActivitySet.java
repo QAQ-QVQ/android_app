@@ -21,6 +21,10 @@ import com.hjy.baserequest.bean.MineSetBean;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseui.ui.SuperDrawable;
+import com.hjy.baseui.ui.view.dialog.TextTipsDialog;
+import com.hjy.baseutil.CacheUtil;
+import com.hjy.baseutil.GlideCacheUtil;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.MineSetAdapter;
@@ -38,10 +42,6 @@ import java.util.List;
  */
 public class ActivitySet extends BaseActivitySubordinate {
     /**
-     * 标题
-     */
-//    private Toolbar toolbar;
-    /**
      * 注销
      */
     private Button logout;
@@ -53,6 +53,10 @@ public class ActivitySet extends BaseActivitySubordinate {
      * 设置适配器
      */
     private MineSetAdapter setAdapter;
+    /**
+     * 设置列表
+     */
+    private ArrayList<MineSetBean> setList;
 
     @Override
     public Object getLayout() {
@@ -65,9 +69,7 @@ public class ActivitySet extends BaseActivitySubordinate {
         transparentStatusBar();
         //设置状态栏是否为浅色模式
         setStatusBarLightMode(true);
-//        toolbar = findViewById(R.id.mine_set_toolbar);
-//        toolbar.setNavigationIcon(ContextCompat.getDrawable(getContext(),R.mipmap.bui_back_black));
-        initToobar(this,"设置");
+        initToobar(this, "设置");
         logout = findViewById(R.id.mine_logout_button);
         logout.setBackground(setClickDrawable());
         setItem = findViewById(R.id.mine_set_item);
@@ -82,9 +84,11 @@ public class ActivitySet extends BaseActivitySubordinate {
         MineSetBean userMsg = new MineSetBean(R.drawable.ic_launcher_background, "歪嘴猴", "", 0);
         MineSetBean security = new MineSetBean(0, "账号与安全", "", 0);
         MineSetBean aboutUs = new MineSetBean(0, "关于我们", "", 0);
+        // TODO: 2020/6/30 获取版本信息
         MineSetBean checkUpdate = new MineSetBean(0, "检查更新", "当前版本号V1.0.0", 0);
-        MineSetBean clearCache = new MineSetBean(0, "清除缓存", "15.66MB", 0);
-        ArrayList setList = new ArrayList();
+
+        MineSetBean clearCache = new MineSetBean(0, "清除缓存", getCacheSize(), 0);
+        setList = new ArrayList();
         setList.add(userMsg);
         setList.add(security);
         setList.add(aboutUs);
@@ -109,12 +113,7 @@ public class ActivitySet extends BaseActivitySubordinate {
                 // TODO: 2020/6/23 退出登录
             }
         });
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+
         setAdapter.setOnclickListener(new MineSetAdapter.OnclickListener() {
             /**
              * @param item 点击的内容
@@ -128,19 +127,19 @@ public class ActivitySet extends BaseActivitySubordinate {
                         break;
                     //账号与安全
                     case 1:
-                        // TODO: 2020/6/24 账号与安全
+                        startActivity(new Intent(getContext(), ActivitySecurity.class));
                         break;
                     //关于我们
                     case 2:
-                        // TODO: 2020/6/24 关于我们
+                        startActivity(new Intent(getContext(), ActivityAboutUs.class));
                         break;
                     //检查更新
                     case 3:
-                        // TODO: 2020/6/24 检查更新
+                        checkUpdate();
                         break;
                     //清除缓存
                     case 4:
-                        // TODO: 2020/6/24 清除缓存
+                        clearCache();
                         break;
                     default:
                         break;
@@ -172,5 +171,67 @@ public class ActivitySet extends BaseActivitySubordinate {
         return stateListDrawable;
     }
 
+    private void checkUpdate() {
+        // TODO: 2020/6/24 检查更新
+        TextTipsDialog textTipsDialog = new TextTipsDialog(getActivity());
+        textTipsDialog.setTitle("有新版本更新");
+        textTipsDialog.setText("内容");
+        textTipsDialog.setOnLeftButtonClickListener("取消", new TextTipsDialog.OnClickListener() {
+            @Override
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
+                textTipsDialog.dismiss();
+            }
+        });
+        textTipsDialog.setOnRightButtonClickListener("升级", new TextTipsDialog.OnClickListener() {
+            @Override
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
+                textTipsDialog.dismiss();
+            }
+        });
+        textTipsDialog.show();
+    }
 
+    /**
+     * @return 获取缓存大小
+     */
+    private String getCacheSize() {
+        String cacheSize = GlideCacheUtil.getInstance().getCacheSize(getActivity());
+        String dirSize = CacheUtil.getDirSize(CacheUtil.getStringDataPath());
+        if (cacheSize.contains("MB")) {
+            String mb = cacheSize.replace("MB", "");
+            Double aDouble = Double.valueOf(mb);
+            if (aDouble >= 100.00) {
+//                mTvCacheSize.setText("图片：" + cacheSize + "\n其他：" + dirSize);
+            }
+        }
+        return cacheSize;
+    }
+
+    /**
+     * @return 清除缓存
+     */
+    private void clearCache() {
+        // TODO: 2020/6/24 清除缓存
+        TextTipsDialog textTipsDialog = new TextTipsDialog(getActivity());
+        textTipsDialog.setTitle("清除缓存");
+        textTipsDialog.setText("确定要清除缓存吗");
+        textTipsDialog.setOnLeftButtonClickListener("取消", new TextTipsDialog.OnClickListener() {
+            @Override
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
+                textTipsDialog.dismiss();
+            }
+        });
+        textTipsDialog.setOnRightButtonClickListener("清除", new TextTipsDialog.OnClickListener() {
+            @Override
+            public void onClick(TextTipsDialog textTipsDialog, View v) {
+                //        CacheUtil.delteDirString(CacheUtil.getStringDataPath());
+                GlideCacheUtil.getInstance().clearImageAllCache(getActivity());
+                ToastUtil.tost("清除成功");
+                setList.get(4).setMsg(getCacheSize());
+                setAdapter.notifyDataSetChanged();
+                textTipsDialog.dismiss();
+            }
+        });
+        textTipsDialog.show();
+    }
 }

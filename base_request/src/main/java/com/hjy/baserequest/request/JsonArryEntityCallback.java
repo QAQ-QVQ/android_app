@@ -52,7 +52,7 @@ public abstract class JsonArryEntityCallback<T> extends BaseCallback {
     /**
      * 对返回数据进行操作的回调， UI线程
      */
-    abstract void onSuccess(List<T> tList);
+    public abstract void onSuccess(List<T> tList);
 
 
 }

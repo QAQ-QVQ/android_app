@@ -55,6 +55,8 @@
             android:textColor="@color/bui_black_light1"
             android:textSize="16sp" />
 
+
+
         <ImageView
             android:id="@+id/mine_set_next"
             android:layout_width="wrap_content"

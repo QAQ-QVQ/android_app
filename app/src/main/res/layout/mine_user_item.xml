@@ -34,14 +34,17 @@
 
         <TextView
             android:id="@+id/mine_user_msg"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_toLeftOf="@+id/mine_user_next"
+            android:layout_toRightOf="@+id/mine_user_title"
             android:layout_weight="3"
             android:gravity="center|right"
             android:text="内容"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/bui_black_light"
             android:textSize="16sp" />
 
