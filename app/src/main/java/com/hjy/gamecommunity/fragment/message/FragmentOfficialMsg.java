@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -13,6 +14,8 @@ import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.divider.HorizontalDividerItemDecoration;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.message.OfficialMsgAdapter;
+import com.hjy.gamecommunity.database.RealmManage;
+import com.hjy.gamecommunity.database.model.Conversation;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -20,6 +23,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 作者: zhangqingyou
@@ -110,7 +114,8 @@ public class FragmentOfficialMsg extends BaseFragment {
         officialMsgAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener<Object>() {
             @Override
             public void onItemClick(View view, Object item, int position) {
-
+                List<Conversation> conversations = RealmManage.getInstance().searchAll(Conversation.class);
+                Log.d("FragmentOfficialMsg", "conversations:" + conversations);
             }
         });
     }

@@ -11,10 +11,7 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.gamecommunity.R;
-import com.tencent.imsdk.v2.V2TIMConversation;
-import com.tencent.imsdk.v2.V2TIMGroupInfo;
-import com.tencent.imsdk.v2.V2TIMMessage;
-import com.tencent.imsdk.v2.V2TIMTextElem;
+import com.hjy.gamecommunity.database.model.Conversation;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.xuexiang.xui.widget.textview.supertextview.SuperButton;
 
@@ -23,21 +20,21 @@ import com.xuexiang.xui.widget.textview.supertextview.SuperButton;
  * 时间: 2020/6/29 9:05
  * 描述: 家族消息
  */
-public class FamilyMsgAdapter extends BaseAdapter<V2TIMConversation> {
+public class FamilyMsgAdapter extends BaseAdapter<Conversation> {
 
 
     public FamilyMsgAdapter() {
     }
 
     @Override
-    public int getLayout(V2TIMConversation item, int position) {
+    public int getLayout(Conversation item, int position) {
         return R.layout.item_family_msg;
 
 
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder viewHolder, V2TIMConversation item, int position) {
+    public void onBindViewHolder(BaseViewHolder viewHolder, Conversation item, int position) {
 
         RadiusImageView mRivImage = viewHolder.findViewById(R.id.riv_image);//家族头像
         TextView mTvTitle = viewHolder.findViewById(R.id.tv_Title);//家族名
@@ -46,10 +43,9 @@ public class FamilyMsgAdapter extends BaseAdapter<V2TIMConversation> {
         SuperButton mSbNumMsg = viewHolder.findViewById(R.id.sb_NumMsg);//家族未读消息数
         ImageView mIvImg = viewHolder.findViewById(R.id.iv_Img);//免打扰图标
 
-        LoadingImageUtil.loadingImag(item.getFaceUrl(), mRivImage, true);
-        mTvTitle.setText(item.getShowName());
-        V2TIMMessage lastMessage = item.getLastMessage();
-        long timestamp = lastMessage.getTimestamp() * 1000;
+        LoadingImageUtil.loadingImag(item.getFaceUrll(), mRivImage, true);
+        mTvTitle.setText(item.getName());
+        long timestamp = item.getTimestamp() * 1000;
         if (com.hjy.baseutil.TimeUtils.isYesterday(timestamp)) {
             //是昨天
             String millis2String = TimeUtils.millis2String(timestamp, "HH:mm");
@@ -66,8 +62,9 @@ public class FamilyMsgAdapter extends BaseAdapter<V2TIMConversation> {
         }
 
 
-        V2TIMTextElem textElem = lastMessage.getTextElem();
-        mTvText.setText(textElem.getText());
+        if (item.getTextElem() != null) {
+            mTvText.setText(item.getTextElem());
+        }
         int unreadCount = item.getUnreadCount();
         if (unreadCount > 99) {
             int fontHeight = getFontHeight(mSbNumMsg.getTextSize()) + ConvertUtils.dp2px(4);
@@ -92,16 +89,13 @@ public class FamilyMsgAdapter extends BaseAdapter<V2TIMConversation> {
          *  // V2TIMManager.getGroupManager().setReceiveMessageOpt();
          */
 
-        int recvOpt = item.getRecvOpt();//获取消息接收选项（群会话有效）
+        String recvOpt = item.getIsRemind();//获取消息接收选项（群会话有效）
         switch (recvOpt) {
-            case V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE://在线正常接收消息，离线时会有厂商的离线推送通知。
+            case "1"://在线正常接收消息，离线时会有厂商的离线推送通知。
                 mIvImg.setVisibility(View.GONE);
                 mSbNumMsg.setVisibility(View.VISIBLE);
                 break;
-            case V2TIMGroupInfo.V2TIM_GROUP_NOT_RECEIVE_MESSAGE://不会接收到群消息
-
-                break;
-            case V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_NOT_NOTIFY_MESSAGE://在线正常接收消息，离线不会有推送
+            case "2"://在线正常接收消息，离线不会有推送
                 mIvImg.setVisibility(View.VISIBLE);
                 mSbNumMsg.setVisibility(View.GONE);
                 break;
@@ -111,7 +105,7 @@ public class FamilyMsgAdapter extends BaseAdapter<V2TIMConversation> {
     }
 
     @Override
-    public void listener(BaseViewHolder viewHolder, V2TIMConversation item, int position) {
+    public void listener(BaseViewHolder viewHolder, Conversation item, int position) {
 
     }
 

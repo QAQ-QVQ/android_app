@@ -2,6 +2,8 @@ package com.hjy.baseui.ui.view.popup.tips;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hjy.baseui.R;
 
@@ -13,8 +15,12 @@ import com.hjy.baseui.R;
  */
 public class LoadPopup extends BaseTipsPopup {
 
+    private TextView mToastMsg;
+    private LinearLayout mLlRootView;
+
     public LoadPopup(Activity activity) {
         super(activity);
+
     }
 
     public LoadPopup(Activity activity, int width, int height) {
@@ -28,7 +34,8 @@ public class LoadPopup extends BaseTipsPopup {
 
     @Override
     public void initView(View rootView) {
-
+        mToastMsg = rootView.findViewById(R.id.toast_msg);
+        mLlRootView = rootView.findViewById(R.id.ll_RootView);
     }
 
     @Override
@@ -39,6 +46,10 @@ public class LoadPopup extends BaseTipsPopup {
     @Override
     public void listener() {
 
+    }
+
+    public void setText(String text) {
+        mToastMsg.setText(text);
     }
 
 

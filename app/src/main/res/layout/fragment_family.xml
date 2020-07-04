@@ -5,8 +5,4 @@
     android:layout_height="match_parent"
     tools:ignore="MissingConstraints">
 
-    <com.tencent.qcloud.tim.uikit.modules.conversation.ConversationLayout
-        android:id="@+id/conversationLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.tencent.qcloud.tim.uikit.modules.conversation.ConversationLayout>
 </android.support.constraint.ConstraintLayout>

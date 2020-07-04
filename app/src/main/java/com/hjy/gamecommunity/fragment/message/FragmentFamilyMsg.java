@@ -1,6 +1,8 @@
 package com.hjy.gamecommunity.fragment.message;
 
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +13,6 @@ import android.widget.AdapterView;
 import android.widget.PopupWindow;
 
 import com.blankj.utilcode.util.ConvertUtils;
-import com.hjy.baserequest.data.UserData;
-import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseui.ui.divider.HorizontalDividerItemDecoration;
@@ -20,10 +20,11 @@ import com.hjy.baseutil.ToastUtil;
 import com.hjy.baseutil.ViewSeting;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.message.FamilyMsgAdapter;
-import com.hjy.gamecommunity.database.Conversation;
+import com.hjy.gamecommunity.database.DataListener;
+import com.hjy.gamecommunity.database.RealmManage;
+import com.hjy.gamecommunity.database.model.Conversation;
 import com.hjy.gamecommunity.enumclass.FamilyMsgOperationEnum;
 import com.hjy.gamecommunity.popupwindow.ListPopup;
-import com.hjy.gamecommunity.utils.GenerateTestUserSig;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -34,17 +35,21 @@ import com.tencent.imsdk.v2.V2TIMConversation;
 import com.tencent.imsdk.v2.V2TIMConversationListener;
 import com.tencent.imsdk.v2.V2TIMConversationResult;
 import com.tencent.imsdk.v2.V2TIMGroupInfo;
+import com.tencent.imsdk.v2.V2TIMGroupListener;
+import com.tencent.imsdk.v2.V2TIMGroupMemberInfo;
 import com.tencent.imsdk.v2.V2TIMManager;
+import com.tencent.imsdk.v2.V2TIMMessage;
 import com.tencent.imsdk.v2.V2TIMSendCallback;
 import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.utils.DensityUtils;
 import com.xuexiang.xui.widget.popupwindow.popup.XUIPopup;
-import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
-
-import io.realm.Realm;
+import java.util.Map;
 
 /**
  * 作者: zhangqingyou
@@ -109,9 +114,30 @@ public class FragmentFamilyMsg extends BaseFragment {
         //设置刷新加载时禁止所有列表操作
         mSmartRefreshLayout.setDisableContentWhenRefresh(true);
         mSmartRefreshLayout.setDisableContentWhenLoading(true);
+        mSmartRefreshLayout.setEnableRefresh(false);//是否启用下拉刷新（默认启用）
+        // mSmartRefreshLayout.autoRefresh();//自动刷新
 
+        //数据库异步查询
+        RealmManage.getInstance().searchAll(Conversation.class, new DataListener<Conversation>() {
+            @Override
+            public void onResult(List<Conversation> conversations) {
+                Collections.sort(conversations, new Comparator<Conversation>() {
+                    @Override
+                    public int compare(Conversation o1, Conversation o2) {
+                        return (int) (o2.getTimestamp() - o1.getTimestamp());
+                    }
+                });
+                familyMsgAdapter.replaceAll(conversations);//优先加载本地，然后再云端更新会话列表
 
-        mSmartRefreshLayout.autoRefresh();//自动刷新
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getConversationList(true, nextSeq, count);
+                    }
+                }, 500);
+            }
+        });
+
 
     }
 
@@ -122,7 +148,7 @@ public class FragmentFamilyMsg extends BaseFragment {
     private long nextSeq = 0;
     private int count = 30;
     private boolean finished;//如果会话全部拉取完毕，成功回调里面 V2TIMConversationResult 中的  isFinished 获取字段值为 true。
-    private boolean refreshOrLoadMore;//true:下拉刷新  false:上拉加载更多
+
 
     @Override
     public void listener() {
@@ -130,22 +156,18 @@ public class FragmentFamilyMsg extends BaseFragment {
         mSmartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshOrLoadMore = true;
-
-                getConversationList(nextSeq, count);
-
+                getConversationList(true, nextSeq, count);
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 refreshOrLoadMore = false;
-
                 if (finished) {
                     closeFinish();
                     ToastUtil.tost("没有更多啦!");
                 } else {
                     //获取会话列表
-                    getConversationList(nextSeq, count);
+                    getConversationList(false, nextSeq, count);
 
                 }
 
@@ -153,7 +175,15 @@ public class FragmentFamilyMsg extends BaseFragment {
 
         });
 
-        familyMsgAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener<V2TIMConversation>() {
+        familyMsgAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener<Conversation>() {
+
+            @Override
+            public void onItemClick(View view, Conversation item, int position) {
+
+            }
+        });
+
+        familyMsgAdapter.setOnItemLongClickListener(new BaseAdapter.OnItemLongClickListener<Conversation>() {
             /**
              * •V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE：在线正常接收消息，离线时会有厂商的离线推送通知。
              * •V2TIMGroupInfo.V2TIM_GROUP_NOT_RECEIVE_MESSAGE：不会接收到群消息。
@@ -162,21 +192,21 @@ public class FragmentFamilyMsg extends BaseFragment {
              *  // V2TIMManager.getGroupManager().setReceiveMessageOpt();
              */
             @Override
-            public void onItemClick(View view, V2TIMConversation item, int position) {
-                int recvOpt = item.getRecvOpt();//获取消息接收选项（群会话有效）
-
+            public void onItemLongClick(View view, Conversation item, int position) {
+                String recvOpt = item.getIsRemind();//获取消息接收选项（群会话有效）
 
                 boolean isRemind = false;//当前消息是否提醒
-                if (recvOpt == V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE) {
+                if (recvOpt.equals("1")) {
                     isRemind = true;
                 }
 
-                showMsgOperationPopup(view, item, false, false, isRemind);
-
+                showMsgOperationPopup(view, item, isRemind);
             }
         });
+
         //设置会话监听器
         V2TIMManager.getConversationManager().setConversationListener(new V2TIMConversationListener() {
+
             /**
              * 有新的会话（比如收到一个新同事发来的单聊消息、或者被拉入了一个新的群组中），
              * 可以根据会话的 lastMessage -> timestamp 重新对会话列表做排序
@@ -188,7 +218,12 @@ public class FragmentFamilyMsg extends BaseFragment {
                 Log.d("FragmentFamilyMsg", "有新的会话（比如收到一个新同事发来的单聊消息、或者被拉入了一个新的群组中）");
 
                 if (conversationList != null && conversationList.size() > 0) {
-                    familyMsgAdapter.addItemsToLast(conversationList);
+                    addOrUpdate(conversationList);//更新本地数据库和会话列表
+//                    List<Conversation> conversations = new ArrayList<>();
+//                    for (V2TIMConversation v2TIMConversation : conversationList) {
+//                        conversations.add(getConversation(v2TIMConversation));
+//                    }
+//                    familyMsgAdapter.addItemsToLast(conversations);
                 }
             }
 
@@ -203,11 +238,56 @@ public class FragmentFamilyMsg extends BaseFragment {
                 Log.d("FragmentFamilyMsg", "某些会话的关键信息发生变化（未读计数发生变化、最后一条消息被更新等等）");
 
                 if (conversationList != null && conversationList.size() > 0) {
-                    if (refreshOrLoadMore)
-                        familyMsgAdapter.replaceAll(conversationList);
-                    else
-                        familyMsgAdapter.addItemsToLast(conversationList);
+                    addOrUpdate(conversationList);//更新本地数据库和会话列表
+
+//                    List<Conversation> conversations = new ArrayList<>();
+//                    for (V2TIMConversation v2TIMConversation : conversationList) {
+//                        conversations.add(getConversation(v2TIMConversation));
+//                    }
+//                    familyMsgAdapter.replaceAll(conversations);
                 }
+            }
+        });
+        //设置群组监听器
+        V2TIMManager.getInstance().setGroupListener(new V2TIMGroupListener() {
+            /**
+             *有用户加入群（全员能够收到）
+             *
+             * @param groupID
+             * @param memberList
+             */
+            @Override
+            public void onMemberEnter(String groupID, List<V2TIMGroupMemberInfo> memberList) {
+                super.onMemberEnter(groupID, memberList);
+                Log.d("FragmentFamilyMsg", "有用户加入群（全员能够收到）");
+                ToastUtil.tost("有用户加入群（全员能够收到）");
+            }
+
+            /**
+             * 有用户离开群（全员能够收到） 自己离开的
+             *
+             * @param groupID
+             * @param member
+             */
+            @Override
+            public void onMemberLeave(String groupID, V2TIMGroupMemberInfo member) {
+                super.onMemberLeave(groupID, member);
+
+                Log.d("FragmentFamilyMsg", "有用户离开群（全员能够收到）");
+                ToastUtil.tost("有用户离开群（全员能够收到）");
+
+            }
+
+            /**
+             * 某些人被踢出某群（全员能够收到）
+             * @param groupID
+             * @param opUser
+             * @param memberList
+             */
+            @Override
+            public void onMemberKicked(String groupID, V2TIMGroupMemberInfo opUser, List<V2TIMGroupMemberInfo> memberList) {
+                super.onMemberKicked(groupID, opUser, memberList);
+                ToastUtil.tost("某些人被踢出某群（全员能够收到）");
             }
         });
     }
@@ -215,40 +295,17 @@ public class FragmentFamilyMsg extends BaseFragment {
 
     /**
      * 获取家族消息列表
+     * 获取会话列表
      *
-     * @param nextSeq 分页拉取的游标，第一次默认取传 0，后续分页拉传上一次分页拉取成功回调里的 nextSeq
-     * @param count 分页拉取的个数，一次分页拉取不宜太多，会影响拉取的速度，建议每次拉取 100 个会话
+     * @param refreshOrLoadMore//true:下拉刷新 false:上拉加载更多
+     * @param nextSeq                      分页拉取的游标，第一次默认取传 0，后续分页拉传上一次分页拉取成功回调里的 nextSeq
+     * @param count                        分页拉取的个数，一次分页拉取不宜太多，会影响拉取的速度，建议每次拉取 100 个会话
      */
-    private boolean isIMLogin;//即时通讯用户是否登录
+    private boolean refreshOrLoadMore;//true:下拉刷新  false:上拉加载更多
 
-    private void getConversationList(long nextSeq, int count) {
-        if (isIMLogin) {
-            //获取会话列表
-            V2TIMManager.getConversationManager().getConversationList(nextSeq, count, getV2TIMSendCallback);
-        } else {
-            UserData userData = UserDataContainer.getInstance().getUserData();
-            if (userData != null) {
-                String user_id = userData.getUser_id();
-                String genTestUserSig = GenerateTestUserSig.genTestUserSig(user_id);
-                V2TIMManager.getInstance().login(user_id, genTestUserSig, new V2TIMCallback() {
-                    @Override
-                    public void onError(int i, String s) {
-                        ToastUtils.toast("IM登录失败！-" + s);
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        isIMLogin = true;
-                        //获取会话列表
-                        V2TIMManager.getConversationManager().getConversationList(nextSeq, count, getV2TIMSendCallback);
-                    }
-                });
-            } else {
-                ToastUtils.toast("您还未登录");
-                closeFinish();
-            }
-        }
-
+    private void getConversationList(boolean refreshOrLoadMore, long nextSeq, int count) {
+        this.refreshOrLoadMore = refreshOrLoadMore;
+        V2TIMManager.getConversationManager().getConversationList(nextSeq, count, getV2TIMSendCallback);
     }
 
     /**
@@ -261,25 +318,26 @@ public class FragmentFamilyMsg extends BaseFragment {
      */
     private ListPopup mListPopup;
 
-    private void showMsgOperationPopup(View view, V2TIMConversation v2TIMConversation, boolean isRead, boolean isTop, boolean isRemind) {
+    private void showMsgOperationPopup(View view, Conversation conversation, /*boolean isRead, boolean isTop,*/ boolean isRemind) {
         if (mListPopup != null && mListPopup.isShowing()) {
             mListPopup.dismiss();
         }
 
         final List<String> stringList = new ArrayList<>();
-        if (isRead) {
-            //如果消息已读，则标记消息可设置未读
-            stringList.add(FamilyMsgOperationEnum.UN_READ);
-        } else {
-            stringList.add(FamilyMsgOperationEnum.READ);
-        }
+//        if (isRead) {
+//            //如果消息已读，则标记消息可设置未读
+//            stringList.add(FamilyMsgOperationEnum.UN_READ);
+//        } else {
+//            stringList.add(FamilyMsgOperationEnum.READ);
+//        }
+//
+//        if (isTop) {
+//            //如果消息已置顶，则标记消息可设置取消置顶
+//            stringList.add(FamilyMsgOperationEnum.UN_TOP);
+//        } else {
+//            stringList.add(FamilyMsgOperationEnum.TOP);
+//        }
 
-        if (isTop) {
-            //如果消息已置顶，则标记消息可设置取消置顶
-            stringList.add(FamilyMsgOperationEnum.UN_TOP);
-        } else {
-            stringList.add(FamilyMsgOperationEnum.TOP);
-        }
         stringList.add(FamilyMsgOperationEnum.REMOVE);
 
         if (isRemind) {
@@ -312,37 +370,62 @@ public class FragmentFamilyMsg extends BaseFragment {
                     case FamilyMsgOperationEnum.UN_TOP://取消消息置顶
                         break;
                     case FamilyMsgOperationEnum.REMOVE://移除消息
-                        break;
-                    case FamilyMsgOperationEnum.REMIND://消息提醒
-                        V2TIMManager.getGroupManager().setReceiveMessageOpt(v2TIMConversation.getGroupID(), V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE, new V2TIMCallback() {
+                        /**
+                         *  删除会话
+                         *
+                         * 注意
+                         * 请注意如下特殊逻辑:
+                         * 删除会话会在本地删除的同时，在服务器也会同步删除。
+                         * 会话内的消息不会从服务器删除，如果其他人在此会话继续发言，仍然可以从后台拉取该会话的漫游消息。
+                         */
+                        V2TIMManager.getConversationManager().deleteConversation(conversation.getConversationID(), new V2TIMCallback() {
                             @Override
                             public void onError(int i, String s) {
-                                ToastUtils.toast("消息提醒设置失败-" + s);
+                                ToastUtil.tost("消息移除失败-" + s);
                             }
 
                             @Override
                             public void onSuccess() {
-                                ToastUtils.toast("消息提醒设置成功");
-                                // mSmartRefreshLayout.autoRefresh();//自动刷新
-                                // familyMsgAdapter.notifyDataSetChanged();
+                                //移除成功后同时删除本地
+                                RealmManage.getInstance().delete(Conversation.class, conversation.getId());
+                                familyMsgAdapter.remove(conversation);
+
+                                // getConversationList(nextSeq, count);//刷新会话列表
+                            }
+                        });
+                        break;
+                    case FamilyMsgOperationEnum.REMIND://消息提醒
+                        V2TIMManager.getGroupManager().setReceiveMessageOpt(conversation.getId(), V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE, new V2TIMCallback() {
+                            @Override
+                            public void onError(int i, String s) {
+                                ToastUtil.tost("消息提醒设置失败-" + s);
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                ToastUtil.tost("消息提醒设置成功");
+                                conversation.setIsRemind("1");
+                                familyMsgAdapter.notifyDataSetChanged();
+                                RealmManage.getInstance().addOrUpdate(conversation);
+
                             }
                         });
                         break;
                     case FamilyMsgOperationEnum.UN_REMIND://取消消息提醒
 
-                        V2TIMManager.getGroupManager().setReceiveMessageOpt(v2TIMConversation.getGroupID(), V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_NOT_NOTIFY_MESSAGE, new V2TIMCallback() {
+                        V2TIMManager.getGroupManager().setReceiveMessageOpt(conversation.getId(), V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_NOT_NOTIFY_MESSAGE, new V2TIMCallback() {
                             @Override
                             public void onError(int i, String s) {
-                                ToastUtils.toast("取消提醒失败-" + s);
+                                ToastUtil.tost("取消提醒失败-" + s);
                             }
 
                             @Override
                             public void onSuccess() {
-                                ToastUtils.toast("取消提醒成功");
-                                // mSmartRefreshLayout.autoRefresh();//自动刷新
-                                //familyMsgAdapter.notifyDataSetChanged();
+                                ToastUtil.tost("取消提醒成功");
+                                conversation.setIsRemind("2");
+                                familyMsgAdapter.notifyDataSetChanged();
+                                RealmManage.getInstance().addOrUpdate(conversation);
                             }
-
                         });
                         break;
                 }
@@ -381,38 +464,116 @@ public class FragmentFamilyMsg extends BaseFragment {
         mListPopup.show(view);
     }
 
+    /**
+     * 关闭下拉刷新和上拉加载
+     */
     private void closeFinish() {
         mSmartRefreshLayout.finishRefresh(200);
         mSmartRefreshLayout.finishLoadMore(200);
     }
 
     /**
-     * 添加数据到本地数据库
+     * 会话数据对象转会还数据库模型
+     * <p>
+     * V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE：在线正常接收消息，离线时会有厂商的离线推送通知。
+     * V2TIMGroupInfo.V2TIM_GROUP_NOT_RECEIVE_MESSAGE：不会接收到群消息。
+     * V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_NOT_NOTIFY_MESSAGE：在线正常接收消息，离线不会有推送
+     * V2TIMManager.getGroupManager().setReceiveMessageOpt();
      *
-     * @param conversationList
+     * @param v2TIMConversation
+     * @return
      */
-    private void commitDatabase(List<V2TIMConversation> conversationList) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        List<Conversation> users = new ArrayList<>();
-        for (V2TIMConversation v2TIMConversation : conversationList) {
-            Conversation conversation = new Conversation();
+    private Conversation getConversation(V2TIMConversation v2TIMConversation) {
+        Conversation conversation = new Conversation();
+        conversation.setId(v2TIMConversation.getGroupID());
+        conversation.setConversationID(v2TIMConversation.getConversationID());
+        conversation.setName(v2TIMConversation.getShowName());
+        conversation.setFaceUrll(v2TIMConversation.getFaceUrl());
+        conversation.setUnreadCount(v2TIMConversation.getUnreadCount());
+
+        if (v2TIMConversation.getRecvOpt() == V2TIMGroupInfo.V2TIM_GROUP_RECEIVE_MESSAGE) {
+            //提醒
+            conversation.setIsRemind("1");
+        } else {
+            conversation.setIsRemind("2");
         }
-        realm.insert(users);
-        realm.commitTransaction();
+        V2TIMMessage lastMessage = v2TIMConversation.getLastMessage();
+        if (lastMessage != null) {
+            conversation.setTimestamp(lastMessage.getTimestamp());
+            if (lastMessage.getTextElem() != null) {
+                conversation.setTextElem(lastMessage.getTextElem().getText());
+            }
+        }
+        return conversation;
     }
 
     /**
-     * 添加数据到本地数据库
+     * 更新本地数据库和会话列表
+     *
+     * @param conversationList
      */
-    private void commitDatabase(V2TIMConversation v2TIMConversation) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        Conversation user = realm.createObject(Conversation.class);
-        // user.setGroupID();
+    private void addOrUpdate(final List<V2TIMConversation> conversationList) {
+        //数据库异步查询
+        RealmManage.getInstance().searchAll(Conversation.class, new DataListener<Conversation>() {
 
-        realm.commitTransaction();
+            @Override
+            public void onResult(List<Conversation> conversations) {
+                Map<String, Conversation> conversationMap = new LinkedHashMap<>();
+                if (conversations.size() > 0) {
+                    for (Conversation conversation : conversations) {
+                        conversationMap.put(conversation.getId(), conversation);
+                    }
+
+                    for (int i = 0; i < conversations.size(); i++) {
+                        Conversation conversation = conversations.get(i);
+                        for (V2TIMConversation v2TIMConversation : conversationList) {
+                            if (conversation.getId().equals(v2TIMConversation.getGroupID())) {
+                                //本地数据库有该条会话的情况
+                                conversation.setName(v2TIMConversation.getShowName());
+                                conversation.setFaceUrll(v2TIMConversation.getFaceUrl());
+                                conversation.setUnreadCount(v2TIMConversation.getUnreadCount());
+                                V2TIMMessage lastMessage = v2TIMConversation.getLastMessage();
+                                if (lastMessage != null) {
+                                    conversation.setTimestamp(lastMessage.getTimestamp());
+                                    if (lastMessage.getTextElem() != null) {
+                                        conversation.setTextElem(lastMessage.getTextElem().getText());
+                                    }
+                                }
+                                conversationMap.put(conversation.getId(), conversation);
+                            } else {
+                                //本地数据库没有该条会话的情况
+                                conversationMap.put(v2TIMConversation.getGroupID(), getConversation(v2TIMConversation));
+                            }
+                        }
+
+
+                    }
+
+                } else {
+                    //本地数据库无数据的情况
+                    for (V2TIMConversation v2TIMConversation : conversationList) {
+                        conversationMap.put(v2TIMConversation.getGroupID(), getConversation(v2TIMConversation));
+                    }
+                }
+
+                if (!conversationMap.isEmpty()) {
+                    List<Conversation> conversationList = new ArrayList<>(conversationMap.values());
+                    Collections.sort(conversationList, new Comparator<Conversation>() {
+                        @Override
+                        public int compare(Conversation o1, Conversation o2) {
+                            return (int) (o2.getTimestamp() - o1.getTimestamp());
+                        }
+                    });
+                    familyMsgAdapter.replaceAll(conversationList);
+                    //更新本地数据库会话列表
+                    RealmManage.getInstance().addOrUpdateAsync(conversationList);
+                }
+
+
+            }
+        });
     }
+
 
     /**
      * 群消息会话列表
@@ -445,26 +606,29 @@ public class FragmentFamilyMsg extends BaseFragment {
         public void onSuccess(V2TIMConversationResult v2TIMConversationResult) {
             Log.d("FragmentFamilyMsg", "获取到会话列表");
             closeFinish();
-
             List<V2TIMConversation> conversationList = v2TIMConversationResult.getConversationList();
-
             if (conversationList != null && conversationList.size() > 0) {
-                if (refreshOrLoadMore)
-                    familyMsgAdapter.replaceAll(conversationList);
-                else
-                    familyMsgAdapter.addItemsToLast(conversationList);
+                addOrUpdate(conversationList);
+
+//                List<Conversation> conversations = new ArrayList<>();
+//                for (V2TIMConversation v2TIMConversation : conversationList) {
+//                    conversations.add(getConversation(v2TIMConversation));
+//                }
+//                familyMsgAdapter.replaceAll(conversations);
             } else {
                 if (refreshOrLoadMore) {
-                    //  ToastUtil.tost("无更新消息");
+                    ToastUtil.tost("没有消息!");
                 } else {
                     ToastUtil.tost("没有更多啦!");
                 }
+
             }
 
             finished = v2TIMConversationResult.isFinished();
             nextSeq = v2TIMConversationResult.getNextSeq();
         }
     };
+
 
     /**
      * 获取已加入的群组回调

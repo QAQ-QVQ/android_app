@@ -155,10 +155,10 @@ dependencies {
         exclude group: 'com.github.bumptech.glide'
     }
     //即时通信 IM
-    implementation ('com.tencent.imsdk:tuikit:4.7.10'){
-        exclude group: 'com.android.support'
-        exclude group: 'com.github.bumptech.glide'
-    }
+//    implementation ('com.tencent.imsdk:tuikit:4.7.10'){
+//        exclude group: 'com.android.support'
+//        exclude group: 'com.github.bumptech.glide'
+//    }
    //即时通信 IM (数据版)
     implementation 'com.tencent.imsdk:imsdk:4.8.50'
 
