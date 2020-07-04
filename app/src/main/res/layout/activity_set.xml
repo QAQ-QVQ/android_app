@@ -56,7 +56,6 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="44dp"
                 android:layout_marginRight="44dp"
-                android:background="@color/bui_gray"
                 android:paddingLeft="20dp"
                 android:paddingTop="12dp"
                 android:paddingRight="20dp"

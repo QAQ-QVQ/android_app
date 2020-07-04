@@ -98,6 +98,19 @@ public class API {
      * 我的游戏
      */
     public static final String myGame = GAME_URL_DEFAULT +"/game/game/myGame";
+    /**
+     * 游戏列表
+     */
+    public static final String gameList = GAME_URL_DEFAULT +"/game/game/gameList";
+    /**
+     * 区服列表
+     */
+    public static final String serviceList = GAME_URL_DEFAULT +"/game/game_server/serverList";
+    /**
+     * 角色列表
+     */
+    public static final String roleList = GAME_URL_DEFAULT +"/game/game_user_role/roleSelect";
+
 
 
     //家族相关
@@ -105,4 +118,16 @@ public class API {
      * 绑定角色信息
      */
     public static final String currentUserRole = FAMILY_URL_DEFAULT +"/family/family_user_role/currentUserRole";
+    /**
+     * 绑定角色
+     */
+    public static final String toCurrentRole = FAMILY_URL_DEFAULT +"/family/family_user_role/bindUserRole";
+    /**
+     * 绑定角色列表
+     */
+    public static final String bindRoleList = FAMILY_URL_DEFAULT +"/family/family_user_role/userRoleList";
+    /**
+     * 切换绑定角色
+     */
+    public static final String switchRole = FAMILY_URL_DEFAULT +"/family/family_user_role/toggleUserRole";
 }

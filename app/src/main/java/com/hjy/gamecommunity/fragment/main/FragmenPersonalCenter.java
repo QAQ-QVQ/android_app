@@ -32,7 +32,14 @@ import com.hjy.baseui.ui.BaseFragment;
 import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.gamecommunity.R;
 
+import com.hjy.gamecommunity.activity.mine.ActivityBindRole;
+import com.hjy.gamecommunity.activity.mine.ActivityCheckRole;
 import com.hjy.gamecommunity.activity.mine.ActivitySet;
+import com.xuexiang.xui.utils.WidgetUtils;
+import com.xuexiang.xui.widget.dialog.MiniLoadingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -154,6 +161,12 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
      * 小红点
      */
     private ImageView Update;
+    /**
+     * 加载弹框
+     */
+    private MiniLoadingDialog mMiniLoadingDialog;
+
+    private List load = new ArrayList();
 
     @Override
     public int getLayoutId() {
@@ -162,6 +175,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View mRootView) {
+//        setPaddingNumTop(findViewById(R.id.mine_set_layout),12);
         ivSet = findViewById(R.id.mine_set);
         ivSet.setOnClickListener(this);
         nickmane = findViewById(R.id.mine_nickname);
@@ -203,6 +217,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         customer.setOnClickListener(this);
         iconHead = findViewById(R.id.mine_icon_head);
         Update = findViewById(R.id.mine_set_update);
+        mMiniLoadingDialog = WidgetUtils.getMiniLoadingDialog(getContext());
     }
 
     @Override
@@ -214,14 +229,14 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
     @Override
     public void initData() {
+        mMiniLoadingDialog.show();
         Request.getInstance().getUserinfo(userinfoJsonEntityCallback);
         Request.getInstance().getGiftNum(giftNumJsonEntityCallback);
         Request.getInstance().getFamilyInfo(familyInfoJsonEntityCallback);
         Request.getInstance().getMyGameInfo(gameInfoJsonEntityCallback);
         Request.getInstance().getPropertyNumber(PropertyNumberJsonEntityCallback);
         Request.getInstance().checkUpdate(checkUpdateJsonEntityCallback);
-        Request.getInstance().getBindRole(bindRoleJsonEntityCallback);
-
+//        Request.getInstance().getBindRole(bindRoleJsonEntityCallback);
     }
 
     @Override
@@ -255,10 +270,12 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 // TODO: 2020/6/23 鲜花
                 break;
             case R.id.mine_tobinding:
-                // TODO: 2020/6/23 绑定区服
+//                  绑定角色
+                startActivity(new Intent(getContext(), ActivityBindRole.class));
                 break;
             case R.id.mine_bind_change:
-                // TODO: 2020/6/23 切换区服
+                //  切换角色
+                startActivity(new Intent(getContext(), ActivityCheckRole.class));
                 break;
             case R.id.mine_family:
                 // TODO: 2020/6/23 家族
@@ -280,6 +297,13 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (UserDataContainer.getInstance().isLogin()) {
+            initData();
+        }
+    }
 
     /**
      * 获取用户信息
@@ -288,6 +312,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(UserInfo userInfo) {
             if (userInfo.getCode() == 200) {
+                load.add(1);
                 UserData userData = UserDataContainer.getInstance().getUserData();
                 userData.setAvatar(userInfo.getData().getAvatar());
                 userData.setUsername(userInfo.getData().getUsername());
@@ -314,6 +339,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 }
                 // TODO: 2020/6/30 头像框
             }
+            end();
         }
     };
     /**
@@ -324,6 +350,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(GiftNumBean giftNumBean) {
             if (giftNumBean.getCode() == 200) {
+                load.add(2);
                 giftNumber = giftNumBean.getData();
                 if (giftNumber == 0) {
                     giftNum.setText(" ");
@@ -335,6 +362,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     giftNum.setText(textGift);
                 }
             }
+            end();
         }
     };
     /**
@@ -345,6 +373,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(FamilyInfoBean familyInfoBean) {
             if (familyInfoBean.getCode() == 200) {
+                load.add(3);
                 switch (familyInfoBean.getData().size()) {
                     case 0:
                         ivFamilyItem1.setVisibility(View.INVISIBLE);
@@ -362,6 +391,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                         break;
                 }
             }
+            end();
         }
     };
     /**
@@ -372,6 +402,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(MyGameInfoBean myGameInfoBean) {
             if (myGameInfoBean.getCode() == 200) {
+                load.add(4);
                 if (myGameInfoBean.getData().size() == 0) {
                     ivGameItem.setVisibility(View.INVISIBLE);
                 } else {
@@ -379,6 +410,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     LoadingImageUtil.loadingImag(myGameInfoBean.getData().get(0).getIcon(), ivGameItem, false);
                 }
             }
+            end();
         }
     };
     /**
@@ -389,10 +421,12 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(PropertyNumberBean propertyNumberBean) {
             if (propertyNumberBean.getCode() == 200) {
+                load.add(5);
                 goldNum.setText(String.valueOf(propertyNumberBean.getData().getCoin()));
                 silverNum.setText(String.valueOf(propertyNumberBean.getData().getUser_credit()));
                 flowerNum.setText(String.valueOf(propertyNumberBean.getData().getFlower_number()));
             }
+            end();
         }
     };
     /**
@@ -403,6 +437,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(CheckUpdateBean checkUpdateBean) {
             if (checkUpdateBean.getCode() == 200) {
+                load.add(6);
 //                checkUpdateBean.getData().getVersion_code()
                 // TODO: 2020/6/29 检查更新
                 Update.setVisibility(View.INVISIBLE);
@@ -410,6 +445,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
             } else if (checkUpdateBean.getCode() == 101) {
 
             }
+            end();
         }
     };
 
@@ -421,6 +457,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         @Override
         protected void onSuccess(BindRoleBean bindRoleBean) {
             if (bindRoleBean.getCode() == 200) {
+                load.add(7);
                 if (bindRoleBean.getData() != null) {
                     bind.setVisibility(View.GONE);
                     bindChange.setVisibility(View.VISIBLE);
@@ -431,6 +468,13 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     bindChange.setVisibility(View.GONE);
                 }
             }
+            end();
         }
     };
+
+    public void end() {
+        if (load.size() >= 6) {
+            mMiniLoadingDialog.dismiss();
+        }
+    }
 }

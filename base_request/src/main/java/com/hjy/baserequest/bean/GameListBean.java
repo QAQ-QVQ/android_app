@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * CREATED BY DY ON 2020/7/1.
- * TIME BY 10:11.
+ * CREATED BY DY ON 2020/7/2.
+ * TIME BY 10:48.
  *
  * @author DY
  **/
-public class MyGameInfoBean implements Serializable {
+public class GameListBean implements Serializable {
 
     /**
      * code : 200
-     * msg : 我的游戏
-     * data : [{"id":2,"name":"穿越火线","icon":""},{"id":1,"name":"剑侠情缘III","icon":""}]
+     * msg : 游戏列表
+     * data : [{"id":1,"name":"剑侠情缘III"}]
      */
 
     private int code;
@@ -45,23 +45,23 @@ public class MyGameInfoBean implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
-
-        public DataBean(int id, String name, String icon) {
-            this.id = id;
-            this.name = name;
-            this.icon = icon;
-        }
-
+    public static class DataBean implements Serializable{
         /**
-         * id : 2
-         * name : 穿越火线
-         * icon :
+         * id : 1
+         * name : 剑侠情缘III
          */
 
         private int id;
         private String name;
         private String icon;
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
 
         public int getId() {
             return id;
@@ -77,14 +77,6 @@ public class MyGameInfoBean implements Serializable {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
         }
     }
 }

@@ -29,7 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="name,roundIcon,allowBackup,icon,label,theme,supportsRtl,usesCleartextTraffic">
-
+        <activity android:name=".activity.mine.ActivityCheckRole"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -135,7 +135,15 @@
         <activity
             android:name=".activity.mine.ActivitySetPassword"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.mine.ActivityBindSelectRole"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.mine.ActivityBindRole"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ActivityVideoPlay"
             android:launchMode="singleTask"

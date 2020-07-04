@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * CREATED BY DY ON 2020/7/1.
- * TIME BY 10:11.
+ * CREATED BY DY ON 2020/7/2.
+ * TIME BY 10:57.
  *
  * @author DY
  **/
-public class MyGameInfoBean implements Serializable {
+public class ServiceListBean implements Serializable {
 
     /**
      * code : 200
-     * msg : 我的游戏
-     * data : [{"id":2,"name":"穿越火线","icon":""},{"id":1,"name":"剑侠情缘III","icon":""}]
+     * msg : 区服列表
+     * data : [{"id":1,"cp_server_name":"绝代天骄"}]
      */
 
     private int code;
@@ -45,23 +45,14 @@ public class MyGameInfoBean implements Serializable {
         this.data = data;
     }
 
-    public static class DataBean {
-
-        public DataBean(int id, String name, String icon) {
-            this.id = id;
-            this.name = name;
-            this.icon = icon;
-        }
-
+    public static class DataBean implements Serializable{
         /**
-         * id : 2
-         * name : 穿越火线
-         * icon :
+         * id : 1
+         * cp_server_name : 绝代天骄
          */
 
         private int id;
-        private String name;
-        private String icon;
+        private String cp_server_name;
 
         public int getId() {
             return id;
@@ -71,20 +62,12 @@ public class MyGameInfoBean implements Serializable {
             this.id = id;
         }
 
-        public String getName() {
-            return name;
+        public String getCp_server_name() {
+            return cp_server_name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
+        public void setCp_server_name(String cp_server_name) {
+            this.cp_server_name = cp_server_name;
         }
     }
 }

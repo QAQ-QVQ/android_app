@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/role_select"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/role_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12sp"
+        android:gravity="center"
+        android:text="死亡如风，常伴吾身"
+        android:textColor="@color/bui_black_light1"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/role_service"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/role_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="盛世在天，电信一区"
+        android:textColor="@color/bui_black_light1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/role_name"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/role_name"
+        app:layout_constraintTop_toBottomOf="@+id/role_name" />
+
+    <com.xuexiang.xui.widget.imageview.RadiusImageView
+        android:id="@+id/role_choose"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="@dimen/mine_margin"
+        android:src="@drawable/qy_choose"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/role_name"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

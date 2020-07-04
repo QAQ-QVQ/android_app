@@ -17,6 +17,7 @@ import com.hjy.baserequest.bean.BindRoleBean;
 import com.hjy.baserequest.bean.CheckUpdateBean;
 import com.hjy.baserequest.bean.DescAndCode;
 import com.hjy.baserequest.bean.FindBanner;
+import com.hjy.baserequest.bean.GameListBean;
 import com.hjy.baserequest.bean.GiftNumBean;
 import com.hjy.baserequest.bean.LiveList;
 import com.hjy.baserequest.bean.MessagePush;
@@ -25,7 +26,9 @@ import com.hjy.baserequest.bean.NewsDetail;
 import com.hjy.baserequest.bean.NewsList;
 import com.hjy.baserequest.bean.PhoneLoginUserBean;
 import com.hjy.baserequest.bean.PropertyNumberBean;
+import com.hjy.baserequest.bean.RoleListBean;
 import com.hjy.baserequest.bean.SearchBean;
+import com.hjy.baserequest.bean.ServiceListBean;
 import com.hjy.baserequest.bean.UserInfo;
 import com.hjy.baserequest.bean.VideoDetail;
 import com.hjy.baserequest.bean.VideoList;
@@ -621,5 +624,69 @@ public class Request {
     public void getBindRole(JsonEntityCallback<BindRoleBean> jsonEntityCallback){
         JsonObject jsonObject = new JsonObject();
         request(POST, API.currentUserRole,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取游戏列表
+     * @param jsonEntityCallback
+     */
+    public void getGameList(JsonEntityCallback<GameListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.gameList,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取区服列表
+     * @param gameid
+     * @param jsonEntityCallback
+     */
+    public void getServiceList(String gameid,JsonEntityCallback<ServiceListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("game_id", gameid);
+        request(POST, API.serviceList,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取角色列表
+     * @param gameId
+     * @param serviceId
+     * @param jsonEntityCallback
+     */
+    public void getRoleList(int gameId,int serviceId,JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("game_id", gameId);
+        jsonObject.addProperty("server_id", serviceId);
+        request(POST, API.roleList,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 绑定角色
+     * @param game_user_role_id  角色id
+     * @param jsonEntityCallback
+     */
+    public void toBindRole(int game_user_role_id,JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("game_user_role_id", game_user_role_id);
+        request(POST, API.toCurrentRole,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取绑定角色列表
+     * @param jsonEntityCallback
+     */
+    public void getBindRoleList(JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.bindRoleList,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 切换绑定角色
+     * @param game_user_role_id
+     * @param jsonEntityCallback
+     */
+    public void switchRole(int game_user_role_id,JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("family_user_role_id", game_user_role_id);
+        request(POST, API.switchRole,jsonObject, jsonEntityCallback);
     }
 }
