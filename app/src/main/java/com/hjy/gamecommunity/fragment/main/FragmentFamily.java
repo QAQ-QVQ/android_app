@@ -12,9 +12,10 @@ import com.hjy.gamecommunity.R;
  * Des:
  */
 public class FragmentFamily extends BaseFragment {
+
     @Override
     public int getLayoutId() {
-        return  R.layout.fragment_family;
+        return R.layout.fragment_family;
     }
 
     @Override
@@ -32,10 +33,13 @@ public class FragmentFamily extends BaseFragment {
     @Override
     public void initData() {
 
+
     }
 
     @Override
     public void listener() {
 
     }
+
+
 }

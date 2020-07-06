@@ -4,13 +4,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.hjy.baserequest.data.UserData;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.ui.BaseFragment;
+import com.hjy.baseui.ui.view.popup.tips.LoadPopup;
 import com.hjy.baseui.ui.view.tablayout.TabLayoutX;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.FragmentStatePageAdapter;
 import com.hjy.gamecommunity.fragment.message.FragmentFamilyMsg;
 import com.hjy.gamecommunity.fragment.message.FragmentInteractMsg;
 import com.hjy.gamecommunity.fragment.message.FragmentOfficialMsg;
+import com.hjy.gamecommunity.utils.GenerateTestUserSig;
+import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMManager;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -47,6 +54,7 @@ public class FragmenMessage extends BaseFragment {
     }
 
     private Map<String, BaseFragment> fragmentMap = new LinkedHashMap<>();
+
     @Override
     public void initData() {
         FragmentFamilyMsg fragmentFamilyMsg = new FragmentFamilyMsg();
@@ -64,7 +72,30 @@ public class FragmenMessage extends BaseFragment {
         fragmentList.addAll(fragmentMap.values());
         FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getChildFragmentManager(), fragmentList);
         fragmentStatePageAdapter.setDestroyItem(false);
-        mViewPager.setAdapter(fragmentStatePageAdapter);
+
+        UserData userData = UserDataContainer.getInstance().getUserData();
+        if (userData != null) {
+            LoadPopup loadPopup = new LoadPopup(getActivity());
+            loadPopup.setText("IM登录中...");
+            loadPopup.show(mViewPager);
+
+            String user_id = userData.getUser_id();
+            String genTestUserSig = GenerateTestUserSig.genTestUserSig(user_id);
+            V2TIMManager.getInstance().login(user_id, genTestUserSig, new V2TIMCallback() {
+                @Override
+                public void onError(int i, String s) {
+                    ToastUtils.toast("IM登录失败！-" + s);
+                    loadPopup.dismiss();
+                }
+
+                @Override
+                public void onSuccess() {
+                    mViewPager.setAdapter(fragmentStatePageAdapter);
+                    loadPopup.dismiss();
+                }
+            });
+        }
+
     }
 
     @Override

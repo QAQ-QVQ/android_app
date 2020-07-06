@@ -19,10 +19,9 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.download.DownloadListener;
 import com.tencent.bugly.beta.download.DownloadTask;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
-import com.tencent.qcloud.tim.uikit.TUIKit;
-import com.tencent.qcloud.tim.uikit.config.CustomFaceConfig;
-import com.tencent.qcloud.tim.uikit.config.GeneralConfig;
-import com.tencent.qcloud.tim.uikit.config.TUIKitConfigs;
+import com.tencent.imsdk.v2.V2TIMManager;
+import com.tencent.imsdk.v2.V2TIMSDKConfig;
+import com.tencent.imsdk.v2.V2TIMSDKListener;
 import com.xuexiang.xui.XUI;
 
 import java.util.Locale;
@@ -31,6 +30,7 @@ import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.share.android.api.PlatformConfig;
 import cn.jpush.android.api.JPushInterface;
+import io.realm.Realm;
 
 
 /**
@@ -58,33 +58,69 @@ public class App extends Application {
         jAnalyticsInterface();//极光页面统计
         jshare();//极光分享
         initBugly();
-        initTUIKit();//即时通信 IM
+        initIM();//即时通信 IM  （数据版）
+        Realm.init(this);//realm数据库
 
-
-        //Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
-       // frescoInit();
+       // initTUIKit();//即时通信 IM
+        // Fresco 的封装，快速上手，图像后处理，超大图高清预览，缩小放大，双击放大等一一俱全
+        // frescoInit();
 
     }
+
+
+
+//    /**
+//     * 即时通信 IM  （UI版）
+//     */
+//    private void initTUIKit() {
+//        // 配置 Config，请按需配置
+//        TUIKitConfigs configs = TUIKit.getConfigs();
+//        configs.setSdkConfig(new TIMSdkConfig(Config.IM.SDKAPPID));
+//        configs.setCustomFaceConfig(new CustomFaceConfig());
+//        configs.setGeneralConfig(new GeneralConfig());
+//        /*
+//         * TUIKit 的初始化函数
+//         *
+//         * @param context  应用的上下文，一般为对应应用的 ApplicationContext
+//         * @param sdkAppID 您在腾讯云注册应用时分配的 SDKAppID
+//         * @param configs  TUIKit 的相关配置项，一般使用默认即可，需特殊配置参考 API 文档
+//         */
+//        TUIKit.init(this, Config.IM.SDKAPPID, configs);
+//
+//    }
 
     /**
-     * 即时通信 IM
+     * 即时通信 IM  （数据版）
      */
-    private void initTUIKit() {
-        // 配置 Config，请按需配置
-        TUIKitConfigs configs = TUIKit.getConfigs();
-        //configs.setSdkConfig(new TIMSdkConfig(SDKAPPID));
-        configs.setCustomFaceConfig(new CustomFaceConfig());
-        configs.setGeneralConfig(new GeneralConfig());
-        /*
-         * TUIKit 的初始化函数
-         *
-         * @param context  应用的上下文，一般为对应应用的 ApplicationContext
-         * @param sdkAppID 您在腾讯云注册应用时分配的 SDKAppID
-         * @param configs  TUIKit 的相关配置项，一般使用默认即可，需特殊配置参考 API 文档
-         */
-        // TUIKit.init(this, "SDKAPPID", configs);
-    }
+    private void initIM() {
+// 1. 从 IM 控制台获取应用 SDKAppID，详情请参考 SDKAppID。
+// 2. 初始化 config 对象
+        V2TIMSDKConfig config = new V2TIMSDKConfig();
+// 3. 指定 log 输出级别，详情请参考 SDKConfig。
+        config.setLogLevel(V2TIMSDKConfig.V2TIM_LOG_INFO);
+// 4. 初始化 SDK 并设置 V2TIMSDKListener 的监听对象。
+// initSDK 后 SDK 会自动连接网络，网络连接状态可以在 V2TIMSDKListener 回调里面监听。
+        V2TIMManager.getInstance().initSDK(getApplicationContext(), Config.IM.SDKAPPID, config, new V2TIMSDKListener() {
+            // 5. 监听 V2TIMSDKListener 回调
+            @Override
+            public void onConnecting() {
+                // 正在连接到腾讯云服务器
+                Log.d("App", "正在连接到腾讯云服务器");
+            }
 
+            @Override
+            public void onConnectSuccess() {
+                // 已经成功连接到腾讯云服务器
+                Log.d("App", "已经成功连接到腾讯云服务器");
+            }
+
+            @Override
+            public void onConnectFailed(int code, String error) {
+                // 连接腾讯云服务器失败
+                Log.d("App", "连接腾讯云服务器失败");
+            }
+        });
+    }
 
     /**
      * 获取Application
@@ -127,11 +163,10 @@ public class App extends Application {
      * 极光分享
      */
     private void jshare() {
-
         PlatformConfig platformConfig = new PlatformConfig();
-        platformConfig.setQQ("appId", "appKey");
-        platformConfig.setWechat("appId", "appSecret");
-        platformConfig.setSinaWeibo("appKey", "appSecret", "redirectUrl");
+        platformConfig.setQQ(Config.QQ.appId, Config.QQ.appKey);
+        platformConfig.setWechat(Config.Wechat.appId, Config.Wechat.appSecret);
+        platformConfig.setSinaWeibo(Config.SinaWeibo.appKey, Config.SinaWeibo.appSecret, Config.SinaWeibo.redirectUrl);
         JShareInterface.init(this, platformConfig);
         JShareInterface.setDebugMode(true);
 
@@ -257,9 +292,9 @@ public class App extends Application {
         //必须要所有配置设置完毕才 安装tinker
         Beta.installTinker();
 
-        Bugly.init(getApplication(), "eb4d356ac8", true);
-
+        Bugly.init(getApplication(), Config.BugLy.buglyAppId, true);
         Beta.init(getApplication(), true);
+
     }
 
 

@@ -434,10 +434,12 @@ public class FragmentHome extends BaseFragment {
                         mFragments.add(fragmentCustomerServiceMsg);
                     }
 
+                    if (isAdded()) {
+                        FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getChildFragmentManager(), mFragments);
+                        fragmentStatePageAdapter.setDestroyItem(false);
+                        mViewPagerBannerFragment.setAdapter(fragmentStatePageAdapter);
+                    }
 
-                    FragmentStatePageAdapter fragmentStatePageAdapter = new FragmentStatePageAdapter(getChildFragmentManager(), mFragments);
-                    fragmentStatePageAdapter.setDestroyItem(false);
-                    mViewPagerBannerFragment.setAdapter(fragmentStatePageAdapter);
                     //预加载页面数量的方法
                     // mViewPager.setOffscreenPageLimit(mTitles.size());//tab数
 

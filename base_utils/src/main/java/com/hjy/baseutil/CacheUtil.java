@@ -70,6 +70,11 @@ public class CacheUtil {
         return getStoragePath() + "/final/data";
     }
 
+    //数据库目录(不可清除)
+    public static String getDatabasePath() {
+        return getStoragePath() + "/final/database";
+    }
+
     //其他数据缓存目录（可清除）
     public static String getStringDataPath() {
         return getStoragePath() + "/data";

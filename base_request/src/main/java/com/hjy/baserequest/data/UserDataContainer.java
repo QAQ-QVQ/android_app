@@ -75,10 +75,8 @@ public class UserDataContainer {
             } else {
                 return null;
             }
-        } else{
+        } else
             return userData;
-        }
-//        return userData;
 
     }
 
@@ -99,11 +97,10 @@ public class UserDataContainer {
             } else {
                 return null;
             }
-        } else{
+        } else
             return user_list;
-        }
 
-//        return user_list;
+
 
     }
 

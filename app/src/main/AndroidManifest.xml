@@ -84,7 +84,8 @@
         <activity
             android:name=".activity.login.ActivityPasswordSetNewPassword"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /> <!-- adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏 -->
+            android:screenOrientation="portrait" />
+        <!-- adjustPan:键盘就覆盖屏幕 , stateHidden:activity显示时软键盘被隐藏 -->
         <activity
             android:name=".activity.search.ActivitySearch"
             android:launchMode="singleTask"
