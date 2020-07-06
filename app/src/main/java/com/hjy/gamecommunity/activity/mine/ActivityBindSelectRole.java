@@ -230,6 +230,8 @@ public class ActivityBindSelectRole extends BaseActivitySubordinate {
                     yesRole.setVisibility(View.GONE);
                 }
                 roleMessage.setText(message);
+            }else {
+                ToastUtil.tost(roleListBean.getMsg());
             }
         }
     };

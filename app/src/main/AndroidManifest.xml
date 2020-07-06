@@ -29,7 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="name,roundIcon,allowBackup,icon,label,theme,supportsRtl,usesCleartextTraffic">
-        <activity android:name=".activity.mine.ActivityCheckRole"></activity>
+
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -142,6 +142,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.mine.ActivityBindRole"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.mine.ActivityMyGame"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.mine.ActivityCheckRole"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

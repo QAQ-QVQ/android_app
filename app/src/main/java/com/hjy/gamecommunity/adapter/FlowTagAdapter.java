@@ -1,13 +1,9 @@
 package com.hjy.gamecommunity.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.StateListDrawable;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hjy.baserequest.bean.MyGameInfoBean;
-import com.hjy.baseui.ui.SuperDrawable;
 import com.hjy.gamecommunity.R;
 import com.xuexiang.xui.widget.flowlayout.BaseTagAdapter;
 
@@ -31,7 +27,7 @@ public class FlowTagAdapter extends BaseTagAdapter<String, TextView> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.bind_role_item;
+        return R.layout.item_bind_role;
     }
 
 

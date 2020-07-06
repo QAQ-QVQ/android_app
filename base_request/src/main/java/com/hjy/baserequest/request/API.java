@@ -130,4 +130,8 @@ public class API {
      * 切换绑定角色
      */
     public static final String switchRole = FAMILY_URL_DEFAULT +"/family/family_user_role/toggleUserRole";
+    /**
+     * 解除绑定
+     */
+    public static final String removeRole = FAMILY_URL_DEFAULT +"/family/family_user_role/removeBinding";
 }

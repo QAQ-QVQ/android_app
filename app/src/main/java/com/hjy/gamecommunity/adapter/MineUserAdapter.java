@@ -34,7 +34,7 @@ public class MineUserAdapter extends RecyclerView.Adapter<MineUserAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.mine_user_item, null, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mine_user, null, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

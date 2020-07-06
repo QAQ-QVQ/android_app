@@ -34,7 +34,7 @@ public class MineSetAdapter extends RecyclerView.Adapter<MineSetAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.mine_set_item, null, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mine_set, null, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

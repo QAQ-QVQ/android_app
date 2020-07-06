@@ -30,10 +30,12 @@ import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseFragment;
 
 import com.hjy.baseutil.LoadingImageUtil;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 
 import com.hjy.gamecommunity.activity.mine.ActivityBindRole;
 import com.hjy.gamecommunity.activity.mine.ActivityCheckRole;
+import com.hjy.gamecommunity.activity.mine.ActivityMyGame;
 import com.hjy.gamecommunity.activity.mine.ActivitySet;
 import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.dialog.MiniLoadingDialog;
@@ -236,7 +238,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
         Request.getInstance().getMyGameInfo(gameInfoJsonEntityCallback);
         Request.getInstance().getPropertyNumber(PropertyNumberJsonEntityCallback);
         Request.getInstance().checkUpdate(checkUpdateJsonEntityCallback);
-//        Request.getInstance().getBindRole(bindRoleJsonEntityCallback);
+        Request.getInstance().getBindRole(bindRoleJsonEntityCallback);
     }
 
     @Override
@@ -284,7 +286,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 // TODO: 2020/6/23 礼物
                 break;
             case R.id.mine_game:
-                // TODO: 2020/6/23 游戏
+                //  我的游戏
+                startActivity(new Intent(getContext(), ActivityMyGame.class));
                 break;
             case R.id.mine_live:
                 // TODO: 2020/6/23 直播
@@ -338,6 +341,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     live.setVisibility(View.VISIBLE);
                 }
                 // TODO: 2020/6/30 头像框
+            }else {
+                ToastUtil.tost(userInfo.getMsg());
             }
             end();
         }
@@ -361,6 +366,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     textGift.setSpan(new ForegroundColorSpan(Color.parseColor("#EE3847")), 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                     giftNum.setText(textGift);
                 }
+            }else {
+                ToastUtil.tost(giftNumBean.getMsg());
             }
             end();
         }
@@ -390,6 +397,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                         LoadingImageUtil.loadingImag(familyInfoBean.getData().get(1).getAvatar(), ivFamilyItem2, false);
                         break;
                 }
+            }else {
+                ToastUtil.tost(familyInfoBean.getMsg());
             }
             end();
         }
@@ -409,6 +418,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     ivGameItem.setVisibility(View.VISIBLE);
                     LoadingImageUtil.loadingImag(myGameInfoBean.getData().get(0).getIcon(), ivGameItem, false);
                 }
+            }else {
+                ToastUtil.tost(myGameInfoBean.getMsg());
             }
             end();
         }
@@ -425,6 +436,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 goldNum.setText(String.valueOf(propertyNumberBean.getData().getCoin()));
                 silverNum.setText(String.valueOf(propertyNumberBean.getData().getUser_credit()));
                 flowerNum.setText(String.valueOf(propertyNumberBean.getData().getFlower_number()));
+            }else {
+               ToastUtil.tost(propertyNumberBean.getMsg());
             }
             end();
         }
@@ -467,6 +480,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     bind.setVisibility(View.VISIBLE);
                     bindChange.setVisibility(View.GONE);
                 }
+            }else {
+                ToastUtil.tost(bindRoleBean.getMsg());
             }
             end();
         }

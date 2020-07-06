@@ -37,6 +37,7 @@ import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Delayed;
 
 /**
  * 我的-》绑定游戏角色
@@ -232,6 +233,8 @@ public class ActivityBindRole extends BaseActivitySubordinate {
                 gameAdapter.addTags(gameName);
                 gameAdapter.setSelectedPositions(0);
                 mMiniLoadingDialog.dismiss();
+            }else {
+                ToastUtil.tost(gameListBean.getMsg());
             }
 
         }
@@ -239,28 +242,32 @@ public class ActivityBindRole extends BaseActivitySubordinate {
     /**
      * 区服数据
      */
+    List serviceName = new ArrayList();
     JsonEntityCallback serviceInfoJsonEntityCallback = new JsonEntityCallback<ServiceListBean>(ServiceListBean.class) {
 
         @Override
         protected void onSuccess(ServiceListBean serviceListBean) {
             if (serviceListBean.getCode() == 200) {
-                List serviceName = new ArrayList();
                 serviceList = serviceListBean;
+                serviceName.clear();
+                serviceAdapter = new FlowTagAdapter(getContext());
                 if (serviceListBean.getData().size() == 0) {
                     nextFlag = false;
+                    chooseService.setVisibility(View.INVISIBLE);
                 } else {
                     nextFlag = true;
                     for (ServiceListBean.DataBean service : serviceListBean.getData()) {
                         serviceName.add(service.getCp_server_name());
                     }
-                    serviceAdapter = new FlowTagAdapter(getContext());
+                    chooseService.setVisibility(View.VISIBLE);
                     chooseService.setAdapter(serviceAdapter);
                     chooseService.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
                     serviceAdapter.addTags(serviceName);
                     serviceAdapter.setSelectedPositions(0);
-
                 }
                 mMiniLoadingDialog.dismiss();
+            }else {
+                ToastUtil.tost(serviceListBean.getMsg());
             }
         }
     };

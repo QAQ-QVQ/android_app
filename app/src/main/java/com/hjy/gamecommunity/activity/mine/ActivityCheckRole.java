@@ -111,11 +111,17 @@ public class ActivityCheckRole extends BaseActivitySubordinate {
                         mPosion = posion;
                     }
 
+                    /**
+                     * @param posion
+                     */
                     @Override
                     public void LongClick(int posion) {
-
+                        // TODO: 2020/7/4 长按
+                        Request.getInstance().removeRole(roleList.getData().get(posion).getId(), removeRoleJsonEntityCallback);
                     }
                 });
+            }else {
+                ToastUtil.tost(roleListBean.getMsg());
             }
         }
     };
@@ -139,6 +145,28 @@ public class ActivityCheckRole extends BaseActivitySubordinate {
             }
         }
     };
+
+    /**
+     * 解除绑定
+     */
+    JsonEntityCallback removeRoleJsonEntityCallback = new JsonEntityCallback<RoleListBean>(RoleListBean.class) {
+
+        @Override
+        protected void onSuccess(RoleListBean roleListBean) {
+            switch (roleListBean.getCode()) {
+                case 200:
+                    initData();
+                    break;
+                case 101:
+                    ToastUtil.tost(roleListBean.getMsg());
+                    break;
+                default:
+                    ToastUtil.tost(roleListBean.getMsg());
+                    break;
+            }
+        }
+    };
+
     private StateListDrawable setCanClickDrawable() {
         //设置点击后透明度
         StateListDrawable stateListDrawable = new SuperDrawable().setClickAlpha(0.7f)

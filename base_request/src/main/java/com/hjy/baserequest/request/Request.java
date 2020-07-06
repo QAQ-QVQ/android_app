@@ -689,4 +689,15 @@ public class Request {
         jsonObject.addProperty("family_user_role_id", game_user_role_id);
         request(POST, API.switchRole,jsonObject, jsonEntityCallback);
     }
+
+    /**
+     * 解除绑定
+     * @param family_user_role_id
+     * @param jsonEntityCallback
+     */
+    public void removeRole(int family_user_role_id,JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("family_user_role_id", family_user_role_id);
+        request(POST, API.switchRole,jsonObject, jsonEntityCallback);
+    }
 }

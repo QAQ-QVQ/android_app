@@ -146,7 +146,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingLeft="8dp"
-                    android:text="5"
+                    android:text="0"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
 
@@ -186,7 +186,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingLeft="8dp"
-                    android:text="5"
+                    android:text="0"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
 
@@ -225,7 +225,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingLeft="8dp"
-                    android:text="5"
+                    android:text="0"
                     android:textColor="@color/bui_black_light1"
                     android:textSize="24sp" />
 
@@ -277,7 +277,7 @@
 
             <LinearLayout
                 android:id="@+id/mine_tobinding"
-                android:visibility="gone"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -320,7 +320,7 @@
 
             <LinearLayout
                 android:id="@+id/mine_bind_change"
-
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -542,7 +542,6 @@
                             android:layout_margin="5dp"
                             android:layout_weight="4"
                             android:gravity="center|right"
-                            android:text="还有6个礼包"
                             android:textColor="@color/bui_black_light"
                             android:textSize="12sp" />
 

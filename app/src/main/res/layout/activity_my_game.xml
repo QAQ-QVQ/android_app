@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bui_white"
+    tools:context=".activity.mine.ActivityMyGame"
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingConstraints">
+
+    <include
+        layout="@layout/bui_bar_black_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></include>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/bui_background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bar">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/mine_game_now"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/bui_white"
+            app:layout_constraintBottom_toTopOf="@+id/mine_game_played"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1">
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/bui_background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="1"></View>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前游戏"
+                android:textColor="@color/bui_black_light1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/mine_game_icon_ImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/bui_background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0"></View>
+
+            <com.xuexiang.xui.widget.imageview.RadiusImageView
+                android:id="@+id/mine_game_icon_ImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toTopOf="@+id/mine_game_name"
+                app:layout_constraintEnd_toEndOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:riv_corner_radius="4dp" />
+
+            <TextView
+                android:id="@+id/mine_game_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="王者荣耀"
+                android:textColor="@color/bui_black_light1"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/mine_game_icon_ImageView"
+                app:layout_constraintStart_toStartOf="@+id/mine_game_icon_ImageView"
+                app:layout_constraintTop_toBottomOf="@+id/mine_game_icon_ImageView" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/mine_game_played"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/bui_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mine_game_now"
+            app:layout_constraintVertical_weight="2">
+            <View
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/bui_background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="1"></View>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="8dp"
+                android:text="我玩过的"
+                android:textColor="@color/bui_black_light1"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/bui_background_light"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0"></View>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mine_game_played_recyclerview"
+                android:layout_margin="@dimen/mine_margin"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

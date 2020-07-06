@@ -3,21 +3,15 @@ package com.hjy.gamecommunity.adapter;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjy.baserequest.bean.RoleListBean;
-import com.hjy.baseui.adapter.BaseAdapter;
 import com.hjy.gamecommunity.R;
 
-import java.time.chrono.IsoChronology;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +41,7 @@ public class RoleSelectAdapter extends RecyclerView.Adapter<RoleSelectAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.role_select_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_role_select, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         holder.roleSelect.setOnClickListener(new View.OnClickListener() {
             @Override
