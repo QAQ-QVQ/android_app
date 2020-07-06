@@ -11,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.hjy.baserequest.bean.AccountInfoBean;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseui.ui.SuperDrawable;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 
 /**
@@ -107,8 +111,13 @@ public class ActivitySetPassword extends BaseActivitySubordinate {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/6/30 提交
-                finish();
+                //新密码
+                String newpassword = newPassword.getText().toString();
+                //确认密码
+                String confirm = confirmPassword.getText().toString();
+                if (!newpassword.isEmpty()&&!confirm.isEmpty()){
+                    Request.getInstance().setPassword(newpassword,confirm,editPasswordInfoJsonEntityCallback);
+                }
             }
         });
     }
@@ -124,4 +133,16 @@ public class ActivitySetPassword extends BaseActivitySubordinate {
                 .buid();
         return stateListDrawable;
     }
+    JsonEntityCallback editPasswordInfoJsonEntityCallback = new JsonEntityCallback<AccountInfoBean>(AccountInfoBean.class){
+
+        @Override
+        protected void onSuccess(AccountInfoBean accountInfoBean) {
+            if (accountInfoBean.getCode() == 200){
+                ToastUtil.tost("为了您的账号安全请重新登录");
+                finish();
+            }else {
+                ToastUtil.tost(accountInfoBean.getMsg());
+            }
+        }
+    };
 }

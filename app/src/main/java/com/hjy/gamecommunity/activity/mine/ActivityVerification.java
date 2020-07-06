@@ -10,9 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hjy.baserequest.bean.AccountInfoBean;
+import com.hjy.baserequest.bean.DescAndCode;
+import com.hjy.baserequest.data.UserDataContainer;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseui.ui.SuperDrawable;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+import com.hjy.gamecommunity.enumclass.SmsEnum;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,7 +70,8 @@ public class ActivityVerification extends BaseActivitySubordinate {
 
     @Override
     public void initData() {
-        // TODO: 2020/6/30 发送验证码
+        verificationPhone.setText(String.valueOf(UserDataContainer.getInstance().getUserData().getPhone()));
+        Request.getInstance().smsVerificationCode(String.valueOf(UserDataContainer.getInstance().getUserData().getPhone()), SmsEnum.i().getKey(SmsEnum.VALUE4),verficationJsonEntityCallback );
         countDown();
     }
 
@@ -72,16 +80,22 @@ public class ActivityVerification extends BaseActivitySubordinate {
         verificationNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ActivitySetPassword.class));
-                finish();
+             String verification =  verificationEdit.getText().toString();
+             if (verification.isEmpty()){
+                 ToastUtil.tost("请输入正确的验证码");
+             }else if (verification.length() >= 5){
+                 Request.getInstance().editPassword(verification,editPasswordInfoJsonEntityCallback);
+             }
             }
         });
         verificationRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2020/6/30 验证码
+                Request.getInstance().smsVerificationCode(String.valueOf(UserDataContainer.getInstance().getUserData().getPhone()), SmsEnum.i().getKey(SmsEnum.VALUE4),verficationJsonEntityCallback );
+                countDown();
             }
         });
+
     }
     /**
      * 单背景样式
@@ -178,4 +192,32 @@ public class ActivityVerification extends BaseActivitySubordinate {
         new Timer().schedule(timerTask, 100, 1000);
     }
 
+    /**
+     * 身份验证
+     */
+    JsonEntityCallback editPasswordInfoJsonEntityCallback = new JsonEntityCallback<AccountInfoBean>(AccountInfoBean.class){
+
+        @Override
+        protected void onSuccess(AccountInfoBean accountInfoBean) {
+            if (accountInfoBean.getCode() == 200){
+                startActivity(new Intent(getContext(), ActivitySetPassword.class));
+                finish();
+            }else {
+                ToastUtil.tost(accountInfoBean.getMsg());
+            }
+        }
+    };
+    /**
+     * 获取验证码
+     */
+    JsonEntityCallback verficationJsonEntityCallback= new JsonEntityCallback<DescAndCode>(DescAndCode.class) {
+        @Override
+        protected void onSuccess(DescAndCode descAndCode) {
+            if (descAndCode.getCode() == 200) {
+                ToastUtil.tost("验证码获取成功");
+            } else {
+                ToastUtil.tost(descAndCode.getMsg());
+            }
+        }
+    };
 }

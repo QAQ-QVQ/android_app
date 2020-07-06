@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.hjy.baserequest.bean.AboutUsBean;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
@@ -46,8 +50,8 @@ public class ActivityAboutUs extends BaseActivitySubordinate {
     @Override
     public void initData() {
         RichText.initCacheDir(this);
-        // TODO: 2020/6/29  获取关于我们
-        richText("ceshishishi");
+        Request.getInstance().aboutUs(aboutUsJsonEntityCallback);
+
     }
 
     @Override
@@ -112,4 +116,15 @@ public class ActivityAboutUs extends BaseActivitySubordinate {
         RichText.clear(this);
         RichText.recycle();
     }
+    JsonEntityCallback aboutUsJsonEntityCallback = new JsonEntityCallback<AboutUsBean>(AboutUsBean.class){
+
+        @Override
+        protected void onSuccess(AboutUsBean aboutUsBean) {
+            if (aboutUsBean.getCode() == 200){
+                richText(aboutUsBean.getData());
+            }else {
+                ToastUtil.tost(aboutUsBean.getMsg());
+            }
+        }
+    };
 }

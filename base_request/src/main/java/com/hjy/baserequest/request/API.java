@@ -49,7 +49,7 @@ public class API {
     public static final String messagePush = SYSTEM_URL_DEFAULT + "/xxx/xxx/xxxxx";//消息推送
     public static final String deviceInformation = SYSTEM_URL_DEFAULT + "/xxx/xxx.do";//搜集设备信息
     public static final String checkFile = SYSTEM_URL_DEFAULT + "/upload/xxx/checkFile";//检查服务器是否有该图片
-    public static final String uploadImg = SYSTEM_URL_DEFAULT + "/upload/xxx/upload_dos";//传图接口
+//    public static final String uploadImg = SYSTEM_URL_DEFAULT + "/upload/xxx/upload_dos";//传图接口
 
 
     //用户
@@ -75,6 +75,31 @@ public class API {
      * 检查更新
      */
     public static final String checkUpdates = USER_URL_DEFAULT + "/user/system/checkForUpdates";
+    /**
+     * 上传用户信息
+     */
+    public static final String updateUserInfo = USER_URL_DEFAULT + "/user/user/setUserInfo";
+    /**
+     * 上传图片接口
+     */
+    public static final String uploadImg = USER_URL_DEFAULT + "/user/system/uploadFile";
+    /**
+     * 关于我们
+     */
+    public static final String aboutUs = USER_URL_DEFAULT + "/user/system/aboutUs";
+    /**
+     * 安全信息
+     */
+    public static final String accountInfo = USER_URL_DEFAULT + "/user/user/accountInfo";
+    /**
+     * 身份验证
+     */
+    public static final String editPassword = USER_URL_DEFAULT + "/user/user/editPassword";
+    /**
+     * 设置密码
+     */
+    public static final String setPassword = USER_URL_DEFAULT + "/user/user/editPasswordSecond";
+
 
     public static final String bindMobileNumber = USER_URL_DEFAULT + "/xxx/xxx.do";//绑定手机号
 

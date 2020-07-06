@@ -21,11 +21,11 @@
 
         <com.xuexiang.xui.widget.imageview.RadiusImageView
             android:id="@+id/mine_set_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:src="@drawable/ic_launcher_background"
             app:riv_corner_radius="@dimen/mine_icon_radius" />
 

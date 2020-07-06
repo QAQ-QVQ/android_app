@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjy.baserequest.bean.MineSetBean;
+import com.hjy.baseutil.LoadingImageUtil;
 import com.hjy.gamecommunity.App;
 import com.hjy.gamecommunity.R;
 
@@ -34,23 +35,26 @@ public class MineSetAdapter extends RecyclerView.Adapter<MineSetAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mine_set, null, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mine_set, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        if (setBeanList.get(i).getIcon() != 0) {
+        if (!setBeanList.get(i).getIcon().isEmpty()) {
             viewHolder.setIcon.setVisibility(View.VISIBLE);
-            viewHolder.setIcon.setImageDrawable(ContextCompat.getDrawable(App.getApplication(),setBeanList.get(i).getIcon()));
+            LoadingImageUtil.loadingImag(setBeanList.get(i).getIcon(), viewHolder.setIcon, false);
+            if ("无头像".equals(setBeanList.get(i).getIcon())) {
+                viewHolder.setIcon.setImageResource(R.drawable.ic_launcher_background);
+            }
         } else {
             viewHolder.setIcon.setVisibility(View.GONE);
         }
         viewHolder.setTitle.setText(setBeanList.get(i).getTitle());
         viewHolder.setTv.setText(setBeanList.get(i).getMsg());
         if (setBeanList.get(i).getNext() != 0) {
-            viewHolder.setNext.setImageDrawable(ContextCompat.getDrawable(App.getApplication(),setBeanList.get(i).getNext()));
+            viewHolder.setNext.setImageDrawable(ContextCompat.getDrawable(App.getApplication(), setBeanList.get(i).getNext()));
         }
         viewHolder.setItem.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,7 +11,7 @@ public class MineSetBean {
     /**
      * 头像
      */
-    private int icon;
+    private String icon;
     /**
      * 设置标题
      */
@@ -25,18 +25,18 @@ public class MineSetBean {
      */
     private int next;
 
-    public MineSetBean(int icon, String title, String msg, int next) {
+    public MineSetBean(String icon, String title, String msg, int next) {
         this.icon = icon;
         this.title = title;
         this.msg = msg;
         this.next = next;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 

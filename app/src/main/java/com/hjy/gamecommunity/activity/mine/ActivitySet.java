@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjy.baserequest.bean.MineSetBean;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baseui.ui.BaseActivity;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseui.ui.SuperDrawable;
@@ -79,15 +80,26 @@ public class ActivitySet extends BaseActivitySubordinate {
     /**
      *
      */
+    String icon,nickname;
     @Override
     public void initData() {
-        MineSetBean userMsg = new MineSetBean(R.drawable.ic_launcher_background, "歪嘴猴", "", 0);
-        MineSetBean security = new MineSetBean(0, "账号与安全", "", 0);
-        MineSetBean aboutUs = new MineSetBean(0, "关于我们", "", 0);
+        if (!UserDataContainer.getInstance().getUserData().getAvatar().isEmpty()){
+            icon = UserDataContainer.getInstance().getUserData().getAvatar();
+        }else {
+            icon = "无头像";
+        }
+        if (!UserDataContainer.getInstance().getUserData().getNickname().isEmpty()){
+            nickname = UserDataContainer.getInstance().getUserData().getNickname();
+        }else {
+            nickname = "暂无昵称";
+        }
+        MineSetBean userMsg = new MineSetBean(icon, nickname, "", 0);
+        MineSetBean security = new MineSetBean("", "账号与安全", "", 0);
+        MineSetBean aboutUs = new MineSetBean("", "关于我们", "", 0);
         // TODO: 2020/6/30 获取版本信息
-        MineSetBean checkUpdate = new MineSetBean(0, "检查更新", "当前版本号V1.0.0", 0);
+        MineSetBean checkUpdate = new MineSetBean("", "检查更新", "当前版本号V1.0.0", 0);
 
-        MineSetBean clearCache = new MineSetBean(0, "清除缓存", getCacheSize(), 0);
+        MineSetBean clearCache = new MineSetBean("", "清除缓存", getCacheSize(), 0);
         setList = new ArrayList();
         setList.add(userMsg);
         setList.add(security);
@@ -103,6 +115,15 @@ public class ActivitySet extends BaseActivitySubordinate {
         };
         setItem.setLayoutManager(linearLayoutManager);
         setItem.setAdapter(setAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (UserDataContainer.getInstance().isLogin()){
+            initData();
+            listener();
+        }
     }
 
     @Override

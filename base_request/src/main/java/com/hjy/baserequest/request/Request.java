@@ -10,6 +10,8 @@ import com.blankj.utilcode.util.MapUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.hjy.baserequest.bean.AboutUsBean;
+import com.hjy.baserequest.bean.AccountInfoBean;
 import com.hjy.baserequest.bean.AccountsLoginUserBean;
 import com.hjy.baserequest.bean.AnchorAndVideoList;
 import com.hjy.baserequest.bean.AnchorList;
@@ -699,5 +701,67 @@ public class Request {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("family_user_role_id", family_user_role_id);
         request(POST, API.switchRole,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 上传用户信息
+     * @param nickname 昵称
+     * @param gender 性别：1=未知，2=男，3=女
+     * @param birthdate 生日
+     * @param signature 个性签名
+     * @param avatar 头像
+     * @param jsonEntityCallback
+     */
+    public void updataUserInfo(String nickname,int gender,int birthdate,String signature,String avatar,JsonEntityCallback<RoleListBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("nickname", nickname);
+        jsonObject.addProperty("gender", gender);
+        jsonObject.addProperty("birthdate", birthdate);
+        jsonObject.addProperty("signature", signature);
+        jsonObject.addProperty("signature", signature);
+        jsonObject.addProperty("avatar", avatar);
+        request(POST, API.updateUserInfo,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 关于我们
+     * @param jsonEntityCallback
+     */
+    public void aboutUs(JsonEntityCallback<AboutUsBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.aboutUs,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 获取安全信息
+     * @param jsonEntityCallback
+     */
+    public void getAccountInfo(JsonEntityCallback<AccountInfoBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        request(POST, API.accountInfo,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 身份验证
+     * @param code  验证码
+     * @param jsonEntityCallback
+     */
+    public void editPassword(String code,JsonEntityCallback<AccountInfoBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code", code);
+        request(POST, API.editPassword,jsonObject, jsonEntityCallback);
+    }
+
+    /**
+     * 设置密码
+     * @param password
+     * @param confirm_password
+     * @param jsonEntityCallback
+     */
+    public void setPassword(String password,String confirm_password ,JsonEntityCallback<AccountInfoBean> jsonEntityCallback){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("password", password);
+        jsonObject.addProperty("confirm_password", confirm_password);
+        request(POST, API.setPassword,jsonObject, jsonEntityCallback);
     }
 }

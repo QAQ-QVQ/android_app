@@ -341,7 +341,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     live.setVisibility(View.VISIBLE);
                 }
                 // TODO: 2020/6/30 头像框
-            }else {
+            } else {
                 ToastUtil.tost(userInfo.getMsg());
             }
             end();
@@ -366,7 +366,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     textGift.setSpan(new ForegroundColorSpan(Color.parseColor("#EE3847")), 3, 5, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                     giftNum.setText(textGift);
                 }
-            }else {
+            } else {
                 ToastUtil.tost(giftNumBean.getMsg());
             }
             end();
@@ -397,7 +397,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                         LoadingImageUtil.loadingImag(familyInfoBean.getData().get(1).getAvatar(), ivFamilyItem2, false);
                         break;
                 }
-            }else {
+            } else {
                 ToastUtil.tost(familyInfoBean.getMsg());
             }
             end();
@@ -418,7 +418,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     ivGameItem.setVisibility(View.VISIBLE);
                     LoadingImageUtil.loadingImag(myGameInfoBean.getData().get(0).getIcon(), ivGameItem, false);
                 }
-            }else {
+            } else {
                 ToastUtil.tost(myGameInfoBean.getMsg());
             }
             end();
@@ -436,8 +436,8 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 goldNum.setText(String.valueOf(propertyNumberBean.getData().getCoin()));
                 silverNum.setText(String.valueOf(propertyNumberBean.getData().getUser_credit()));
                 flowerNum.setText(String.valueOf(propertyNumberBean.getData().getFlower_number()));
-            }else {
-               ToastUtil.tost(propertyNumberBean.getMsg());
+            } else {
+                ToastUtil.tost(propertyNumberBean.getMsg());
             }
             end();
         }
@@ -449,16 +449,22 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
         @Override
         protected void onSuccess(CheckUpdateBean checkUpdateBean) {
-            if (checkUpdateBean.getCode() == 200) {
-                load.add(6);
-//                checkUpdateBean.getData().getVersion_code()
-                // TODO: 2020/6/29 检查更新
-                Update.setVisibility(View.INVISIBLE);
-                Update.setVisibility(View.VISIBLE);
-            } else if (checkUpdateBean.getCode() == 101) {
-
-            }
-            end();
+//            switch (checkUpdateBean.getCode()) {
+//                case 200:
+//                    load.add(6);
+////                checkUpdateBean.getData().getVersion_code()
+//                    // TODO: 2020/6/29 检查更新
+//                    Update.setVisibility(View.INVISIBLE);
+//                    Update.setVisibility(View.VISIBLE);
+//                    break;
+//                case 101:
+//                    ToastUtil.tost(checkUpdateBean.getMsg());
+//                    break;
+//                default:
+//                    ToastUtil.tost(checkUpdateBean.getMsg());
+//                    break;
+//            }
+//            end();
         }
     };
 
@@ -480,7 +486,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                     bind.setVisibility(View.VISIBLE);
                     bindChange.setVisibility(View.GONE);
                 }
-            }else {
+            } else {
                 ToastUtil.tost(bindRoleBean.getMsg());
             }
             end();

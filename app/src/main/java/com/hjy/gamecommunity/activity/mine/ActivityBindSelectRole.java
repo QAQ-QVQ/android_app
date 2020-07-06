@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hjy.baserequest.bean.GameListBean;
 import com.hjy.baserequest.bean.RoleListBean;
 import com.hjy.baserequest.bean.ServiceListBean;
+import com.hjy.baserequest.data.UserDataContainer;
 import com.hjy.baserequest.request.JsonEntityCallback;
 import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
@@ -224,8 +225,7 @@ public class ActivityBindSelectRole extends BaseActivitySubordinate {
                     LoadingImageUtil.loadingImag(game.getIcon(), gameIcon, false);
                     gameName.setText("游戏：" + game.getName());
                     serviceName.setText("区服：" + service.getCp_server_name());
-                    // TODO: 2020/7/2 账号
-                    message = "您的账号（" + 1333456735 + "）内没有检测到支持绑定角色";
+                    message = "您的账号（" + UserDataContainer.getInstance().getUserData().getPhone() + "）内没有检测到支持绑定角色";
                     noRole.setVisibility(View.VISIBLE);
                     yesRole.setVisibility(View.GONE);
                 }

@@ -12,14 +12,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjy.baserequest.bean.MineUserSetBean;
+import com.hjy.baserequest.bean.MyGameInfoBean;
+import com.hjy.baserequest.bean.UploadImageOne;
+import com.hjy.baserequest.data.UserDataContainer;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
+import com.hjy.baserequest.request.UploadImage;
+import com.hjy.baserequest.request.UploadImageInterface;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
 import com.hjy.baseutil.LoadingImageUtil;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.adapter.MineUserAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.lzy.okgo.callback.Callback;
+import com.lzy.okgo.model.Progress;
+import com.lzy.okgo.model.Response;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.picker.widget.OptionsPickerView;
 import com.xuexiang.xui.widget.picker.widget.TimePickerView;
@@ -30,9 +41,11 @@ import com.xuexiang.xui.widget.picker.widget.listener.OnTimeSelectChangeListener
 import com.xuexiang.xui.widget.picker.widget.listener.OnTimeSelectListener;
 import com.xuexiang.xutil.data.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 我的—》设置-》个人资料
@@ -91,12 +104,37 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         userRelative = findViewById(R.id.mine_user_relativelayout);
     }
 
+    String signature, nick, icon;
+    /**
+     * 性别：1=未知，2=男，3=女
+     */
+    int genderNum, birthdays;
+
     @Override
     public void initData() {
-        MineUserSetBean nickName = new MineUserSetBean("昵称：", "未填写", 0);
-        MineUserSetBean gender = new MineUserSetBean("性别：", "未选择", 0);
-        MineUserSetBean birthday = new MineUserSetBean("生日：", "未选择", 0);
-        MineUserSetBean personalsignature = new MineUserSetBean("个性签名：", "未填写", 0);
+        if (!UserDataContainer.getInstance().getUserData().getAvatar().isEmpty()) {
+            icon = UserDataContainer.getInstance().getUserData().getAvatar();
+        }
+        LoadingImageUtil.loadingImag(icon, userIcon, true);
+        if (UserDataContainer.getInstance().getUserData().getNickname().isEmpty()) {
+            nick = "未填写";
+        } else {
+            nick = UserDataContainer.getInstance().getUserData().getNickname();
+        }
+        MineUserSetBean nickName = new MineUserSetBean("昵称：", nick, 0);
+
+        genderNum = UserDataContainer.getInstance().getUserData().getGender();
+        MineUserSetBean gender = new MineUserSetBean("性别：", checkGenderNum(genderNum), 0);
+
+        MineUserSetBean birthday = new MineUserSetBean("生日：", getBirthdayString(UserDataContainer.getInstance().getUserData().getBirthdate()), 0);
+
+        if (UserDataContainer.getInstance().getUserData().getSignature().isEmpty()) {
+            signature = "未填写";
+        } else {
+            signature = UserDataContainer.getInstance().getUserData().getSignature();
+        }
+        MineUserSetBean personalsignature = new MineUserSetBean("个性签名：", signature, 0);
+
         userList = new ArrayList<>();
         userList.add(nickName);
         userList.add(gender);
@@ -111,9 +149,6 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         };
         userItem.setLayoutManager(linearLayoutManager);
         userItem.setAdapter(userAdapter);
-
-
-        Log.d("ActivityUserMessage", "initData");
     }
 
     @Override
@@ -158,7 +193,60 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         });
     }
 
+    /**
+     * 获取时间 时间戳转日期
+     *
+     * @param birthday
+     * @return
+     */
+    private String getBirthdayString(int birthday) {
+        birthdays = birthday;
+        if (birthday == 0) {
+            return "未选择";
+        } else {
+            String date = DateUtils.millis2String(birthday * (long) 1000, new SimpleDateFormat("yyyy.MM.dd"));
+            return date;
+        }
+    }
 
+
+    /**
+     * 转换性别
+     *
+     * @param gender
+     * @return
+     */
+    private int checkGenderString(String gender) {
+        switch (gender) {
+            case "未选择":
+                return 1;
+            case "男":
+                return 2;
+            case "女":
+                return 3;
+            default:
+                return 1;
+        }
+    }
+
+    /**
+     * 转换性别
+     *
+     * @param gender
+     * @return
+     */
+    private String checkGenderNum(int gender) {
+        switch (gender) {
+            case 1:
+                return "未选择";
+            case 2:
+                return "男";
+            case 3:
+                return "女";
+            default:
+                return "未选择";
+        }
+    }
 
     /**
      * 时间选择
@@ -167,10 +255,11 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
         TimePickerView mDatePicker = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelected(Date date, View v) {
-                String string = DateUtils.date2String(date, DateUtils.yyyyMMdd.get());
+                String string = DateUtils.date2String(date, new SimpleDateFormat("yyyy.MM.dd"));
+                birthdays = (int) (date.getTime() / 1000);
                 userList.get(2).setMsg(string);
                 userAdapter.notifyDataSetChanged();
-                // TODO: 2020/6/28 上传生日到服务器
+                Request.getInstance().updataUserInfo(nick, genderNum, birthdays, signature, icon, updataUserInfoJsonEntityCallback);
             }
         })
                 .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
@@ -205,7 +294,8 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                 userList.get(1).setMsg(mSexOption[options1]);
                 sexSelectOption[0] = options1;
                 userAdapter.notifyDataSetChanged();
-                // TODO: 2020/6/28 上传性别到服务器
+                genderNum = checkGenderString(mSexOption[options1]);
+                Request.getInstance().updataUserInfo(nick, genderNum, birthdays, signature, icon, updataUserInfoJsonEntityCallback);
             }
         })
                 .setTitleText("请选择性别")
@@ -334,7 +424,8 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     if (!nickname.isEmpty()) {
                         userList.get(0).setMsg(nickname);
                         userAdapter.notifyDataSetChanged();
-                        // TODO: 2020/6/29  上传昵称
+                        nick = nickname;
+                        Request.getInstance().updataUserInfo(nick, genderNum, birthdays, signature, icon, updataUserInfoJsonEntityCallback);
                     }
                     break;
                 //个性签名
@@ -343,7 +434,8 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
                     if (!personalsignature.isEmpty()) {
                         userList.get(3).setMsg(personalsignature);
                         userAdapter.notifyDataSetChanged();
-                        // TODO: 2020/6/29     上传个性签名
+                        signature = personalsignature;
+                        Request.getInstance().updataUserInfo(nick, genderNum, birthdays, personalsignature, icon, updataUserInfoJsonEntityCallback);
                     }
                     break;
                 default:
@@ -370,7 +462,34 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
             path = media.getPath();
         }
         LoadingImageUtil.loadingImag(path, userIcon, false);
-        // TODO: 2020/6/28  上传头像到服务器
+        UploadImage uploadImage = new UploadImage(getActivity());
+        uploadImage.uploadImageOne(path, new UploadImageInterface<UploadImageOne>() {
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onSuccess(UploadImageOne uploadImageOne) {
+                icon = uploadImageOne.getData();
+                Request.getInstance().updataUserInfo(nick, genderNum, birthdays, signature, icon, updataUserInfoJsonEntityCallback);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void schedule(float progress) {
+
+            }
+
+            @Override
+            public void onSuccess(String imagUrl, String imagMd5) {
+
+            }
+        });
         // 例如 LocalMedia 里面返回五种path
         // 1.media.getPath(); 原图path，但在Android Q版本上返回的是content:// Uri类型
         // 2.media.getCutPath();裁剪后path，需判断media.isCut();切勿直接使用
@@ -388,4 +507,29 @@ public class ActivityUserMessage extends BaseActivitySubordinate {
 //                    }
     }
 
+    JsonEntityCallback updataUserInfoJsonEntityCallback = new JsonEntityCallback<MyGameInfoBean>(MyGameInfoBean.class) {
+
+        @Override
+        protected void onSuccess(MyGameInfoBean myGameInfoBean) {
+            switch (myGameInfoBean.getCode()) {
+                case 200:
+                    ToastUtil.tost(myGameInfoBean.getMsg());
+                    //更新昵称,个性签名,性别
+                    UserDataContainer.getInstance().getUserData().setNickname(nick);
+                    UserDataContainer.getInstance().getUserData().setSignature(signature);
+                    UserDataContainer.getInstance().getUserData().setGender(genderNum);
+                    UserDataContainer.getInstance().getUserData().setBirthdate(birthdays);
+                    UserDataContainer.getInstance().getUserData().setAvatar(icon);
+                    initData();
+                    listener();
+                    break;
+                case 101:
+                    ToastUtil.tost(myGameInfoBean.getMsg());
+                    break;
+                default:
+                    ToastUtil.tost(myGameInfoBean.getMsg());
+                    break;
+            }
+        }
+    };
 }

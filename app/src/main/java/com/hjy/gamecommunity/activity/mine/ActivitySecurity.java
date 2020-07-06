@@ -7,8 +7,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hjy.baserequest.bean.AccountInfoBean;
+import com.hjy.baserequest.bean.BindRoleBean;
+import com.hjy.baserequest.data.UserDataContainer;
+import com.hjy.baserequest.request.JsonEntityCallback;
+import com.hjy.baserequest.request.Request;
 import com.hjy.baseui.ui.BaseActivitySubordinate;
+import com.hjy.baseutil.ToastUtil;
 import com.hjy.gamecommunity.R;
+
 /**
  * 我的-》设置 -》账号与安全
  * Date: 2020/6/30 09:23
@@ -54,7 +61,13 @@ public class ActivitySecurity extends BaseActivitySubordinate {
 
     @Override
     public void initData() {
-        // TODO: 2020/6/30 设置密码
+        Request.getInstance().getAccountInfo(accountInfoJsonEntityCallback);
+        securityPhoneNumber.setText(String.valueOf(UserDataContainer.getInstance().getUserData().getPhone()));
+
+    }
+
+    @Override
+    public void listener() {
         securityPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +76,21 @@ public class ActivitySecurity extends BaseActivitySubordinate {
         });
     }
 
-    @Override
-    public void listener() {
+    JsonEntityCallback accountInfoJsonEntityCallback = new JsonEntityCallback<AccountInfoBean>(AccountInfoBean.class) {
 
-    }
+        @Override
+        protected void onSuccess(AccountInfoBean accountInfoBean) {
+            if (accountInfoBean.getCode() == 200) {
+                //未设置
+                if (accountInfoBean.getData().getIs_set_password() == 0) {
+                    securityPasswordTv.setText("未设置");
+                //已设置
+                } else {
+                    securityPasswordTv.setText("更改密码");
+                }
+            } else {
+                ToastUtil.tost(accountInfoBean.getMsg());
+            }
+        }
+    };
 }

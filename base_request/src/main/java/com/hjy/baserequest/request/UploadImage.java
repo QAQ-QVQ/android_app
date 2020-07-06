@@ -170,7 +170,7 @@ public class UploadImage {
      *
      * @param urlFile
      */
-    private void uploadImageOne(String urlFile, final UploadImageInterface<UploadImageOne> uploadImageInterface) {
+    public void uploadImageOne(String urlFile, final UploadImageInterface<UploadImageOne> uploadImageInterface) {
         Request.getInstance().uploadImageOne(urlFile, new StringCallback() {
             @Override
             public void onFinish() {
@@ -194,7 +194,6 @@ public class UploadImage {
 
             @Override
             public void onSuccess(Response<String> response) {
-
                 String body = response.body();
                 Log.d("uploadImageOne", body);
                 try {
