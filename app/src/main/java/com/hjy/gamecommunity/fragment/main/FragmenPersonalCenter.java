@@ -36,6 +36,7 @@ import com.hjy.gamecommunity.R;
 import com.hjy.gamecommunity.activity.mine.ActivityBindRole;
 import com.hjy.gamecommunity.activity.mine.ActivityCheckRole;
 import com.hjy.gamecommunity.activity.mine.ActivityMyGame;
+import com.hjy.gamecommunity.activity.mine.ActivityMyGold;
 import com.hjy.gamecommunity.activity.mine.ActivitySet;
 import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.dialog.MiniLoadingDialog;
@@ -250,6 +251,7 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_set:
+                //设置
 //                startActivity(new Intent(getContext(), ActivityPhoneLogin.class));
                 startActivity(new Intent(getContext(), ActivitySet.class));
                 break;
@@ -263,10 +265,14 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
                 // TODO: 2020/6/23 个性签名
                 break;
             case R.id.mine_gold:
-                // TODO: 2020/6/23 金豆
+                //  2020/6/23 金豆
+                Intent intent = new Intent(getContext(), ActivityMyGold.class);
+                intent.putExtra("gold",goldNum.getText().toString());
+                startActivity(intent);
                 break;
             case R.id.mine_silver:
                 // TODO: 2020/6/23 银豆
+
                 break;
             case R.id.mine_flower:
                 // TODO: 2020/6/23 鲜花
@@ -449,22 +455,22 @@ public class FragmenPersonalCenter extends BaseFragment implements View.OnClickL
 
         @Override
         protected void onSuccess(CheckUpdateBean checkUpdateBean) {
-//            switch (checkUpdateBean.getCode()) {
-//                case 200:
-//                    load.add(6);
-////                checkUpdateBean.getData().getVersion_code()
-//                    // TODO: 2020/6/29 检查更新
-//                    Update.setVisibility(View.INVISIBLE);
-//                    Update.setVisibility(View.VISIBLE);
-//                    break;
-//                case 101:
-//                    ToastUtil.tost(checkUpdateBean.getMsg());
-//                    break;
-//                default:
-//                    ToastUtil.tost(checkUpdateBean.getMsg());
-//                    break;
-//            }
-//            end();
+            switch (checkUpdateBean.getCode()) {
+                case 200:
+                    load.add(6);
+//                checkUpdateBean.getData().getVersion_code()
+                    // TODO: 2020/6/29 检查更新
+                    Update.setVisibility(View.INVISIBLE);
+                    Update.setVisibility(View.VISIBLE);
+                    break;
+                case 101:
+                    ToastUtil.tost(checkUpdateBean.getMsg());
+                    break;
+                default:
+                    ToastUtil.tost(checkUpdateBean.getMsg());
+                    break;
+            }
+            end();
         }
     };
 

@@ -133,6 +133,10 @@ public class ActivitySetPassword extends BaseActivitySubordinate {
                 .buid();
         return stateListDrawable;
     }
+
+    /**
+     * 修改密码
+     */
     JsonEntityCallback editPasswordInfoJsonEntityCallback = new JsonEntityCallback<AccountInfoBean>(AccountInfoBean.class){
 
         @Override

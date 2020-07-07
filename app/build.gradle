@@ -150,7 +150,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     //PictureSelector图片选择
-    implementation ('com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'){
+    implementation('com.github.LuckSiege.PictureSelector:picture_library:v2.2.3') {
         exclude group: 'com.android.support'
         exclude group: 'com.github.bumptech.glide'
     }
@@ -159,7 +159,7 @@ dependencies {
 //        exclude group: 'com.android.support'
 //        exclude group: 'com.github.bumptech.glide'
 //    }
-   //即时通信 IM (数据版)
+    //即时通信 IM (数据版)
     implementation 'com.tencent.imsdk:imsdk:4.8.50'
 
 
